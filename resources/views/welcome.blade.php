@@ -109,8 +109,12 @@
             </div>
         </main>
         
-        <footer class="relative z-10 w-full p-6 text-center text-sm text-gray-500 font-medium">
+        <footer class="relative z-10 w-full py-6 mt-auto text-center text-sm text-gray-500 border-t border-white/5 bg-[#141B2D]/50 backdrop-blur-md">
             &copy; {{ date('Y') }} {{ setting('app_name', 'Naugawan Premier League') }}. All rights reserved.
+            @if(setting('developer_name'))
+                <span class="mx-1">|</span>
+                Developed by <a href="{{ setting('developer_url', '#') }}" target="_blank" class="text-[#FFC800] hover:underline">{{ setting('developer_name') }}</a>
+            @endif
         </footer>
     </body>
 </html>

@@ -18,6 +18,8 @@ class Settings extends Component
     public $contact_phone;
 
     public $season;
+    public $developer_name;
+    public $developer_url;
 
     public function mount()
     {
@@ -27,6 +29,8 @@ class Settings extends Component
         $this->favicon = setting('favicon', '');
         $this->contact_email = setting('contact_email', '');
         $this->contact_phone = setting('contact_phone', '');
+        $this->developer_name = setting('developer_name', 'Shanu Saifi');
+        $this->developer_url = setting('developer_url', '#');
     }
 
     public function save()
@@ -38,6 +42,8 @@ class Settings extends Component
             'new_favicon' => 'nullable|mimes:ico,png,jpg,jpeg|max:1024', // max 1MB
             'contact_email' => 'nullable|email|max:255',
             'contact_phone' => 'nullable|string|max:255',
+            'developer_name' => 'nullable|string|max:255',
+            'developer_url' => 'nullable|string|max:255',
         ]);
 
         \App\Models\Setting::set('app_name', $this->app_name);
@@ -59,6 +65,8 @@ class Settings extends Component
 
         \App\Models\Setting::set('contact_email', $this->contact_email);
         \App\Models\Setting::set('contact_phone', $this->contact_phone);
+        \App\Models\Setting::set('developer_name', $this->developer_name);
+        \App\Models\Setting::set('developer_url', $this->developer_url);
 
         session()->flash('success', 'Settings updated successfully.');
     }

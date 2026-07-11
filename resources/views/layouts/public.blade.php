@@ -56,8 +56,12 @@
             {{ $slot }}
         </main>
 
-        <footer class="border-t border-white/10 py-8 text-center text-gray-500 text-sm bg-[#0B0F19]">
+        <footer class="bg-card-bg border-t border-gray-800 py-6 text-center text-sm text-gray-500 font-medium">
             &copy; {{ date('Y') }} {{ setting('app_name', 'Naugawan Premier League (NPLT20)') }}. All rights reserved.
+            @if(setting('developer_name'))
+                <span class="mx-1">|</span>
+                Developed by <a href="{{ setting('developer_url', '#') }}" target="_blank" class="text-accent-gold hover:underline">{{ setting('developer_name') }}</a>
+            @endif
         </footer>
 
         @livewireScripts

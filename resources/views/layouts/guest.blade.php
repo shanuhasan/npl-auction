@@ -29,8 +29,16 @@
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-md mt-2 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+            <div class="w-full sm:max-w-md mt-2 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg mb-8">
                 {{ $slot }}
+            </div>
+            
+            <div class="w-full text-center text-sm text-gray-500 py-4 absolute bottom-0 left-0 bg-gray-100 dark:bg-gray-900">
+                &copy; {{ date('Y') }} {{ setting('app_name', 'NPLT20') }}. All rights reserved. 
+                @if(setting('developer_name'))
+                    <span class="mx-1">|</span>
+                    Developed by <a href="{{ setting('developer_url', '#') }}" target="_blank" class="text-[#FFC800] hover:underline">{{ setting('developer_name') }}</a>
+                @endif
             </div>
         </div>
     </body>

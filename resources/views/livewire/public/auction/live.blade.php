@@ -186,7 +186,15 @@
             </div>
         </div>
 
-            </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full py-3 text-center text-xs md:text-sm text-gray-500 border-t border-white/5 bg-[#141B2D]/80 backdrop-blur-md relative z-20 mt-auto">
+        &copy; {{ date('Y') }} {{ setting('app_name', 'NPLT20') }}. All rights reserved. 
+        @if(setting('developer_name'))
+            <span class="mx-1">|</span> Developed by <a href="{{ setting('developer_url', '#') }}" target="_blank" class="text-[#FFC800] hover:underline">{{ setting('developer_name') }}</a>
+        @endif
+    </footer>
 
     <!-- Alpine Script -->
     <script>

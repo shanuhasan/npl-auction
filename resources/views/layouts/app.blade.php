@@ -67,6 +67,14 @@
                 <main class="flex-1 overflow-y-auto bg-primary-bg p-4 sm:p-6 lg:p-8">
                     {{ $slot }}
                 </main>
+                
+                <!-- Footer -->
+                <footer class="bg-card-bg border-t border-gray-800 py-3 text-center text-sm text-gray-500 w-full">
+                    &copy; {{ date('Y') }} {{ setting('app_name', 'NPLT20') }}. All rights reserved. 
+                    @if(setting('developer_name'))
+                        | Developed by <a href="{{ setting('developer_url', '#') }}" target="_blank" class="text-accent-gold hover:underline">{{ setting('developer_name') }}</a>
+                    @endif
+                </footer>
             </div>
         </div>
         

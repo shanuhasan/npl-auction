@@ -73,6 +73,20 @@
                                 <input type="text" id="contact_phone" wire:model="contact_phone" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="+91 9876543210">
                                 @error('contact_phone') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                             </div>
+                            
+                            <!-- Developer Name -->
+                            <div>
+                                <label for="developer_name" class="block text-sm font-medium text-gray-400 mb-1">Developer Name</label>
+                                <input type="text" id="developer_name" wire:model="developer_name" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="e.g. Insphire">
+                                @error('developer_name') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                            </div>
+
+                            <!-- Developer URL -->
+                            <div>
+                                <label for="developer_url" class="block text-sm font-medium text-gray-400 mb-1">Developer URL</label>
+                                <input type="text" id="developer_url" wire:model="developer_url" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="e.g. https://insphire.in">
+                                @error('developer_url') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                            </div>
                         </div>
 
                         <div class="pt-4 border-t border-gray-800 flex justify-end">
