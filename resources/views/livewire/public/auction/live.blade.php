@@ -7,9 +7,9 @@
     
     <!-- Header -->
     <div class="px-4 md:px-8 py-4 flex flex-wrap gap-3 justify-between items-center border-b border-white/10 z-10 bg-[#141B2D]/80 backdrop-blur-md">
-        <h1 class="text-xl md:text-2xl font-bold tracking-wider text-[#FFC800] uppercase">
+        <a href="{{ url('/') }}" class="text-xl md:text-2xl font-bold tracking-wider text-[#FFC800] uppercase hover:text-yellow-400 transition-colors">
             {{ $auction->title }}
-        </h1>
+        </a>
         <div class="flex items-center space-x-2 md:space-x-4">
             @if($auction->status === 'live')
                 <span class="flex h-3 w-3 relative">
