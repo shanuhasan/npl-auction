@@ -7,14 +7,19 @@
     <!-- Header: Team Info -->
     <div class="px-8 py-4 flex justify-between items-center border-b border-[var(--team-color)]/30 z-10 bg-[#141B2D]/90 backdrop-blur-md shadow-[0_0_20px_var(--team-color)]" style="box-shadow: 0 4px 30px rgba(0,0,0,0.5), 0 0 20px {{ $myTeam->primary_color }}33;">
         <div class="flex items-center gap-4">
-            <img src="{{ $myTeam->logo ? Storage::url($myTeam->logo) : 'https://ui-avatars.com/api/?name='.urlencode($myTeam->name).'&background=random' }}" 
-                 alt="{{ $myTeam->name }}" 
-                 class="w-12 h-12 rounded-full border-2 border-[var(--team-color)]">
-            <div>
-                <h1 class="text-xl font-bold tracking-wider uppercase" style="color: var(--team-color);">
-                    {{ $myTeam->name }}
-                </h1>
-                <p class="text-xs text-gray-400">Owner Dashboard</p>
+            <a href="{{ route('dashboard') }}" class="text-gray-400 hover:text-white transition p-2 bg-white/5 rounded-full border border-white/10 hover:bg-white/10" title="Back to Dashboard">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </a>
+            <div class="flex items-center gap-4 border-l border-white/10 pl-4">
+                <img src="{{ $myTeam->logo ? Storage::url($myTeam->logo) : 'https://ui-avatars.com/api/?name='.urlencode($myTeam->name).'&background=random' }}" 
+                     alt="{{ $myTeam->name }}" 
+                     class="w-12 h-12 rounded-full border-2 border-[var(--team-color)]">
+                <div>
+                    <h1 class="text-xl font-bold tracking-wider uppercase" style="color: var(--team-color);">
+                        {{ $myTeam->name }}
+                    </h1>
+                    <p class="text-xs text-gray-400">Owner Dashboard</p>
+                </div>
             </div>
         </div>
         <div class="text-right">
