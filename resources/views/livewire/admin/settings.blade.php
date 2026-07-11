@@ -28,6 +28,13 @@
                                 @error('app_name') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                             </div>
 
+                            <!-- Season -->
+                            <div>
+                                <label for="season" class="block text-sm font-medium text-gray-400 mb-1">Season</label>
+                                <input type="text" id="season" wire:model="season" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="e.g. Season 2026">
+                                @error('season') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                            </div>
+
                             <!-- Logo File -->
                             <div>
                                 <label for="new_logo" class="block text-sm font-medium text-gray-400 mb-1">Upload Logo</label>

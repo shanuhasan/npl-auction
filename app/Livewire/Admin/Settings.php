@@ -17,9 +17,12 @@ class Settings extends Component
     public $contact_email;
     public $contact_phone;
 
+    public $season;
+
     public function mount()
     {
         $this->app_name = setting('app_name', 'Naugawan Premier League');
+        $this->season = setting('season', date('Y'));
         $this->logo = setting('logo', '');
         $this->favicon = setting('favicon', '');
         $this->contact_email = setting('contact_email', '');
@@ -30,6 +33,7 @@ class Settings extends Component
     {
         $this->validate([
             'app_name' => 'required|string|max:255',
+            'season' => 'required|string|max:255',
             'new_logo' => 'nullable|image|max:2048', // max 2MB
             'new_favicon' => 'nullable|mimes:ico,png,jpg,jpeg|max:1024', // max 1MB
             'contact_email' => 'nullable|email|max:255',
@@ -37,6 +41,7 @@ class Settings extends Component
         ]);
 
         \App\Models\Setting::set('app_name', $this->app_name);
+        \App\Models\Setting::set('season', $this->season);
         
         if ($this->new_logo) {
             $logoPath = $this->new_logo->store('settings', 'public');

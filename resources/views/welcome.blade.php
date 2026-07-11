@@ -68,7 +68,7 @@
                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFC800] opacity-75"></span>
                       <span class="relative inline-flex rounded-full h-3 w-3 bg-[#FFC800]"></span>
                     </span>
-                    Season 2026
+                    {{ setting('season', 'Season ' . date('Y')) }}
                 </div>
                 
                 <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-white uppercase" style="text-shadow: 0 4px 20px rgba(255,200,0,0.3);">
