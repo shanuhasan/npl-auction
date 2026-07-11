@@ -25,10 +25,10 @@
                     @auth
                         @if(auth()->user()->role === 'admin')
                             <a href="{{ route('admin.dashboard') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.dashboard') ? 'bg-gray-800 border-l-4 border-accent-red text-accent-red font-bold' : 'hover:bg-gray-800 text-accent-red font-semibold' }}">Dashboard (Admin)</a>
-                            <a href="{{ route('admin.auctions') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.auctions*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Auctions</a>
+                            <a href="{{ route('admin.users') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.users*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Users</a>
                             <a href="{{ route('admin.teams') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.teams*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Teams</a>
                             <a href="{{ route('admin.players') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.players*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Players</a>
-                            <a href="{{ route('admin.users') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.users*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Users</a>
+                            <a href="{{ route('admin.auctions') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.auctions*') || request()->routeIs('admin.auction.*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Auctions</a>
                             <a href="{{ route('admin.analytics') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.analytics') ? 'bg-gray-800 border-l-4 border-[#FFC800] text-[#FFC800] font-bold' : 'hover:bg-gray-800 text-[#FFC800]' }}">Analytics</a>
                             <a href="{{ route('admin.settings') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.settings') ? 'bg-gray-800 border-l-4 border-[#FFC800] text-[#FFC800] font-bold' : 'hover:bg-gray-800 text-[#FFC800]' }}">Settings</a>
                         @elseif(auth()->user()->role === 'team_owner')
