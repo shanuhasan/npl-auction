@@ -150,6 +150,11 @@ class AuctionService
                 return ['success' => false, 'message' => 'Auction is not live.'];
             }
 
+            $participatingTeams = $auction->teams;
+            if ($participatingTeams->isNotEmpty() && !$participatingTeams->contains('id', $teamId)) {
+                return ['success' => false, 'message' => 'Your team is not participating in this auction.'];
+            }
+
             if (!$state->current_auction_player_id) {
                 return ['success' => false, 'message' => 'No active player on auction.'];
             }

@@ -8,6 +8,8 @@ use App\Models\AuctionState;
 use App\Models\Player;
 use App\Models\AuctionPlayer;
 
+use App\Models\Team;
+
 class Create extends Component
 {
     public $title;
@@ -20,6 +22,7 @@ class Create extends Component
     ];
 
     public $selectedPlayers = [];
+    public $selectedTeams = [];
 
     protected $rules = [
         'title' => 'required|string|max:255',
@@ -57,9 +60,12 @@ class Create extends Component
             ->orderBy('base_price', 'desc')
             ->get()
             ->groupBy('category');
+            
+        $teams = Team::all();
 
         return view('livewire.admin.auctions.create', [
             'playersByCategory' => $playersByCategory,
+            'teams' => $teams,
         ])->layout('layouts.app');
     }
 
@@ -105,6 +111,10 @@ class Create extends Component
                     'status' => 'pending',
                 ]);
             }
+        }
+
+        if (!empty($this->selectedTeams)) {
+            $auction->teams()->attach($this->selectedTeams);
         }
 
         session()->flash('message', 'Auction created successfully!');

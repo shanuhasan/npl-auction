@@ -55,10 +55,38 @@
             </div>
         </div>
 
-        <!-- Section 3: Players -->
+        <!-- Section 3: Participating Teams -->
         <div class="bg-card-bg rounded-lg shadow p-6 border border-gray-800">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 gap-4">
-                <h2 class="text-xl font-poppins font-bold text-accent-gold">3. Select Players</h2>
+                <h2 class="text-xl font-poppins font-bold text-accent-gold">3. Select Participating Teams</h2>
+            </div>
+            <p class="text-gray-400 text-sm mb-4 border-b border-gray-700 pb-2">Only the selected teams will be able to enter the bidding room for this auction.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                @forelse($teams as $team)
+                    <label class="flex items-center space-x-3 bg-primary-bg p-3 rounded border border-gray-800 cursor-pointer hover:border-gray-600 transition">
+                        <input type="checkbox" wire:model="selectedTeams" value="{{ $team->id }}" class="form-checkbox h-5 w-5 text-accent-gold bg-gray-900 border-gray-700 rounded focus:ring-accent-gold">
+                        <div class="flex-1 flex items-center space-x-2">
+                            @if($team->logo)
+                                <img src="{{ Storage::url($team->logo) }}" alt="{{ $team->name }}" class="w-6 h-6 object-cover rounded-full">
+                            @else
+                                <div class="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-[10px] text-white">
+                                    {{ substr($team->name, 0, 2) }}
+                                </div>
+                            @endif
+                            <p class="text-white font-medium text-sm">{{ $team->name }}</p>
+                        </div>
+                    </label>
+                @empty
+                    <p class="text-gray-400">No teams found. Please add teams first.</p>
+                @endforelse
+            </div>
+        </div>
+
+        <!-- Section 4: Players -->
+        <div class="bg-card-bg rounded-lg shadow p-6 border border-gray-800">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 gap-4">
+                <h2 class="text-xl font-poppins font-bold text-accent-gold">4. Select Players</h2>
                 <div class="flex gap-2">
                     <button type="button" wire:click="selectAllPlayers" class="text-xs font-bold bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded shadow uppercase tracking-wider">Select All</button>
                     <button type="button" wire:click="deselectAllPlayers" class="text-xs font-bold bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded shadow uppercase tracking-wider">Deselect All</button>

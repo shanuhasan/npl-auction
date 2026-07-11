@@ -35,6 +35,11 @@ class Auction extends Model
         return $this->hasOne(AuctionState::class);
     }
 
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'guid';

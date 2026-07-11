@@ -35,4 +35,9 @@ class Team extends Model
     {
         return $this->hasMany(Bid::class);
     }
+
+    public function auctions()
+    {
+        return $this->belongsToMany(Auction::class);
+    }
 }

@@ -39,6 +39,13 @@ class Bidding extends Component
             abort(403, 'You do not own any team.');
         }
 
+        // Restrict if auction has participating teams but this team is not one of them
+        $participatingTeams = $this->auction->teams;
+        if ($participatingTeams->isNotEmpty() && !$participatingTeams->contains('id', $this->myTeam->id)) {
+            session()->flash('error', 'Your team is not participating in this auction.');
+            return $this->redirect(route('public.teams.show', $this->myTeam->id), navigate: true);
+        }
+
         $this->loadState();
     }
 

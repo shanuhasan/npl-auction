@@ -33,11 +33,19 @@ class Live extends Component
     public function loadState()
     {
         $this->state = AuctionState::where('auction_id', $this->auction->id)->first();
-        $this->teams = Team::with(['auctionPlayers' => function($q) {
+        $participatingTeams = $this->auction->teams;
+        
+        $teamQuery = Team::with(['auctionPlayers' => function($q) {
             $q->where('auction_id', $this->auction->id)
               ->where('status', 'sold')
               ->with('player');
-        }])->get()->keyBy('id')->toArray();
+        }]);
+
+        if ($participatingTeams->isNotEmpty()) {
+            $teamQuery->whereIn('id', $participatingTeams->pluck('id'));
+        }
+
+        $this->teams = $teamQuery->get()->keyBy('id')->toArray();
         
         if ($this->state && $this->state->current_auction_player_id) {
             $ap = AuctionPlayer::with('player')->find($this->state->current_auction_player_id);
