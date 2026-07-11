@@ -39,14 +39,14 @@
                 </div>
             @elseif($currentPlayer)
                 <!-- Player Card Container -->
-                <div class="relative z-10 w-full max-w-4xl flex flex-col xl:flex-row items-center gap-6 md:gap-8 p-4 md:p-8 bg-[#141B2D]/80 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl transition-all duration-500">
+                <div class="relative z-10 w-full max-w-4xl flex flex-col md:flex-row items-center md:items-stretch gap-6 md:gap-8 p-4 md:p-8 bg-[#141B2D]/80 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl transition-all duration-500">
                     
                     <!-- Player Photo -->
-                    <div class="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 shrink-0 mx-auto">
-                        <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-[#FFC800]/20 to-transparent blur-xl"></div>
+                    <div class="relative w-48 h-64 sm:w-56 sm:h-72 md:w-64 md:h-80 shrink-0 mx-auto md:mx-0">
+                        <div class="absolute inset-0 rounded-2xl bg-gradient-to-tr from-[#FFC800]/20 to-transparent blur-xl"></div>
                         <img src="{{ $currentPlayer['player']['photo'] ? Storage::url($currentPlayer['player']['photo']) : 'https://ui-avatars.com/api/?name='.urlencode($currentPlayer['player']['name']).'&background=FFC800&color=0B0F19&size=512' }}" 
                              alt="{{ $currentPlayer['player']['name'] }}" 
-                             class="relative w-full h-full object-cover rounded-full border-4 border-[#FFC800]/30 shadow-2xl z-10">
+                             class="relative w-full h-full object-cover rounded-2xl border-4 border-[#FFC800]/30 shadow-2xl z-10 bg-[#0B0F19]">
                         
                         <!-- Role Badge -->
                         <div class="absolute bottom-4 left-1/2 -translate-x-1/2 px-6 py-2 bg-gradient-to-r from-[#FFC800] to-yellow-600 text-[#0B0F19] rounded-full font-bold text-sm uppercase tracking-wider shadow-lg z-20 whitespace-nowrap">
@@ -55,40 +55,33 @@
                     </div>
 
                     <!-- Player Details & Bidding -->
-                    <div class="flex-1 w-full text-center xl:text-left space-y-4 md:space-y-6">
+                    <div class="flex-1 w-full text-center md:text-left space-y-4 md:space-y-6 flex flex-col justify-center">
                         <div>
-                            <div class="flex flex-wrap items-center justify-center xl:justify-start gap-2 md:gap-4 mb-2">
+                            <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 md:gap-4 mb-2">
                                 <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">{{ $currentPlayer['player']['name'] }}</h2>
-                                @if($currentPlayer['player']['country'])
-                                    <span class="px-3 py-1 bg-white/10 rounded text-sm uppercase tracking-widest">{{ $currentPlayer['player']['country'] }}</span>
-                                @endif
                             </div>
                             <div class="flex items-center justify-center md:justify-start gap-3 text-gray-400 text-lg mb-3">
                                 <span>Base: ₹{{ number_format($currentPlayer['player']['base_price']) }}</span>
-                                <span>&bull;</span>
-                                <span class="uppercase">{{ str_replace('-', ' ', $currentPlayer['player']['category']) }}</span>
                             </div>
 
                             @if($statusOverlay === 'sold')
-                                <div class="inline-flex flex-col items-center xl:items-start animate-in fade-in zoom-in duration-300">
-                                    <div class="flex flex-wrap items-center justify-center xl:justify-start gap-3">
-                                        <div class="bg-gradient-to-r from-[#00C853] to-green-600 px-4 py-1 rounded-md border border-white/20 shadow-[0_0_15px_rgba(0,200,83,0.3)]">
-                                            <span class="text-lg md:text-xl font-black text-white tracking-widest uppercase">SOLD</span>
-                                        </div>
+                                <div class="inline-flex flex-col items-center md:items-start animate-in fade-in zoom-in duration-500 mb-4">
+                                    <div class="flex flex-col md:flex-row items-center justify-center md:justify-start gap-3 bg-[#00C853] px-6 py-3 rounded-2xl border-2 border-white/50 shadow-[0_0_40px_rgba(0,200,83,0.8)] animate-pulse">
+                                        <span class="text-3xl md:text-4xl font-black text-white tracking-widest uppercase drop-shadow-lg">SOLD</span>
                                         @if($currentHighestTeam)
-                                            <div class="bg-black/60 backdrop-blur-md px-3 py-1 rounded-md border border-white/10 text-center shadow-lg">
-                                                <span class="text-xs text-gray-300">To </span>
-                                                <span class="text-sm font-bold text-white">{{ $currentHighestTeam['name'] }}</span>
-                                                <span class="text-xs text-gray-300"> for </span>
-                                                <span class="text-sm font-black text-[#FFC800]">₹{{ number_format($currentHighestBid) }}</span>
+                                            <div class="flex flex-wrap items-center justify-center gap-1.5 md:gap-2 border-t md:border-t-0 md:border-l border-white/40 pt-2 md:pt-0 md:pl-4">
+                                                <span class="text-sm md:text-lg text-green-100 font-medium">To</span>
+                                                <span class="text-base md:text-2xl font-extrabold text-white">{{ $currentHighestTeam['name'] }}</span>
+                                                <span class="text-sm md:text-lg text-green-100 font-medium">for</span>
+                                                <span class="text-xl md:text-3xl font-black text-[#FFC800] drop-shadow-md">₹{{ number_format($currentHighestBid) }}</span>
                                             </div>
                                         @endif
                                     </div>
                                 </div>
                             @elseif($statusOverlay === 'unsold')
-                                <div class="inline-flex flex-col items-center xl:items-start animate-in fade-in zoom-in duration-300">
-                                    <div class="bg-gradient-to-r from-red-600 to-red-800 px-5 py-1 rounded-md border border-white/20 shadow-[0_0_15px_rgba(220,38,38,0.3)]">
-                                        <span class="text-lg md:text-xl font-black text-white tracking-widest uppercase">UNSOLD</span>
+                                <div class="inline-flex flex-col items-center md:items-start animate-in fade-in zoom-in duration-500 mb-4">
+                                    <div class="bg-red-600 px-8 py-3 rounded-2xl border-2 border-white/50 shadow-[0_0_40px_rgba(220,38,38,0.8)]">
+                                        <span class="text-3xl md:text-4xl font-black text-white tracking-widest uppercase drop-shadow-lg">UNSOLD</span>
                                     </div>
                                 </div>
                             @endif
@@ -110,7 +103,10 @@
                                         <img src="{{ $currentHighestTeam['logo'] ? Storage::url($currentHighestTeam['logo']) : 'https://ui-avatars.com/api/?name='.urlencode($currentHighestTeam['name']).'&background=random' }}" 
                                              alt="{{ $currentHighestTeam['name'] }}" 
                                              class="w-10 h-10 rounded-full object-cover">
-                                        <span class="font-bold">{{ $currentHighestTeam['short_name'] }}</span>
+                                        <div class="flex flex-col text-left">
+                                            <span class="font-bold text-sm leading-tight">{{ $currentHighestTeam['name'] }}</span>
+                                            <span class="text-xs text-[#FFC800] font-black uppercase tracking-wider">{{ $currentHighestTeam['short_name'] }}</span>
+                                        </div>
                                     </div>
                                 @else
                                     <div class="text-gray-500 font-semibold italic">Awaiting bids...</div>
@@ -126,17 +122,6 @@
                             </div>
                         </div>
                         
-                        <!-- Stats Grid -->
-                        @if($currentPlayer['player']['stats'])
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                @foreach($currentPlayer['player']['stats'] as $key => $val)
-                                    <div class="bg-white/5 rounded-xl p-3 text-center border border-white/5">
-                                        <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">{{ str_replace('_', ' ', $key) }}</div>
-                                        <div class="font-bold text-lg">{{ $val }}</div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
                     </div>
 
                     <!-- Overlays (Moved inline below player name) -->
@@ -160,9 +145,13 @@
                         <div class="flex items-center gap-3">
                             <img src="{{ $team['logo'] ? Storage::url($team['logo']) : 'https://ui-avatars.com/api/?name='.urlencode($team['name']).'&background=random' }}" 
                                  class="w-10 h-10 rounded-full border border-white/20 object-cover">
-                            <div>
-                                <h4 class="font-bold text-white text-sm uppercase">{{ $team['short_name'] }}</h4>
-                                <p class="text-xs text-[#00C853] font-black">₹{{ number_format($team['remaining_budget']) }}</p>
+                            <div class="flex flex-col text-left">
+                                <h4 class="font-bold text-white text-sm leading-tight">{{ $team['name'] }}</h4>
+                                <div class="flex items-center gap-1.5 mt-0.5">
+                                    <span class="text-[10px] text-[#FFC800] font-black uppercase tracking-wider">{{ $team['short_name'] }}</span>
+                                    <span class="text-gray-500 text-[10px]">&bull;</span>
+                                    <p class="text-xs text-[#00C853] font-black">₹{{ number_format($team['remaining_budget']) }}</p>
+                                </div>
                             </div>
                         </div>
                         <span class="bg-black/50 text-gray-300 text-[10px] uppercase font-bold px-2 py-1 rounded-full">
