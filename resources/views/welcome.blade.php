@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Naugawan Premier League</title>
+        <title>{{ setting('app_name', 'Naugawan Premier League') }}</title>
+        <link rel="icon" href="{{ setting('favicon') ? asset('storage/' . setting('favicon')) : asset('favicon.ico') }}">
         
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -71,7 +72,7 @@
                 </div>
                 
                 <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-white uppercase" style="text-shadow: 0 4px 20px rgba(255,200,0,0.3);">
-                    Naugawan <span class="text-gold">Premier League</span>
+                    <span class="text-gold">{{ setting('app_name', 'Naugawan Premier League') }}</span>
                 </h1>
                 
                 <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
@@ -109,7 +110,7 @@
         </main>
         
         <footer class="relative z-10 w-full p-6 text-center text-sm text-gray-500 font-medium">
-            &copy; {{ date('Y') }} Naugawan Premier League. All rights reserved.
+            &copy; {{ date('Y') }} {{ setting('app_name', 'Naugawan Premier League') }}. All rights reserved.
         </footer>
     </body>
 </html>

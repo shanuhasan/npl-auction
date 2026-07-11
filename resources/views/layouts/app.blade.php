@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Naugawan Premier League (NPLT20)') }}</title>
+        <title>{{ setting('app_name', config('app.name', 'Naugawan Premier League (NPLT20)')) }}</title>
+        <link rel="icon" href="{{ setting('favicon') ? asset('storage/' . setting('favicon')) : asset('favicon.ico') }}">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -14,8 +15,11 @@
         <div class="flex h-screen overflow-hidden">
             <!-- Sidebar -->
             <aside class="w-64 bg-card-bg shadow-lg border-r border-gray-800 hidden md:flex flex-col">
-                <div class="p-6 border-b border-gray-800">
-                    <h2 class="text-2xl font-poppins font-bold text-accent-gold">Naugawan Premier League (NPLT20)</h2>
+                <div class="p-6 border-b border-gray-800 flex items-center gap-3">
+                    @if(setting('logo'))
+                        <img src="{{ asset('storage/' . setting('logo')) }}" alt="Logo" class="h-10 w-10 object-contain">
+                    @endif
+                    <h2 class="text-xl font-poppins font-bold text-accent-gold">{{ setting('app_name', 'NPLT20') }}</h2>
                 </div>
                 <nav class="flex-1 mt-6 space-y-1">
                     <a href="{{ route('dashboard') }}" class="block px-6 py-3 transition {{ request()->routeIs('dashboard') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Dashboard</a>
@@ -27,6 +31,7 @@
                             <a href="{{ route('admin.players') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.players*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Players</a>
                             <a href="{{ route('admin.users') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.users*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Users</a>
                             <a href="{{ route('admin.analytics') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.analytics') ? 'bg-gray-800 border-l-4 border-[#FFC800] text-[#FFC800] font-bold' : 'hover:bg-gray-800 text-[#FFC800]' }}">Analytics</a>
+                            <a href="{{ route('admin.settings') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.settings') ? 'bg-gray-800 border-l-4 border-[#FFC800] text-[#FFC800] font-bold' : 'hover:bg-gray-800 text-[#FFC800]' }}">Settings</a>
                         @elseif(auth()->user()->role === 'team_owner')
                             @php
                                 $myTeam = \App\Models\Team::where('owner_id', auth()->id())->first();

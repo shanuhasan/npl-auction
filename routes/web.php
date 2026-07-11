@@ -25,6 +25,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/auctions', \App\Livewire\Admin\Auctions\Index::class)->name('auctions');
     Route::get('/auctions/create', \App\Livewire\Admin\Auctions\Create::class)->name('auctions.create');
     Route::get('/auction/control/{auction}', \App\Livewire\Admin\Auctions\Control::class)->name('auction.control');
+    Route::get('/settings', \App\Livewire\Admin\Settings::class)->name('settings');
 });
 
 Route::get('/test-broadcast', function () {
