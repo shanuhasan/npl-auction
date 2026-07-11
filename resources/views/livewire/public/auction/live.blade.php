@@ -6,11 +6,11 @@
      class="min-h-screen bg-[#0B0F19] text-white flex flex-col relative overflow-hidden">
     
     <!-- Header -->
-    <div class="px-8 py-4 flex justify-between items-center border-b border-white/10 z-10 bg-[#141B2D]/80 backdrop-blur-md">
-        <h1 class="text-2xl font-bold tracking-wider text-[#FFC800] uppercase">
+    <div class="px-4 md:px-8 py-4 flex flex-wrap gap-3 justify-between items-center border-b border-white/10 z-10 bg-[#141B2D]/80 backdrop-blur-md">
+        <h1 class="text-xl md:text-2xl font-bold tracking-wider text-[#FFC800] uppercase">
             {{ $auction->title }}
         </h1>
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-2 md:space-x-4">
             @if($auction->status === 'live')
                 <span class="flex h-3 w-3 relative">
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -24,10 +24,10 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 grid grid-cols-2 relative p-2 md:p-8 gap-4 md:gap-8 overflow-hidden h-[calc(100vh-80px)] w-full">
+    <div class="flex-1 flex flex-col lg:grid lg:grid-cols-2 relative p-4 md:p-8 gap-6 md:gap-8 overflow-y-auto lg:overflow-hidden h-auto lg:h-[calc(100vh-80px)] w-full custom-scrollbar">
         
         <!-- LEFT COLUMN: Active Auction -->
-        <div class="flex flex-col justify-center items-center relative z-10 w-full h-full overflow-y-auto">
+        <div class="flex flex-col justify-center items-center relative z-10 w-full lg:h-full lg:overflow-y-auto min-h-[60vh] lg:min-h-0 py-4 lg:py-0">
             
             <!-- Background Glows -->
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#FFC800]/5 rounded-full blur-[100px] pointer-events-none"></div>
@@ -39,10 +39,10 @@
                 </div>
             @elseif($currentPlayer)
                 <!-- Player Card Container -->
-                <div class="relative z-10 w-full max-w-4xl flex flex-col md:flex-row items-center gap-8 p-8 bg-[#141B2D]/80 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl transition-all duration-500">
+                <div class="relative z-10 w-full max-w-4xl flex flex-col xl:flex-row items-center gap-6 md:gap-8 p-4 md:p-8 bg-[#141B2D]/80 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl transition-all duration-500">
                     
                     <!-- Player Photo -->
-                    <div class="relative w-64 h-64 md:w-80 md:h-80 shrink-0">
+                    <div class="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 shrink-0 mx-auto">
                         <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-[#FFC800]/20 to-transparent blur-xl"></div>
                         <img src="{{ $currentPlayer['player']['photo'] ? Storage::url($currentPlayer['player']['photo']) : 'https://ui-avatars.com/api/?name='.urlencode($currentPlayer['player']['name']).'&background=FFC800&color=0B0F19&size=512' }}" 
                              alt="{{ $currentPlayer['player']['name'] }}" 
@@ -55,10 +55,10 @@
                     </div>
 
                     <!-- Player Details & Bidding -->
-                    <div class="flex-1 text-center md:text-left space-y-6">
+                    <div class="flex-1 w-full text-center xl:text-left space-y-4 md:space-y-6">
                         <div>
-                            <div class="flex items-center justify-center md:justify-start gap-4 mb-2">
-                                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">{{ $currentPlayer['player']['name'] }}</h2>
+                            <div class="flex flex-wrap items-center justify-center xl:justify-start gap-2 md:gap-4 mb-2">
+                                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">{{ $currentPlayer['player']['name'] }}</h2>
                                 @if($currentPlayer['player']['country'])
                                     <span class="px-3 py-1 bg-white/10 rounded text-sm uppercase tracking-widest">{{ $currentPlayer['player']['country'] }}</span>
                                 @endif
@@ -76,8 +76,8 @@
                              style="transition: all 0.3s ease-out;">
                             <p class="text-gray-400 uppercase tracking-widest text-sm font-semibold mb-2">Current Bid</p>
                             
-                            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                                <div class="text-5xl md:text-7xl font-black text-[#FFC800]">
+                            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                                <div class="text-4xl sm:text-5xl md:text-7xl font-black text-[#FFC800]">
                                     ₹{{ number_format($currentHighestBid > 0 ? $currentHighestBid : $currentPlayer['player']['base_price']) }}
                                 </div>
                                 
@@ -117,30 +117,30 @@
 
                     <!-- Overlays -->
                     @if($statusOverlay === 'sold')
-                        <div class="absolute inset-0 z-50 bg-[#00C853]/90 backdrop-blur-sm rounded-3xl flex flex-col items-center justify-center shadow-[0_0_100px_rgba(0,200,83,0.5)] animate-in fade-in zoom-in duration-300">
-                            <div class="text-8xl font-black text-white tracking-widest uppercase drop-shadow-2xl mb-4">SOLD</div>
+                        <div class="absolute inset-0 z-50 bg-[#00C853]/90 backdrop-blur-sm rounded-3xl flex flex-col items-center justify-center shadow-[0_0_100px_rgba(0,200,83,0.5)] animate-in fade-in zoom-in duration-300 p-4 text-center">
+                            <div class="text-5xl md:text-8xl font-black text-white tracking-widest uppercase drop-shadow-2xl mb-4">SOLD</div>
                             @if($currentHighestTeam)
-                                <div class="text-3xl font-bold text-white drop-shadow-lg bg-black/30 px-6 py-2 rounded-full">
+                                <div class="text-xl md:text-3xl font-bold text-white drop-shadow-lg bg-black/30 px-4 md:px-6 py-2 rounded-full">
                                     To {{ $currentHighestTeam['name'] }} for ₹{{ number_format($currentHighestBid) }}
                                 </div>
                             @endif
                         </div>
                     @elseif($statusOverlay === 'unsold')
-                        <div class="absolute inset-0 z-50 bg-gray-900/95 backdrop-blur-md rounded-3xl flex items-center justify-center animate-in fade-in duration-500">
-                            <div class="text-7xl font-black text-gray-500 tracking-widest uppercase drop-shadow-2xl opacity-50">UNSOLD</div>
+                        <div class="absolute inset-0 z-50 bg-gray-900/95 backdrop-blur-md rounded-3xl flex items-center justify-center animate-in fade-in duration-500 p-4 text-center">
+                            <div class="text-5xl md:text-7xl font-black text-gray-500 tracking-widest uppercase drop-shadow-2xl opacity-50">UNSOLD</div>
                         </div>
                     @endif
                 </div>
             @else
                 <div class="text-center z-10 animate-pulse">
-                    <div class="w-16 h-16 border-4 border-[#FFC800] border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-                    <h2 class="text-3xl font-bold text-gray-300">Waiting for next player...</h2>
+                    <div class="w-12 h-12 md:w-16 md:h-16 border-4 border-[#FFC800] border-t-transparent rounded-full animate-spin mx-auto mb-4 md:mb-6"></div>
+                    <h2 class="text-xl md:text-3xl font-bold text-gray-300">Waiting for next player...</h2>
                 </div>
             @endif
         </div>
 <!-- RIGHT COLUMN: Teams and Squads -->
-        <div class="w-full bg-[#141B2D]/80 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl flex flex-col z-10 overflow-hidden h-full">
-            <h3 class="font-black text-xl text-white uppercase tracking-widest sticky top-0 bg-[#0B0F19]/90 backdrop-blur-sm p-6 z-10 border-b border-white/10">Teams & Squads</h3>
+        <div class="w-full bg-[#141B2D]/80 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl flex flex-col z-10 overflow-hidden min-h-[500px] lg:h-full mt-4 lg:mt-0">
+            <h3 class="font-black text-lg md:text-xl text-white uppercase tracking-widest sticky top-0 bg-[#0B0F19]/90 backdrop-blur-sm p-4 md:p-6 z-10 border-b border-white/10">Teams & Squads</h3>
             
             <div class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
                 @foreach($teams as $team)
