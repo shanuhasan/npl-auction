@@ -4,11 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Str;
+
 class Auction extends Model
 {
     protected $fillable = [
-        'title', 'auction_date', 'status',
+        'guid', 'title', 'auction_date', 'status',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($auction) {
+            if (empty($auction->guid)) {
+                $auction->guid = Str::uuid()->toString();
+            }
+        });
+    }
 
     protected $casts = [
         'auction_date' => 'datetime',
@@ -22,5 +33,10 @@ class Auction extends Model
     public function state()
     {
         return $this->hasOne(AuctionState::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'guid';
     }
 }
