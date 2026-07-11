@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'NPL Auction') }}</title>
+        <title>{{ config('app.name', 'Naugawan Premier League (NPLT20)') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -27,7 +27,7 @@
                 <div class="flex justify-between h-16 items-center">
                     <div class="flex items-center gap-8">
                         <a href="/" class="text-2xl font-black text-[#FFC800] tracking-wider uppercase">
-                            NPL AUCTION
+                            Naugawan Premier League (NPLT20)
                         </a>
                         <div class="hidden md:flex space-x-6">
                             <a href="{{ route('public.teams') }}" class="text-gray-300 hover:text-white font-semibold uppercase tracking-wider {{ request()->routeIs('public.teams*') ? 'text-[#FFC800]' : '' }}">Teams</a>
@@ -57,7 +57,7 @@
         </main>
 
         <footer class="border-t border-white/10 py-8 text-center text-gray-500 text-sm bg-[#0B0F19]">
-            &copy; {{ date('Y') }} NPL Auction Simulator. All rights reserved.
+            &copy; {{ date('Y') }} Naugawan Premier League (NPLT20). All rights reserved.
         </footer>
 
         @livewireScripts

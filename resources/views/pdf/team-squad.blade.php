@@ -28,7 +28,7 @@
 
     <div class="header">
         <h1>{{ $team->name }}</h1>
-        <p>Official NPL Auction Squad</p>
+        <p>Official NPLT20 Squad</p>
     </div>
 
     <table class="stats">
@@ -84,7 +84,7 @@
     @endforeach
 
     <div class="footer">
-        Generated on {{ now()->format('d M Y, H:i A') }} by NPL Auction Simulator.
+        Generated on {{ now()->format('d M Y, H:i A') }} by Naugawan Premier League (NPLT20).
     </div>
 
 </body>

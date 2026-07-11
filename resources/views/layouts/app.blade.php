@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'NPL Auction') }}</title>
+        <title>{{ config('app.name', 'Naugawan Premier League (NPLT20)') }}</title>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -15,7 +15,7 @@
             <!-- Sidebar -->
             <aside class="w-64 bg-card-bg shadow-lg border-r border-gray-800 hidden md:flex flex-col">
                 <div class="p-6 border-b border-gray-800">
-                    <h2 class="text-2xl font-poppins font-bold text-accent-gold">NPL Auction</h2>
+                    <h2 class="text-2xl font-poppins font-bold text-accent-gold">Naugawan Premier League (NPLT20)</h2>
                 </div>
                 <nav class="flex-1 mt-6 space-y-1">
                     <a href="{{ route('dashboard') }}" class="block px-6 py-3 hover:bg-gray-800 transition">Dashboard</a>
