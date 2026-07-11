@@ -63,11 +63,35 @@
                                     <span class="px-3 py-1 bg-white/10 rounded text-sm uppercase tracking-widest">{{ $currentPlayer['player']['country'] }}</span>
                                 @endif
                             </div>
-                            <div class="flex items-center justify-center md:justify-start gap-3 text-gray-400 text-lg">
+                            <div class="flex items-center justify-center md:justify-start gap-3 text-gray-400 text-lg mb-3">
                                 <span>Base: ₹{{ number_format($currentPlayer['player']['base_price']) }}</span>
                                 <span>&bull;</span>
                                 <span class="uppercase">{{ str_replace('-', ' ', $currentPlayer['player']['category']) }}</span>
                             </div>
+
+                            @if($statusOverlay === 'sold')
+                                <div class="inline-flex flex-col items-center xl:items-start animate-in fade-in zoom-in duration-300">
+                                    <div class="flex flex-wrap items-center justify-center xl:justify-start gap-3">
+                                        <div class="bg-gradient-to-r from-[#00C853] to-green-600 px-4 py-1 rounded-md border border-white/20 shadow-[0_0_15px_rgba(0,200,83,0.3)]">
+                                            <span class="text-lg md:text-xl font-black text-white tracking-widest uppercase">SOLD</span>
+                                        </div>
+                                        @if($currentHighestTeam)
+                                            <div class="bg-black/60 backdrop-blur-md px-3 py-1 rounded-md border border-white/10 text-center shadow-lg">
+                                                <span class="text-xs text-gray-300">To </span>
+                                                <span class="text-sm font-bold text-white">{{ $currentHighestTeam['name'] }}</span>
+                                                <span class="text-xs text-gray-300"> for </span>
+                                                <span class="text-sm font-black text-[#FFC800]">₹{{ number_format($currentHighestBid) }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @elseif($statusOverlay === 'unsold')
+                                <div class="inline-flex flex-col items-center xl:items-start animate-in fade-in zoom-in duration-300">
+                                    <div class="bg-gradient-to-r from-red-600 to-red-800 px-5 py-1 rounded-md border border-white/20 shadow-[0_0_15px_rgba(220,38,38,0.3)]">
+                                        <span class="text-lg md:text-xl font-black text-white tracking-widest uppercase">UNSOLD</span>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
 
                         <!-- Current Bid Display -->
@@ -115,28 +139,7 @@
                         @endif
                     </div>
 
-                    <!-- Overlays -->
-                    @if($statusOverlay === 'sold')
-                        <div class="absolute -top-4 md:-top-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center animate-in slide-in-from-top-4 fade-in duration-300 drop-shadow-2xl">
-                            <div class="bg-gradient-to-r from-[#00C853] to-green-600 px-6 md:px-12 py-1 md:py-2 rounded-t-xl md:rounded-t-2xl border-t border-x border-white/20 text-center shadow-[0_0_30px_rgba(0,200,83,0.5)]">
-                                <span class="text-3xl md:text-5xl font-black text-white tracking-widest uppercase">SOLD</span>
-                            </div>
-                            @if($currentHighestTeam)
-                                <div class="bg-black/90 backdrop-blur-md px-4 md:px-8 py-2 rounded-b-xl md:rounded-b-2xl border-b border-x border-white/10 text-center whitespace-nowrap shadow-xl">
-                                    <span class="text-xs md:text-sm text-gray-300">To </span>
-                                    <span class="text-sm md:text-base font-bold text-white">{{ $currentHighestTeam['name'] }}</span>
-                                    <span class="text-xs md:text-sm text-gray-300"> for </span>
-                                    <span class="text-sm md:text-lg font-black text-[#FFC800]">₹{{ number_format($currentHighestBid) }}</span>
-                                </div>
-                            @endif
-                        </div>
-                    @elseif($statusOverlay === 'unsold')
-                        <div class="absolute -top-4 md:-top-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center animate-in slide-in-from-top-4 fade-in duration-300 drop-shadow-2xl">
-                            <div class="bg-gradient-to-r from-red-600 to-red-800 px-8 md:px-12 py-2 rounded-xl md:rounded-2xl border border-white/20 text-center shadow-[0_0_30px_rgba(220,38,38,0.5)]">
-                                <span class="text-3xl md:text-5xl font-black text-white tracking-widest uppercase">UNSOLD</span>
-                            </div>
-                        </div>
-                    @endif
+                    <!-- Overlays (Moved inline below player name) -->
                 </div>
             @else
                 <div class="text-center z-10 animate-pulse">
