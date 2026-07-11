@@ -36,6 +36,10 @@ class Control extends Component
 
     public function mount(Auction $auction)
     {
+        if ($auction->status === 'completed') {
+            return redirect()->route('admin.auctions');
+        }
+        
         $this->auction = $auction;
         $this->teams = Team::all();
         $this->loadData();
@@ -108,10 +112,11 @@ class Control extends Component
         $result = $service->endAuction($this->auction->id);
         if (!$result['success']) {
             session()->flash('error', $result['message']);
+            $this->loadData();
         } else {
             session()->flash('success', $result['message']);
+            return redirect()->route('admin.auctions');
         }
-        $this->loadData();
     }
 
 

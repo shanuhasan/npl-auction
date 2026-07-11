@@ -22,7 +22,6 @@
                     <h2 class="text-xl font-poppins font-bold text-accent-gold">{{ setting('app_name', 'NPLT20') }}</h2>
                 </div>
                 <nav class="flex-1 mt-6 space-y-1">
-                    <a href="{{ route('dashboard') }}" class="block px-6 py-3 transition {{ request()->routeIs('dashboard') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Dashboard</a>
                     @auth
                         @if(auth()->user()->role === 'admin')
                             <a href="{{ route('admin.dashboard') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.dashboard') ? 'bg-gray-800 border-l-4 border-accent-red text-accent-red font-bold' : 'hover:bg-gray-800 text-accent-red font-semibold' }}">Dashboard (Admin)</a>
