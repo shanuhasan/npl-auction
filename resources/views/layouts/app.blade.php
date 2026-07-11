@@ -18,29 +18,29 @@
                     <h2 class="text-2xl font-poppins font-bold text-accent-gold">Naugawan Premier League (NPLT20)</h2>
                 </div>
                 <nav class="flex-1 mt-6 space-y-1">
-                    <a href="{{ route('dashboard') }}" class="block px-6 py-3 hover:bg-gray-800 transition">Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="block px-6 py-3 transition {{ request()->routeIs('dashboard') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Dashboard</a>
                     @auth
                         @if(auth()->user()->role === 'admin')
-                            <a href="{{ route('admin.dashboard') }}" class="block px-6 py-3 hover:bg-gray-800 transition text-accent-red font-semibold">Dashboard (Admin)</a>
-                            <a href="{{ route('admin.auctions') }}" class="block px-6 py-3 hover:bg-gray-800 transition">Manage Auctions</a>
-                            <a href="{{ route('admin.teams') }}" class="block px-6 py-3 hover:bg-gray-800 transition">Manage Teams</a>
-                            <a href="{{ route('admin.players') }}" class="block px-6 py-3 hover:bg-gray-800 transition">Manage Players</a>
-                            <a href="{{ route('admin.users') }}" class="block px-6 py-3 hover:bg-gray-800 transition">Manage Users</a>
-                            <a href="{{ route('admin.analytics') }}" class="block px-6 py-3 hover:bg-gray-800 transition text-[#FFC800]">Analytics</a>
+                            <a href="{{ route('admin.dashboard') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.dashboard') ? 'bg-gray-800 border-l-4 border-accent-red text-accent-red font-bold' : 'hover:bg-gray-800 text-accent-red font-semibold' }}">Dashboard (Admin)</a>
+                            <a href="{{ route('admin.auctions') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.auctions*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Auctions</a>
+                            <a href="{{ route('admin.teams') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.teams*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Teams</a>
+                            <a href="{{ route('admin.players') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.players*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Players</a>
+                            <a href="{{ route('admin.users') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.users*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Users</a>
+                            <a href="{{ route('admin.analytics') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.analytics') ? 'bg-gray-800 border-l-4 border-[#FFC800] text-[#FFC800] font-bold' : 'hover:bg-gray-800 text-[#FFC800]' }}">Analytics</a>
                         @elseif(auth()->user()->role === 'team_owner')
                             @php
                                 $myTeam = \App\Models\Team::where('owner_id', auth()->id())->first();
                                 $activeAuction = \App\Models\Auction::whereIn('status', ['live', 'upcoming'])->first();
                             @endphp
                             @if($myTeam)
-                                <a href="{{ route('public.teams.show', $myTeam->id) }}" class="block px-6 py-3 hover:bg-gray-800 transition text-success-green font-semibold">My Team</a>
+                                <a href="{{ route('public.teams.show', $myTeam->id) }}" class="block px-6 py-3 transition {{ request()->routeIs('public.teams.show') ? 'bg-gray-800 border-l-4 border-success-green text-success-green font-bold' : 'hover:bg-gray-800 text-success-green font-semibold' }}">My Team</a>
                             @endif
                             @if($activeAuction)
-                                <a href="{{ route('team.auction.bidding', $activeAuction->guid) }}" class="block px-6 py-3 hover:bg-gray-800 transition">Bidding Room</a>
+                                <a href="{{ route('team.auction.bidding', $activeAuction->guid) }}" class="block px-6 py-3 transition {{ request()->routeIs('team.auction.bidding') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Bidding Room</a>
                             @endif
                         @endif
-                        <a href="{{ route('public.players') }}" class="block px-6 py-3 hover:bg-gray-800 transition">All Players</a>
-                        <a href="{{ route('reports.auction') }}" class="block px-6 py-3 hover:bg-gray-800 transition text-[#00C853] font-bold">Reports</a>
+                        <a href="{{ route('public.players') }}" class="block px-6 py-3 transition {{ request()->routeIs('public.players') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">All Players</a>
+                        <a href="{{ route('reports.auction') }}" class="block px-6 py-3 transition {{ request()->routeIs('reports.auction') ? 'bg-gray-800 border-l-4 border-[#00C853] text-[#00C853] font-bold' : 'hover:bg-gray-800 text-[#00C853] font-bold' }}">Reports</a>
                     @endauth
                 </nav>
             </aside>
