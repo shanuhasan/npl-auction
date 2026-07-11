@@ -12,7 +12,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-gray-300 text-sm font-bold mb-2">Auction Title</label>
-                    <input type="text" wire:model="title" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" required placeholder="e.g. IPL Mega Auction 2026">
+                    <input type="text" wire:model="title" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" required placeholder="e.g. NPL Mega Auction 2026">
                     @error('title') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                 </div>
                 <div>
