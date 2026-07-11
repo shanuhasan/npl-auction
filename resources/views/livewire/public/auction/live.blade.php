@@ -117,17 +117,24 @@
 
                     <!-- Overlays -->
                     @if($statusOverlay === 'sold')
-                        <div class="absolute inset-0 z-50 bg-[#00C853]/90 backdrop-blur-sm rounded-3xl flex flex-col items-center justify-center shadow-[0_0_100px_rgba(0,200,83,0.5)] animate-in fade-in zoom-in duration-300 p-4 text-center">
-                            <div class="text-5xl md:text-8xl font-black text-white tracking-widest uppercase drop-shadow-2xl mb-4">SOLD</div>
+                        <div class="absolute -top-4 md:-top-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center animate-in slide-in-from-top-4 fade-in duration-300 drop-shadow-2xl">
+                            <div class="bg-gradient-to-r from-[#00C853] to-green-600 px-6 md:px-12 py-1 md:py-2 rounded-t-xl md:rounded-t-2xl border-t border-x border-white/20 text-center shadow-[0_0_30px_rgba(0,200,83,0.5)]">
+                                <span class="text-3xl md:text-5xl font-black text-white tracking-widest uppercase">SOLD</span>
+                            </div>
                             @if($currentHighestTeam)
-                                <div class="text-xl md:text-3xl font-bold text-white drop-shadow-lg bg-black/30 px-4 md:px-6 py-2 rounded-full">
-                                    To {{ $currentHighestTeam['name'] }} for ₹{{ number_format($currentHighestBid) }}
+                                <div class="bg-black/90 backdrop-blur-md px-4 md:px-8 py-2 rounded-b-xl md:rounded-b-2xl border-b border-x border-white/10 text-center whitespace-nowrap shadow-xl">
+                                    <span class="text-xs md:text-sm text-gray-300">To </span>
+                                    <span class="text-sm md:text-base font-bold text-white">{{ $currentHighestTeam['name'] }}</span>
+                                    <span class="text-xs md:text-sm text-gray-300"> for </span>
+                                    <span class="text-sm md:text-lg font-black text-[#FFC800]">₹{{ number_format($currentHighestBid) }}</span>
                                 </div>
                             @endif
                         </div>
                     @elseif($statusOverlay === 'unsold')
-                        <div class="absolute inset-0 z-50 bg-gray-900/95 backdrop-blur-md rounded-3xl flex items-center justify-center animate-in fade-in duration-500 p-4 text-center">
-                            <div class="text-5xl md:text-7xl font-black text-gray-500 tracking-widest uppercase drop-shadow-2xl opacity-50">UNSOLD</div>
+                        <div class="absolute -top-4 md:-top-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center animate-in slide-in-from-top-4 fade-in duration-300 drop-shadow-2xl">
+                            <div class="bg-gradient-to-r from-red-600 to-red-800 px-8 md:px-12 py-2 rounded-xl md:rounded-2xl border border-white/20 text-center shadow-[0_0_30px_rgba(220,38,38,0.5)]">
+                                <span class="text-3xl md:text-5xl font-black text-white tracking-widest uppercase">UNSOLD</span>
+                            </div>
                         </div>
                     @endif
                 </div>
