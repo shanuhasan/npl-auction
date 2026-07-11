@@ -322,4 +322,27 @@ class AuctionService
             return ['success' => true, 'message' => 'Auction ended.'];
         });
     }
+
+    /**
+     * Recalls all unsold players back to pending status.
+     */
+    public function recallUnsoldPlayers($auctionId)
+    {
+        return DB::transaction(function () use ($auctionId) {
+            $unsoldPlayers = AuctionPlayer::where('auction_id', $auctionId)
+                ->where('status', 'unsold')
+                ->get();
+                
+            if ($unsoldPlayers->isEmpty()) {
+                return ['success' => false, 'message' => 'No unsold players to recall.'];
+            }
+            
+            foreach ($unsoldPlayers as $ap) {
+                $ap->update(['status' => 'pending']);
+                $ap->player->update(['status' => 'available']);
+            }
+            
+            return ['success' => true, 'message' => $unsoldPlayers->count() . ' unsold players recalled back to the auction.'];
+        });
+    }
 }

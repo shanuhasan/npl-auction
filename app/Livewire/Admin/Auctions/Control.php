@@ -218,6 +218,18 @@ class Control extends Component
         }
     }
 
+    public function recallUnsold()
+    {
+        $service = app(AuctionService::class);
+        $result = $service->recallUnsoldPlayers($this->auction->id);
+        if (!$result['success']) {
+            session()->flash('error', $result['message']);
+        } else {
+            session()->flash('success', $result['message']);
+        }
+        $this->loadData();
+    }
+
     public function render()
     {
         return view('livewire.admin.auctions.control');

@@ -152,19 +152,29 @@
             <!-- RIGHT COLUMN: Stats & History -->
             <div class="w-full lg:w-96 space-y-6">
                 <!-- Live Stats -->
-                <div class="bg-card-bg shadow border border-gray-800 sm:rounded-lg p-6 grid grid-cols-3 gap-4 text-center">
-                    <div>
-                        <p class="text-xs text-gray-400 uppercase">Pending</p>
-                        <p class="text-2xl font-black text-white">{{ $pendingCount }}</p>
+                <div class="bg-card-bg shadow border border-gray-800 sm:rounded-lg p-6">
+                    <div class="grid grid-cols-3 gap-4 text-center mb-4">
+                        <div>
+                            <p class="text-xs text-gray-400 uppercase">Pending</p>
+                            <p class="text-2xl font-black text-white">{{ $pendingCount }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 uppercase">Sold</p>
+                            <p class="text-2xl font-black text-green-500">{{ $soldCount }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 uppercase">Unsold</p>
+                            <p class="text-2xl font-black text-gray-500">{{ $unsoldCount }}</p>
+                        </div>
                     </div>
-                    <div>
-                        <p class="text-xs text-gray-400 uppercase">Sold</p>
-                        <p class="text-2xl font-black text-green-500">{{ $soldCount }}</p>
+                    
+                    @if($unsoldCount > 0)
+                    <div class="border-t border-gray-800 pt-4 mt-2">
+                        <button wire:click="recallUnsold" wire:confirm="Are you sure you want to bring {{ $unsoldCount }} unsold players back into the auction?" class="w-full py-2 bg-red-600/20 hover:bg-red-600 text-red-500 hover:text-white border border-red-600 rounded font-bold text-sm uppercase shadow transition">
+                            Recall Unsold Players
+                        </button>
                     </div>
-                    <div>
-                        <p class="text-xs text-gray-400 uppercase">Unsold</p>
-                        <p class="text-2xl font-black text-gray-500">{{ $unsoldCount }}</p>
-                    </div>
+                    @endif
                 </div>
 
                 <!-- Live Bid History -->
