@@ -43,7 +43,7 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         @if($auction->status === 'upcoming' || $auction->status === 'live')
-                            <a href="{{ route('admin.auction.control', $auction->id) }}" class="text-indigo-400 hover:text-indigo-300 font-bold">Control Panel</a>
+                            <a href="{{ route('admin.auction.control', $auction->guid) }}" class="text-indigo-400 hover:text-indigo-300 font-bold">Control Panel</a>
                         @endif
                     </td>
                 </tr>

@@ -36,7 +36,7 @@
                                 <a href="{{ route('public.teams.show', $myTeam->id) }}" class="block px-6 py-3 hover:bg-gray-800 transition text-success-green font-semibold">My Team</a>
                             @endif
                             @if($activeAuction)
-                                <a href="{{ route('team.auction.bidding', $activeAuction->id) }}" class="block px-6 py-3 hover:bg-gray-800 transition">Bidding Room</a>
+                                <a href="{{ route('team.auction.bidding', $activeAuction->guid) }}" class="block px-6 py-3 hover:bg-gray-800 transition">Bidding Room</a>
                             @endif
                         @endif
                         <a href="{{ route('public.players') }}" class="block px-6 py-3 hover:bg-gray-800 transition">All Players</a>
