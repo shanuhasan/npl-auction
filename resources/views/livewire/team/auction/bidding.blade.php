@@ -5,33 +5,44 @@
      style="--team-color: {{ $myTeam->primary_color }};">
     
     <!-- Header: Team Info -->
-    <div class="px-4 md:px-8 py-4 flex flex-wrap md:flex-nowrap justify-between items-center relative border-b border-[var(--team-color)]/30 z-10 bg-[#141B2D]/90 backdrop-blur-md shadow-[0_0_20px_var(--team-color)]" style="box-shadow: 0 4px 30px rgba(0,0,0,0.5), 0 0 20px {{ $myTeam->primary_color }}33;">
-        <div class="flex items-center gap-2 md:gap-4 z-10">
-            <a href="{{ route('dashboard') }}" class="text-gray-400 hover:text-white transition p-2 bg-white/5 rounded-full border border-white/10 hover:bg-white/10" title="Back to Dashboard">
+    <div class="px-4 md:px-8 py-3 md:py-4 flex items-center justify-between relative border-b border-[var(--team-color)]/30 z-10 bg-[#141B2D]/90 backdrop-blur-md shadow-[0_0_20px_var(--team-color)]" style="box-shadow: 0 4px 30px rgba(0,0,0,0.5), 0 0 20px {{ $myTeam->primary_color }}33;">
+        
+        <!-- Left: Back Button -->
+        <div class="flex-1 flex justify-start">
+            <a href="{{ route('dashboard') }}" class="text-gray-400 hover:text-white transition p-2 bg-white/5 rounded-full border border-white/10 hover:bg-white/10 z-20" title="Back to Dashboard">
                 <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             </a>
-            <div class="flex items-center gap-2 md:gap-4 border-l border-white/10 pl-2 md:pl-4">
-                <img src="{{ $myTeam->logo ? Storage::url($myTeam->logo) : 'https://ui-avatars.com/api/?name='.urlencode($myTeam->name).'&background=random' }}" 
-                     alt="{{ $myTeam->name }}" 
-                     class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[var(--team-color)]">
-                <div>
-                    <h1 class="text-lg md:text-xl font-bold tracking-wider uppercase text-white drop-shadow-md leading-tight">
-                        {{ $myTeam->name }}
-                    </h1>
-                    <p class="text-[10px] md:text-xs text-gray-400">Owner Dashboard</p>
-                </div>
+        </div>
+
+        <!-- Center: Team Info -->
+        <div class="flex-none flex items-center gap-3 md:gap-4 z-10">
+            <img src="{{ $myTeam->logo ? Storage::url($myTeam->logo) : 'https://ui-avatars.com/api/?name='.urlencode($myTeam->name).'&background=random' }}" 
+                 alt="{{ $myTeam->name }}" 
+                 class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[var(--team-color)] shadow-lg">
+            <div class="text-left">
+                <h1 class="text-lg md:text-xl font-bold tracking-wider uppercase text-white drop-shadow-md leading-tight">
+                    {{ $myTeam->name }}
+                </h1>
+                <p class="text-[10px] md:text-xs text-[var(--team-color)] uppercase tracking-wider font-bold">Owner Dashboard</p>
             </div>
         </div>
 
-        <!-- Center: Auction Name -->
-        <div class="w-full md:w-auto order-last md:order-none mt-3 md:mt-0 md:absolute md:left-1/2 md:-translate-x-1/2 text-center z-10 pt-3 md:pt-0 border-t border-white/10 md:border-none">
+        <!-- Right: Empty Spacer (to keep Center perfectly aligned) -->
+        <div class="flex-1"></div>
+    </div>
+
+    <!-- Sub Header: Auction Info & Budget -->
+    <div class="px-4 md:px-8 py-2 md:py-3 bg-black/40 border-b border-white/5 flex justify-between items-center z-10 relative backdrop-blur-sm shadow-md">
+        <!-- Left: Auction Name -->
+        <div class="text-left z-10">
             <p class="text-[10px] md:text-xs text-gray-400 uppercase tracking-widest mb-0.5 md:mb-1">Live Bidding Room</p>
-            <h2 class="text-lg md:text-2xl font-black text-[#FFC800] uppercase tracking-wider truncate">{{ $auction->title }}</h2>
+            <h2 class="text-base md:text-2xl font-black text-[#FFC800] uppercase tracking-wider truncate">{{ $auction->title }}</h2>
         </div>
 
-        <div class="text-right z-10">
-            <p class="text-[10px] md:text-sm text-gray-400 uppercase tracking-widest">Remaining Budget</p>
-            <p class="text-xl md:text-3xl font-black text-[#00C853]">₹{{ number_format($myTeam->remaining_budget) }}</p>
+        <!-- Right: Remaining Budget -->
+        <div class="text-right z-10 bg-black/40 px-3 md:px-6 py-1.5 md:py-2 rounded-xl border border-white/10 shadow-inner">
+            <p class="text-[10px] md:text-xs text-gray-400 uppercase tracking-widest mb-0.5 md:mb-1">Remaining Budget</p>
+            <p class="text-lg md:text-3xl font-black text-[#00C853] tracking-tight">₹{{ number_format($myTeam->remaining_budget) }}</p>
         </div>
     </div>
 
