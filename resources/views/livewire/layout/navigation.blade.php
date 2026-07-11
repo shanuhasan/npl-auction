@@ -22,18 +22,18 @@ new class extends Component
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
+                <!-- <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" wire:navigate>
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
-                </div>
+                </div> -->
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <!-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                </div>
+                </div> -->
             </div>
 
             <!-- Settings Dropdown -->
@@ -84,6 +84,53 @@ new class extends Component
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @auth
+                @if(auth()->user()->role === 'admin')
+                    <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" wire:navigate class="text-accent-red font-bold">
+                        Dashboard (Admin)
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.auctions')" :active="request()->routeIs('admin.auctions*')" wire:navigate>
+                        Manage Auctions
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.teams')" :active="request()->routeIs('admin.teams*')" wire:navigate>
+                        Manage Teams
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.players')" :active="request()->routeIs('admin.players*')" wire:navigate>
+                        Manage Players
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users*')" wire:navigate>
+                        Manage Users
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.analytics')" :active="request()->routeIs('admin.analytics')" wire:navigate>
+                        Analytics
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.settings')" :active="request()->routeIs('admin.settings')" wire:navigate>
+                        Settings
+                    </x-responsive-nav-link>
+                @elseif(auth()->user()->role === 'team_owner')
+                    @php
+                        $myTeam = \App\Models\Team::where('owner_id', auth()->id())->first();
+                        $activeAuction = \App\Models\Auction::whereIn('status', ['live', 'upcoming'])->first();
+                    @endphp
+                    @if($myTeam)
+                        <x-responsive-nav-link :href="route('public.teams.show', $myTeam->id)" :active="request()->routeIs('public.teams.show')" wire:navigate class="text-success-green font-bold">
+                            My Team
+                        </x-responsive-nav-link>
+                    @endif
+                    @if($activeAuction)
+                        <x-responsive-nav-link :href="route('team.auction.bidding', $activeAuction->guid)" :active="request()->routeIs('team.auction.bidding')" wire:navigate>
+                            Bidding Room
+                        </x-responsive-nav-link>
+                    @endif
+                @endif
+                <x-responsive-nav-link :href="route('public.players')" :active="request()->routeIs('public.players')" wire:navigate>
+                    All Players
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('reports.auction')" :active="request()->routeIs('reports.auction')" wire:navigate class="text-[#00C853] font-bold">
+                    Reports
+                </x-responsive-nav-link>
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->
