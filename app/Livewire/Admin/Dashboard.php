@@ -28,6 +28,7 @@ class Dashboard extends Component
             'totalTeams' => Team::count(),
             'upcomingAuctions' => Auction::where('status', 'upcoming')->count(),
             'completedAuctions' => Auction::where('status', 'completed')->count(),
+            'hasLiveAuctions' => Auction::where('status', 'live')->exists(),
         ])->layout('layouts.app');
     }
 }
