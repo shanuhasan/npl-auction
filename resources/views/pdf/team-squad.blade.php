@@ -84,7 +84,7 @@
     @endforeach
 
     <div class="footer">
-        Generated on {{ now()->format('d M Y, H:i A') }} by Naugawan Premier League (NPLT20).
+        Generated on {{ now()->format('d M Y, H:i A') }} by {{ setting('app_name', 'Naugawan Premier League (NPLT20)') }}.
     </div>
 
 </body>
