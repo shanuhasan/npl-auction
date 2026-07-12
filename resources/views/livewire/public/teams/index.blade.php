@@ -20,24 +20,10 @@
                     
                     <!-- Team Body -->
                     <div class="p-6 text-center">
-                        <h2 class="text-xl font-bold text-white tracking-wide group-hover:text-[var(--team-color)] transition-colors">{{ $team->name }}</h2>
-                        <p class="text-sm font-semibold text-gray-400 uppercase tracking-widest mt-1">{{ $team->short_name }}</p>
-                        
-                        <div class="mt-6 grid grid-cols-2 gap-4">
-                            <div class="bg-black/20 rounded-xl p-3 border border-white/5">
-                                <p class="text-[10px] text-gray-500 uppercase tracking-widest">Spent</p>
-                                <p class="font-bold text-red-400">₹{{ number_format($team->budget - $team->remaining_budget) }}</p>
-                            </div>
-                            <div class="bg-black/20 rounded-xl p-3 border border-white/5">
-                                <p class="text-[10px] text-gray-500 uppercase tracking-widest">Purse</p>
-                                <p class="font-bold text-[#00C853]">₹{{ number_format($team->remaining_budget) }}</p>
-                            </div>
-                        </div>
-
-                        <div class="mt-4 pt-4 border-t border-white/5 flex justify-between items-center text-sm">
-                            <span class="text-gray-400">Squad Size</span>
-                            <span class="font-bold text-white bg-white/10 px-3 py-1 rounded-full">{{ $team->players_count }} Players</span>
-                        </div>
+                        <h2 class="text-xl font-bold text-white tracking-wide group-hover:text-[var(--team-color)] transition-colors">{{ $team->name }} ({{ $team->short_name }})</h2>
+                        @if($team->owner)
+                            <p class="text-sm font-medium text-gray-300 mt-2">Owner: {{ $team->owner->name }}</p>
+                        @endif
                     </div>
                 </div>
             </a>
