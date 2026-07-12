@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    <div class="bg-card-bg rounded-lg shadow overflow-hidden border border-gray-800">
+    <div class="bg-card-bg rounded-lg shadow overflow-x-auto border border-gray-800">
         <table class="min-w-full divide-y divide-gray-800">
             <thead class="bg-gray-900">
                 <tr>
