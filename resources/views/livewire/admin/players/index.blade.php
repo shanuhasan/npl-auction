@@ -11,15 +11,15 @@
     @endif
 
     <div class="bg-card-bg p-4 rounded-lg shadow mb-6 border border-gray-800 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-        <input type="text" wire:model.live="search" placeholder="Search by name..." class="flex-1 w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
-        <select wire:model.live="filterRole" class="w-full md:w-auto bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
+        <input type="text" wire:model.live="search" placeholder="Search by name..." class="w-full md:flex-1 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
+        <select wire:model.live="filterRole" class="w-full md:w-48 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
             <option value="">All Roles</option>
             <option value="batsman">Batsman</option>
             <option value="bowler">Bowler</option>
             <option value="all-rounder">All-Rounder</option>
             <option value="wicketkeeper">Wicketkeeper</option>
         </select>
-        <select wire:model.live="filterStatus" class="w-full md:w-auto bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
+        <select wire:model.live="filterStatus" class="w-full md:w-48 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
             <option value="">All Statuses</option>
             <option value="available">Available</option>
             <option value="sold">Sold</option>
