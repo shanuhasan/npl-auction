@@ -41,7 +41,7 @@ class Control extends Component
         }
         
         $this->auction = $auction;
-        $this->teams = Team::all();
+        $this->teams = $auction->teams()->get();
         $this->loadData();
     }
 
@@ -237,6 +237,13 @@ class Control extends Component
 
     public function render()
     {
-        return view('livewire.admin.auctions.control');
+        $playersList = AuctionPlayer::with(['player', 'soldToTeam'])
+            ->where('auction_id', $this->auction->id)
+            ->orderBy('order_no')
+            ->get();
+
+        return view('livewire.admin.auctions.control', [
+            'playersList' => $playersList
+        ]);
     }
 }

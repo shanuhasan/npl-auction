@@ -30,6 +30,12 @@ class Auction extends Model
         return $this->hasMany(AuctionPlayer::class);
     }
 
+    public function players()
+    {
+        return $this->belongsToMany(Player::class, 'auction_players')
+                    ->withPivot('status', 'sold_price', 'buyer_team_id', 'order_no');
+    }
+
     public function state()
     {
         return $this->hasOne(AuctionState::class);

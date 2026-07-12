@@ -41,9 +41,10 @@
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-600 text-white">{{ ucfirst($auction->status) }}</span>
                         @endif
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-3">
                         @if($auction->status === 'upcoming' || $auction->status === 'live')
-                            <a href="{{ route('admin.auction.control', $auction->guid) }}" class="text-indigo-400 hover:text-indigo-300 font-bold">Control Panel</a>
+                            <a href="{{ route('admin.auctions.edit', $auction->guid) }}" class="text-accent-gold hover:text-yellow-400 font-bold" wire:navigate>Edit</a>
+                            <a href="{{ route('admin.auction.control', $auction->guid) }}" class="text-indigo-400 hover:text-indigo-300 font-bold" wire:navigate>Control Panel</a>
                         @endif
                     </td>
                 </tr>

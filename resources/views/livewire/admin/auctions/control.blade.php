@@ -210,6 +210,45 @@
                         @endforelse
                     </div>
                 </div>
+
+                <!-- Players List -->
+                <div class="bg-card-bg shadow border border-gray-800 sm:rounded-lg flex flex-col h-[400px]">
+                    <div class="p-4 border-b border-gray-800 bg-[#141B2D] rounded-t-lg">
+                        <h3 class="font-bold text-accent-gold uppercase tracking-wider">Players List</h3>
+                    </div>
+                    <div class="flex-1 overflow-y-auto p-4 space-y-2">
+                        @forelse($playersList as $ap)
+                            <div class="flex justify-between items-center bg-primary-bg border border-gray-800 p-2 rounded">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-xs font-bold text-gray-400">
+                                        {{ $ap->order_no }}
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-sm text-white">{{ $ap->player->name }}</p>
+                                        <p class="text-xs text-gray-500">₹{{ number_format($ap->player->base_price) }}</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    @if($ap->status === 'pending')
+                                        <span class="text-xs font-bold text-gray-400 bg-gray-800 px-2 py-1 rounded uppercase tracking-wider">Pending</span>
+                                    @elseif($ap->status === 'current')
+                                        <span class="text-xs font-bold text-white bg-blue-600 px-2 py-1 rounded animate-pulse uppercase tracking-wider">Current</span>
+                                    @elseif($ap->status === 'sold')
+                                        <span class="text-xs font-bold text-white bg-green-600 px-2 py-1 rounded uppercase tracking-wider">Sold</span>
+                                        <p class="text-[10px] text-accent-gold font-bold mt-1">{{ $ap->soldToTeam->short_name ?? '' }} (₹{{ number_format($ap->final_price) }})</p>
+                                    @elseif($ap->status === 'unsold')
+                                        <span class="text-xs font-bold text-white bg-gray-600 px-2 py-1 rounded uppercase tracking-wider">Unsold</span>
+                                    @endif
+                                </div>
+                            </div>
+                        @empty
+                            <div class="text-center text-gray-500 py-10 text-sm">
+                                No players assigned.
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+
             </div>
 
         </div>
