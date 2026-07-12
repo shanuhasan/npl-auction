@@ -16,9 +16,9 @@
         </div>
     @endif
 
-    <div class="bg-card-bg p-4 rounded-lg shadow mb-6 border border-gray-800 flex space-x-4">
-        <input type="text" wire:model.live="search" placeholder="Search by name or email..." class="flex-1 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
-        <select wire:model.live="filterRole" class="bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
+    <div class="bg-card-bg p-4 rounded-lg shadow mb-6 border border-gray-800 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+        <input type="text" wire:model.live="search" placeholder="Search by name or email..." class="w-full md:flex-1 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
+        <select wire:model.live="filterRole" class="w-full md:w-48 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
             <option value="">All Roles</option>
             <option value="admin">Admin</option>
             <option value="team_owner">Team Owner</option>
@@ -26,7 +26,7 @@
         </select>
     </div>
 
-    <div class="bg-card-bg rounded-lg shadow overflow-hidden border border-gray-800">
+    <div class="bg-card-bg rounded-lg shadow overflow-x-auto border border-gray-800">
         <table class="min-w-full divide-y divide-gray-800">
             <thead class="bg-gray-900">
                 <tr>

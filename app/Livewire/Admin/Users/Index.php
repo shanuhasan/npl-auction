@@ -52,7 +52,7 @@ class Index extends Component
             ->paginate(10);
 
         return view('livewire.admin.users.index', compact('users'))
-            ->layout('layouts.app', ['header' => '<h2 class="font-semibold text-xl text-white leading-tight">Manage Users</h2>']);
+            ->layout('layouts.app');
     }
 
     public function create()
