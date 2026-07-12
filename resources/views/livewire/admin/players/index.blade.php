@@ -53,7 +53,9 @@
                             </div>
                             <div class="ml-4">
                                 <div class="text-sm font-medium text-white">{{ $player->name }}</div>
-                                <div class="text-sm text-gray-400">{{ $player->country }}</div>
+                                <div class="text-sm text-gray-400">
+                                    {{ $player->city ? $player->city . ', ' : '' }}{{ $player->country }}
+                                </div>
                             </div>
                         </div>
                     </td>
@@ -98,6 +100,11 @@
                             <label class="block text-gray-300 text-sm font-bold mb-2">Country</label>
                             <input type="text" wire:model="country" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" required>
                             @error('country') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 text-sm font-bold mb-2">City/Village/Town</label>
+                            <input type="text" wire:model="city" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" placeholder="Optional">
+                            @error('city') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Role</label>
