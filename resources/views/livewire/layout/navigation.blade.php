@@ -90,8 +90,8 @@ new class extends Component
                     <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" wire:navigate class="text-accent-red font-bold">
                         Dashboard (Admin)
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('admin.auctions')" :active="request()->routeIs('admin.auctions*')" wire:navigate>
-                        Manage Auctions
+                    <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users*')" wire:navigate>
+                        Manage Users
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.teams')" :active="request()->routeIs('admin.teams*')" wire:navigate>
                         Manage Teams
@@ -99,8 +99,8 @@ new class extends Component
                     <x-responsive-nav-link :href="route('admin.players')" :active="request()->routeIs('admin.players*')" wire:navigate>
                         Manage Players
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users*')" wire:navigate>
-                        Manage Users
+                    <x-responsive-nav-link :href="route('admin.auctions')" :active="request()->routeIs('admin.auctions*')" wire:navigate>
+                        Manage Auctions
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.analytics')" :active="request()->routeIs('admin.analytics')" wire:navigate>
                         Analytics
