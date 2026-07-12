@@ -26,6 +26,10 @@ class Live extends Component
 
     public function mount(Auction $auction)
     {
+        if ($auction->status === 'upcoming') {
+            return redirect('/');
+        }
+        
         $this->auction = $auction;
         $this->loadState();
     }

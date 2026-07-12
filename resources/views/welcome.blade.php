@@ -80,7 +80,7 @@
                 </p>
 
                 @php
-                    $auction = \App\Models\Auction::where('status', 'active')->first() ?? \App\Models\Auction::latest()->first();
+                    $auction = \App\Models\Auction::whereIn('status', ['live', 'paused'])->first() ?? \App\Models\Auction::where('status', 'completed')->latest()->first();
                 @endphp
 
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
