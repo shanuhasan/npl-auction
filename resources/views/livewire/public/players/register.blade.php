@@ -51,13 +51,28 @@
 
                     <div>
                         <label class="block text-gray-300 text-sm font-bold mb-2">Batting Style</label>
-                        <input type="text" wire:model="batting_style" class="w-full bg-primary-bg border border-gray-700 rounded py-3 px-4 text-white focus:outline-none focus:border-accent-gold transition" placeholder="e.g. Right-hand bat">
+                        <select wire:model="batting_style" class="w-full bg-primary-bg border border-gray-700 rounded py-3 px-4 text-white focus:outline-none focus:border-accent-gold transition">
+                            <option value="">Select Batting Style</option>
+                            <option value="Right-hand bat">Right-hand bat</option>
+                            <option value="Left-hand bat">Left-hand bat</option>
+                        </select>
                         @error('batting_style') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
                     <div>
                         <label class="block text-gray-300 text-sm font-bold mb-2">Bowling Style</label>
-                        <input type="text" wire:model="bowling_style" class="w-full bg-primary-bg border border-gray-700 rounded py-3 px-4 text-white focus:outline-none focus:border-accent-gold transition" placeholder="e.g. Right-arm medium">
+                        <select wire:model="bowling_style" class="w-full bg-primary-bg border border-gray-700 rounded py-3 px-4 text-white focus:outline-none focus:border-accent-gold transition">
+                            <option value="">Select Bowling Style (or None)</option>
+                            <option value="None">None</option>
+                            <option value="Right-arm fast">Right-arm fast</option>
+                            <option value="Right-arm medium">Right-arm medium</option>
+                            <option value="Right-arm offbreak">Right-arm offbreak</option>
+                            <option value="Right-arm legbreak">Right-arm legbreak</option>
+                            <option value="Left-arm fast">Left-arm fast</option>
+                            <option value="Left-arm medium">Left-arm medium</option>
+                            <option value="Left-arm orthodox">Left-arm orthodox</option>
+                            <option value="Left-arm chinaman">Left-arm chinaman</option>
+                        </select>
                         @error('bowling_style') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
