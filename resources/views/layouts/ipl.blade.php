@@ -84,7 +84,7 @@
                     $auction = \App\Models\Auction::whereIn('status', ['live', 'paused'])->first();
                 @endphp
                 @if($auction)
-                    <a href="{{ route('auction.live', $auction->guid) }}" class="hidden md:flex items-center bg-red-600 text-white px-4 py-2 font-bold text-sm uppercase rounded hover:bg-red-700 transition-colors">
+                    <a href="{{ route('auction.live', $auction->guid) }}" class="inline-flex items-center bg-red-600 text-white px-3 py-1.5 md:px-4 md:py-2 font-bold text-xs md:text-sm uppercase rounded hover:bg-red-700 transition-colors whitespace-nowrap shadow-lg">
                         <span class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
                         Live Auction
                     </a>
