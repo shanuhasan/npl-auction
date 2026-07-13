@@ -70,7 +70,14 @@ class Index extends Component
             if ($this->existing_logo) {
                 Storage::disk('public')->delete($this->existing_logo);
             }
-            $logoPath = $this->logo->store('teams', 'public');
+            $filename = pathinfo($this->logo->hashName(), PATHINFO_FILENAME) . '.webp';
+            $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+            $image = $manager->read($this->logo->getRealPath())
+                ->scaleDown(800, 800)
+                ->toWebp(80);
+                
+            \Illuminate\Support\Facades\Storage::disk('public')->put('teams/' . $filename, (string) $image);
+            $logoPath = 'teams/' . $filename;
         }
 
         Team::updateOrCreate(['id' => $this->team_id], [

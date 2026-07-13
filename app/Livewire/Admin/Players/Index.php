@@ -140,7 +140,14 @@ class Index extends Component
             if ($this->existing_photo) {
                 Storage::disk('public')->delete($this->existing_photo);
             }
-            $photoPath = $this->photo->store('players', 'public');
+            $filename = pathinfo($this->photo->hashName(), PATHINFO_FILENAME) . '.webp';
+            $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+            $image = $manager->read($this->photo->getRealPath())
+                ->scaleDown(800, 800)
+                ->toWebp(80);
+                
+            \Illuminate\Support\Facades\Storage::disk('public')->put('players/' . $filename, (string) $image);
+            $photoPath = 'players/' . $filename;
         }
 
         Player::updateOrCreate(['id' => $this->player_id], [

@@ -48,7 +48,17 @@ class Register extends Component
     {
         $this->validate();
 
-        $photoPath = $this->photo->store('players', 'public');
+        $photoPath = null;
+        if ($this->photo) {
+            $filename = pathinfo($this->photo->hashName(), PATHINFO_FILENAME) . '.webp';
+            $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+            $image = $manager->read($this->photo->getRealPath())
+                ->scaleDown(800, 800)
+                ->toWebp(80);
+                
+            \Illuminate\Support\Facades\Storage::disk('public')->put('players/' . $filename, (string) $image);
+            $photoPath = 'players/' . $filename;
+        }
 
         Player::create([
             'name' => $this->name,

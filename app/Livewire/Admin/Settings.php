@@ -50,14 +50,28 @@ class Settings extends Component
         \App\Models\Setting::set('season', $this->season);
         
         if ($this->new_logo) {
-            $logoPath = $this->new_logo->store('settings', 'public');
+            $filename = pathinfo($this->new_logo->hashName(), PATHINFO_FILENAME) . '.webp';
+            $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+            $image = $manager->read($this->new_logo->getRealPath())
+                ->scaleDown(800, 800)
+                ->toWebp(80);
+                
+            \Illuminate\Support\Facades\Storage::disk('public')->put('settings/' . $filename, (string) $image);
+            $logoPath = 'settings/' . $filename;
             \App\Models\Setting::set('logo', $logoPath);
             $this->logo = $logoPath;
             $this->new_logo = null;
         }
 
         if ($this->new_favicon) {
-            $faviconPath = $this->new_favicon->store('settings', 'public');
+            $filename = pathinfo($this->new_favicon->hashName(), PATHINFO_FILENAME) . '.webp';
+            $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+            $image = $manager->read($this->new_favicon->getRealPath())
+                ->scaleDown(128, 128)
+                ->toWebp(80);
+                
+            \Illuminate\Support\Facades\Storage::disk('public')->put('settings/' . $filename, (string) $image);
+            $faviconPath = 'settings/' . $filename;
             \App\Models\Setting::set('favicon', $faviconPath);
             $this->favicon = $faviconPath;
             $this->new_favicon = null;
