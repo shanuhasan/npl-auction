@@ -104,15 +104,18 @@
                             Dashboard
                         </a>
                     @endif
+                    <form method="POST" action="{{ route('logout') }}" class="hidden md:flex m-0 p-0 items-center">
+                        @csrf
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="text-red-500 hover:text-red-400 font-bold text-sm tracking-wide uppercase transition-colors">
+                            Logout
+                        </a>
+                    </form>
                 @else
                     <a href="{{ route('login') }}" class="hidden md:flex items-center text-white hover:text-[#FFC800] font-bold text-sm tracking-wide uppercase transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" /></svg>
                         Login
                     </a>
                 @endauth
-                <button class="text-white hover:text-[#FFC800]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                </button>
                 <button id="mobile-menu-button" class="md:hidden text-white hover:text-[#FFC800] focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                 </button>
@@ -139,6 +142,12 @@
                 @else
                     <a href="{{ route('dashboard') }}" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase text-[#FFC800] border-b border-gray-800">Dashboard</a>
                 @endif
+                <form method="POST" action="{{ route('logout') }}" class="block m-0 p-0">
+                    @csrf
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase text-red-500 hover:text-red-400 border-b border-gray-800">
+                        Logout
+                    </a>
+                </form>
             @else
                 <a href="{{ route('login') }}" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase text-white border-b border-gray-800">Login</a>
             @endauth
