@@ -27,7 +27,7 @@ class Index extends Component
     {
         $query = Player::with(['currentTeam', 'auctionPlayers' => function($q) {
             $q->where('status', 'sold')->latest();
-        }]);
+        }])->where('is_approved', true);
 
         if ($this->search) {
             $query->where('name', 'like', '%' . $this->search . '%');

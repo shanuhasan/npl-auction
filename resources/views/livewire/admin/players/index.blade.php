@@ -25,6 +25,11 @@
             <option value="sold">Sold</option>
             <option value="unsold">Unsold</option>
         </select>
+        <select wire:model.live="filterApproval" class="w-full md:w-48 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
+            <option value="">All Approvals</option>
+            <option value="1">Approved</option>
+            <option value="0">Pending</option>
+        </select>
     </div>
 
     <div class="bg-card-bg rounded-lg shadow overflow-x-auto border border-gray-800">
@@ -63,12 +68,22 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300 capitalize">{{ str_replace('-', ' ', $player->category) }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-accent-gold font-semibold">₹{{ number_format($player->base_price, 2) }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                            {{ $player->status === 'sold' ? 'bg-success-green text-white' : ($player->status === 'unsold' ? 'bg-accent-red text-white' : 'bg-gray-600 text-white') }}">
-                            {{ ucfirst($player->status) }}
-                        </span>
+                        <div class="flex flex-col space-y-1">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-max
+                                {{ $player->status === 'sold' ? 'bg-success-green text-white' : ($player->status === 'unsold' ? 'bg-accent-red text-white' : 'bg-gray-600 text-white') }}">
+                                {{ ucfirst($player->status) }}
+                            </span>
+                            @if(!$player->is_approved)
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-max bg-yellow-500 text-black">
+                                    Pending
+                                </span>
+                            @endif
+                        </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        @if(!$player->is_approved)
+                            <button wire:click="approve({{ $player->id }})" class="text-yellow-400 hover:text-yellow-300 mr-3 font-bold uppercase tracking-wider text-xs">Approve</button>
+                        @endif
                         @if($player->status === 'available')
                             <button wire:click="openAssignModal({{ $player->id }})" class="text-green-400 hover:text-green-300 mr-3 font-bold uppercase tracking-wider text-xs">Assign</button>
                         @endif
@@ -139,6 +154,14 @@
                                 <option value="unsold">Unsold</option>
                             </select>
                             @error('status') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Approval</label>
+                            <select wire:model="is_approved" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" required>
+                                <option value="1">Approved</option>
+                                <option value="0">Pending</option>
+                            </select>
+                            @error('is_approved') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Batting Style</label>

@@ -55,9 +55,9 @@ class Control extends Component
             $this->manualBidIncrement = $this->state->manual_bid_increment ?? 0;
         }
 
-        $this->pendingCount = AuctionPlayer::where('auction_id', $this->auction->id)->where('status', 'pending')->count();
-        $this->soldCount = AuctionPlayer::where('auction_id', $this->auction->id)->where('status', 'sold')->count();
-        $this->unsoldCount = AuctionPlayer::where('auction_id', $this->auction->id)->where('status', 'unsold')->count();
+        $this->pendingCount = AuctionPlayer::whereHas('player', fn($q) => $q->where('is_approved', true))->where('auction_id', $this->auction->id)->where('status', 'pending')->count();
+        $this->soldCount = AuctionPlayer::whereHas('player', fn($q) => $q->where('is_approved', true))->where('auction_id', $this->auction->id)->where('status', 'sold')->count();
+        $this->unsoldCount = AuctionPlayer::whereHas('player', fn($q) => $q->where('is_approved', true))->where('auction_id', $this->auction->id)->where('status', 'unsold')->count();
 
         if ($this->state && $this->state->current_auction_player_id) {
             $ap = AuctionPlayer::with('player')->find($this->state->current_auction_player_id);
@@ -238,6 +238,7 @@ class Control extends Component
     public function render()
     {
         $playersList = AuctionPlayer::with(['player', 'soldToTeam'])
+            ->whereHas('player', fn($q) => $q->where('is_approved', true))
             ->where('auction_id', $this->auction->id)
             ->orderBy('order_no')
             ->get();

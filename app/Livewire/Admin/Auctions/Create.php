@@ -45,7 +45,7 @@ class Create extends Component
 
     public function selectAllPlayers()
     {
-        $this->selectedPlayers = Player::where('status', 'available')->pluck('id')->map(fn($id) => (string)$id)->toArray();
+        $this->selectedPlayers = Player::where('status', 'available')->where('is_approved', true)->pluck('id')->map(fn($id) => (string)$id)->toArray();
     }
 
     public function deselectAllPlayers()
@@ -57,6 +57,7 @@ class Create extends Component
     {
         // Group players by category for display
         $playersByCategory = Player::where('status', 'available')
+            ->where('is_approved', true)
             ->orderBy('base_price', 'desc')
             ->get()
             ->groupBy('category');

@@ -19,7 +19,9 @@ class Index extends Component
     public $filterRole = '';
     public $filterStatus = '';
 
-    public $player_id, $name, $role, $country, $city, $batting_style, $bowling_style, $base_price, $category, $status;
+    public $filterApproval = '';
+
+    public $player_id, $name, $role, $country, $city, $batting_style, $bowling_style, $base_price, $category, $status, $is_approved;
     public $photo, $existing_photo;
     
     // Stats array for json
@@ -49,6 +51,7 @@ class Index extends Component
         'base_price' => 'required|numeric|min:0',
         'category' => 'required|in:marquee,set-a,set-b,set-c',
         'status' => 'required|in:available,sold,unsold',
+        'is_approved' => 'boolean',
         'photo' => 'nullable|image|max:2048',
         'stats.matches' => 'nullable|integer',
         'stats.runs' => 'nullable|integer',
@@ -75,6 +78,9 @@ class Index extends Component
             })
             ->when($this->filterStatus, function ($query) {
                 $query->where('status', $this->filterStatus);
+            })
+            ->when($this->filterApproval !== '', function ($query) {
+                $query->where('is_approved', $this->filterApproval === '1');
             })
             ->latest()
             ->paginate(10);
@@ -113,6 +119,7 @@ class Index extends Component
         $this->base_price = 0;
         $this->category = 'set-a';
         $this->status = 'available';
+        $this->is_approved = true;
         $this->photo = null;
         $this->existing_photo = null;
         $this->stats = [
@@ -147,6 +154,7 @@ class Index extends Component
             'base_price' => $this->base_price,
             'category' => $this->category,
             'status' => $this->status,
+            'is_approved' => $this->is_approved,
             'stats' => $this->stats,
         ]);
 
@@ -168,6 +176,7 @@ class Index extends Component
         $this->base_price = $player->base_price;
         $this->category = $player->category;
         $this->status = $player->status;
+        $this->is_approved = $player->is_approved;
         $this->existing_photo = $player->photo;
         
         $stats = $player->stats ?? [];
@@ -180,6 +189,14 @@ class Index extends Component
         ], $stats);
         
         $this->openModal();
+    }
+
+    public function approve($id)
+    {
+        $player = Player::findOrFail($id);
+        $player->is_approved = true;
+        $player->save();
+        session()->flash('message', 'Player Approved Successfully.');
     }
 
     public function delete($id)

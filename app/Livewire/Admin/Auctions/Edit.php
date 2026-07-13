@@ -65,7 +65,7 @@ class Edit extends Component
 
     public function selectAllPlayers()
     {
-        $this->selectedPlayers = Player::where('status', 'available')->pluck('id')->map(fn($id) => (string)$id)->toArray();
+        $this->selectedPlayers = Player::where('status', 'available')->where('is_approved', true)->pluck('id')->map(fn($id) => (string)$id)->toArray();
     }
 
     public function deselectAllPlayers()
@@ -76,9 +76,10 @@ class Edit extends Component
     public function render()
     {
         // Group players by category for display
-        // We only want to show available players OR players already attached to this auction
+        // We only want to show available and approved players OR players already attached to this auction
         $playersByCategory = Player::where(function($query) {
                 $query->where('status', 'available')
+                      ->where('is_approved', true)
                       ->orWhereIn('id', $this->selectedPlayers);
             })
             ->orderBy('base_price', 'desc')

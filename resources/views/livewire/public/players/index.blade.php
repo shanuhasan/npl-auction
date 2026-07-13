@@ -1,8 +1,15 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     
-    <div class="mb-10 text-center">
-        <h1 class="text-4xl md:text-5xl font-black text-white uppercase tracking-widest mb-4">Players Directory</h1>
-        <p class="text-gray-400 text-lg">Search, filter, and track all players in the auction.</p>
+    <div class="mb-10 flex flex-col md:flex-row justify-between items-center">
+        <div class="text-center md:text-left mb-6 md:mb-0">
+            <h1 class="text-4xl md:text-5xl font-black text-white uppercase tracking-widest mb-4">Players Directory</h1>
+            <p class="text-gray-400 text-lg">Search, filter, and track all players in the auction.</p>
+        </div>
+        <div>
+            <a href="{{ route('public.players.register') }}" class="bg-accent-gold text-primary-bg px-6 py-3 rounded-xl font-bold hover:bg-yellow-400 transition shadow-lg text-lg uppercase tracking-wider">
+                Register as Player
+            </a>
+        </div>
     </div>
 
     <!-- Filters Section -->
