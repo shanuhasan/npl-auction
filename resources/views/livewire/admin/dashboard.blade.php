@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
         <!-- Total Players -->
         <div class="bg-card-bg rounded-lg p-6 shadow border border-gray-800">
             <h2 class="text-sm font-inter text-gray-400 uppercase tracking-wide">Total Players</h2>
@@ -37,6 +37,12 @@
         <div class="bg-card-bg rounded-lg p-6 shadow border border-gray-800">
             <h2 class="text-sm font-inter text-gray-400 uppercase tracking-wide">Completed Auctions</h2>
             <p class="text-4xl font-poppins font-bold text-accent-gold mt-2">{{ $completedAuctions }}</p>
+        </div>
+
+        <!-- Total Visitors -->
+        <div class="bg-card-bg rounded-lg p-6 shadow border border-gray-800">
+            <h2 class="text-sm font-inter text-gray-400 uppercase tracking-wide">Total Visitors</h2>
+            <p class="text-4xl font-poppins font-bold text-accent-gold mt-2">{{ $totalVisitors }}</p>
         </div>
     </div>
 </div>

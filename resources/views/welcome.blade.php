@@ -115,6 +115,8 @@
                 <span class="mx-1">|</span>
                 Developed by <a href="{{ setting('developer_url', '#') }}" target="_blank" class="text-[#FFC800] hover:underline">{{ setting('developer_name') }}</a>
             @endif
+            <span class="mx-1">|</span>
+            <span class="font-semibold text-gray-400">Total Visitors: {{ \App\Models\Visitor::count() }}</span>
         </footer>
     </body>
 </html>

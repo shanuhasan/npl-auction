@@ -29,6 +29,7 @@ class Dashboard extends Component
             'upcomingAuctions' => Auction::where('status', 'upcoming')->count(),
             'completedAuctions' => Auction::where('status', 'completed')->count(),
             'hasLiveAuctions' => Auction::where('status', 'live')->exists(),
+            'totalVisitors' => \App\Models\Visitor::count(),
         ])->layout('layouts.app');
     }
 }
