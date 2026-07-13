@@ -15,6 +15,7 @@ class Register extends Component
     public $role = 'batsman';
     public $country = 'India';
     public $city = '';
+    public $contact_no = '';
     public $batting_style = '';
     public $bowling_style = '';
     public $photo;
@@ -34,6 +35,7 @@ class Register extends Component
         'role' => 'required|in:batsman,bowler,all-rounder,wicketkeeper',
         'country' => 'required|string|max:100',
         'city' => 'nullable|string|max:100',
+        'contact_no' => 'required|string|max:20|unique:players,contact_no',
         'batting_style' => 'nullable|string|max:100',
         'bowling_style' => 'nullable|string|max:100',
         'photo' => 'required|image|max:2048', // 2MB Max
@@ -66,6 +68,7 @@ class Register extends Component
             'role' => $this->role,
             'country' => $this->country,
             'city' => $this->city,
+            'contact_no' => $this->contact_no,
             'batting_style' => $this->batting_style,
             'bowling_style' => $this->bowling_style,
             'base_price' => 0,

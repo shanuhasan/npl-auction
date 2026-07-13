@@ -21,6 +21,12 @@
                     </div>
                     
                     <div>
+                        <label class="block text-gray-300 text-sm font-bold mb-2">Contact No. <span class="text-red-500">*</span></label>
+                        <input type="text" wire:model="contact_no" class="w-full bg-primary-bg border border-gray-700 rounded py-3 px-4 text-white focus:outline-none focus:border-accent-gold transition" placeholder="e.g. +91 9876543210">
+                        @error('contact_no') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div>
                         <label class="block text-gray-300 text-sm font-bold mb-2">Role <span class="text-red-500">*</span></label>
                         <select wire:model="role" class="w-full bg-primary-bg border border-gray-700 rounded py-3 px-4 text-white focus:outline-none focus:border-accent-gold transition">
                             <option value="batsman">Batsman</option>

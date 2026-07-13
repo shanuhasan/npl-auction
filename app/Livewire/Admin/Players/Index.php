@@ -21,7 +21,7 @@ class Index extends Component
 
     public $filterApproval = '';
 
-    public $player_id, $name, $role, $country, $city, $batting_style, $bowling_style, $base_price, $category, $status, $is_approved;
+    public $player_id, $name, $role, $country, $city, $contact_no, $batting_style, $bowling_style, $base_price, $category, $status, $is_approved;
     public $photo, $existing_photo;
     
     // Stats array for json
@@ -41,24 +41,28 @@ class Index extends Component
     public $assignTeamId;
     public $assignPrice = 0;
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'role' => 'required|in:batsman,bowler,all-rounder,wicketkeeper',
-        'country' => 'required|string|max:100',
-        'city' => 'nullable|string|max:100',
-        'batting_style' => 'nullable|string|max:100',
-        'bowling_style' => 'nullable|string|max:100',
-        'base_price' => 'required|numeric|min:0',
-        'category' => 'required|in:marquee,set-a,set-b,set-c',
-        'status' => 'required|in:available,sold,unsold',
-        'is_approved' => 'boolean',
-        'photo' => 'nullable|image|max:2048',
-        'stats.matches' => 'nullable|integer',
-        'stats.runs' => 'nullable|integer',
-        'stats.wickets' => 'nullable|integer',
-        'stats.average' => 'nullable|numeric',
-        'stats.strike_rate' => 'nullable|numeric',
-    ];
+    protected function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'role' => 'required|in:batsman,bowler,all-rounder,wicketkeeper',
+            'country' => 'required|string|max:100',
+            'city' => 'nullable|string|max:100',
+            'contact_no' => 'required|string|max:20|unique:players,contact_no,' . $this->player_id,
+            'batting_style' => 'nullable|string|max:100',
+            'bowling_style' => 'nullable|string|max:100',
+            'base_price' => 'required|numeric|min:0',
+            'category' => 'required|in:marquee,set-a,set-b,set-c',
+            'status' => 'required|in:available,sold,unsold',
+            'is_approved' => 'boolean',
+            'photo' => 'nullable|image|max:2048',
+            'stats.matches' => 'nullable|integer',
+            'stats.runs' => 'nullable|integer',
+            'stats.wickets' => 'nullable|integer',
+            'stats.average' => 'nullable|numeric',
+            'stats.strike_rate' => 'nullable|numeric',
+        ];
+    }
 
     public function updatingSearch()
     {
@@ -114,6 +118,7 @@ class Index extends Component
         $this->role = 'batsman';
         $this->country = 'India';
         $this->city = '';
+        $this->contact_no = '';
         $this->batting_style = '';
         $this->bowling_style = '';
         $this->base_price = 0;
@@ -156,6 +161,7 @@ class Index extends Component
             'role' => $this->role,
             'country' => $this->country,
             'city' => $this->city,
+            'contact_no' => $this->contact_no,
             'batting_style' => $this->batting_style,
             'bowling_style' => $this->bowling_style,
             'base_price' => $this->base_price,
@@ -178,6 +184,7 @@ class Index extends Component
         $this->role = $player->role;
         $this->country = $player->country;
         $this->city = $player->city;
+        $this->contact_no = $player->contact_no;
         $this->batting_style = $player->batting_style;
         $this->bowling_style = $player->bowling_style;
         $this->base_price = $player->base_price;
