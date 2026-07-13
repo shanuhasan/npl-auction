@@ -13,6 +13,6 @@ class Index extends Component
         $teams = Team::withCount('players')->get();
         return view('livewire.public.teams.index', [
             'teams' => $teams
-        ])->layout(auth()->check() ? 'layouts.app' : 'layouts.public');
+        ])->layout('layouts.ipl');
     }
 }

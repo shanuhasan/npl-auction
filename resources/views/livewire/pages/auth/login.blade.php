@@ -27,7 +27,7 @@ new #[Layout('layouts.guest')] class extends Component
         } elseif ($user->role === 'team_owner') {
             $team = \App\Models\Team::where('owner_id', $user->id)->first();
             if ($team) {
-                $this->redirectIntended(default: route('public.teams.show', $team->id, absolute: false), navigate: true);
+                $this->redirectIntended(default: route('team_owner.my_team', absolute: false), navigate: true);
             } else {
                 $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
             }

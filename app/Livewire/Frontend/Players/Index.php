@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Public\Players;
+namespace App\Livewire\Frontend\Players;
 
 use Livewire\Component;
 use Livewire\Attributes\Layout;
@@ -44,7 +44,7 @@ class Index extends Component
 
         $players = $query->orderBy('name')->paginate(16);
 
-        return view('livewire.public.players.index', [
+        return view('livewire.frontend.players.index', [
             'players' => $players
         ])->layout('layouts.ipl');
     }

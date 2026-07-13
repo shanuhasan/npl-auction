@@ -37,13 +37,13 @@
                                 $activeAuction = \App\Models\Auction::whereIn('status', ['live', 'upcoming'])->first();
                             @endphp
                             @if($myTeam)
-                                <a href="{{ route('public.teams.show', $myTeam->id) }}" class="block px-6 py-3 transition {{ request()->routeIs('public.teams.show') ? 'bg-gray-800 border-l-4 border-success-green text-success-green font-bold' : 'hover:bg-gray-800 text-success-green font-semibold' }}">My Team</a>
+                                <a href="{{ route('team_owner.my_team') }}" class="block px-6 py-3 transition {{ request()->routeIs('team_owner.my_team') ? 'bg-gray-800 border-l-4 border-success-green text-success-green font-bold' : 'hover:bg-gray-800 text-success-green font-semibold' }}">My Team</a>
                             @endif
                             @if($activeAuction)
                                 <a href="{{ route('team.auction.bidding', $activeAuction->guid) }}" class="block px-6 py-3 transition {{ request()->routeIs('team.auction.bidding') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Bidding Room</a>
                             @endif
                         @endif
-                        <a href="{{ route('public.players') }}" class="block px-6 py-3 transition {{ request()->routeIs('public.players') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">All Players</a>
+                        <a href="{{ route('public.players') }}" target="_blank" class="block px-6 py-3 transition {{ request()->routeIs('public.players') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">All Players</a>
                         <a href="{{ route('reports.auction') }}" class="block px-6 py-3 transition {{ request()->routeIs('reports.auction') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Reports</a>
                     @endauth
                 </nav>

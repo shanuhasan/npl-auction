@@ -83,6 +83,6 @@ class Register extends Component
 
     public function render()
     {
-        return view('livewire.public.players.register')->layout(auth()->check() ? 'layouts.app' : 'layouts.public');
+        return view('livewire.public.players.register')->layout('layouts.ipl');
     }
 }

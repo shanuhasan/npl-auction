@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Livewire\Public\Teams;
+namespace App\Livewire\TeamOwner;
 
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use App\Models\Team;
 
-class Show extends Component
+class MyTeam extends Component
 {
     public $team;
     public $auctions;
     public $selectedAuctionId;
 
-    public function mount(Team $team)
+    public function mount()
     {
-        $this->team = $team;
+        $this->team = Team::where('owner_id', auth()->id())->firstOrFail();
         $this->auctions = \App\Models\Auction::orderBy('created_at', 'desc')->get();
         
         if ($this->auctions->isNotEmpty()) {
@@ -48,6 +48,6 @@ class Show extends Component
             'totalSpent' => $totalSpent,
             'remainingBudget' => $remainingBudget,
             'totalPlayers' => $players->count()
-        ])->layout('layouts.ipl');
+        ])->layout('layouts.app');
     }
 }

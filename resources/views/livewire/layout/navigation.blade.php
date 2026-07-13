@@ -114,7 +114,7 @@ new class extends Component
                         $activeAuction = \App\Models\Auction::whereIn('status', ['live', 'upcoming'])->first();
                     @endphp
                     @if($myTeam)
-                        <x-responsive-nav-link :href="route('public.teams.show', $myTeam->id)" :active="request()->routeIs('public.teams.show')" wire:navigate class="text-success-green font-bold">
+                        <x-responsive-nav-link :href="route('team_owner.my_team')" :active="request()->routeIs('team_owner.my_team')" wire:navigate class="text-success-green font-bold">
                             My Team
                         </x-responsive-nav-link>
                     @endif
@@ -124,7 +124,7 @@ new class extends Component
                         </x-responsive-nav-link>
                     @endif
                 @endif
-                <x-responsive-nav-link :href="route('public.players')" :active="request()->routeIs('public.players')" wire:navigate>
+                <x-responsive-nav-link :href="route('public.players')" :active="request()->routeIs('public.players')" target="_blank">
                     All Players
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('reports.auction')" :active="request()->routeIs('reports.auction')" wire:navigate class="text-[#00C853] font-bold">

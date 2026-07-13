@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
+Route::view('/home', 'home')->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -54,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:team_owner'])->group(function () {
+    Route::get('/team-owner/my-team', \App\Livewire\TeamOwner\MyTeam::class)->name('team_owner.my_team');
     Route::get('/team/auction/{auction}', \App\Livewire\Team\Auction\Bidding::class)->name('team.auction.bidding');
 });
 
