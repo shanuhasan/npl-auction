@@ -110,20 +110,20 @@
         </main>
         
         <footer class="relative z-10 w-full py-6 mt-auto border-t border-white/5 bg-[#141B2D]/50 backdrop-blur-md">
-            <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 text-sm text-gray-500 text-center px-4">
-                <div>&copy; {{ date('Y') }} {{ setting('app_name', 'Naugawan Premier League') }}. All rights reserved.</div>
+            <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-gray-500 text-center px-4">
+                <span>&copy; {{ date('Y') }} {{ setting('app_name', 'Naugawan Premier League') }}. All rights reserved.</span>
                 
                 @if(setting('developer_name'))
-                    <div class="hidden md:block">|</div>
-                    <div>
+                    <span>|</span>
+                    <span>
                         Developed by <a href="{{ setting('developer_url', '#') }}" target="_blank" class="text-[#FFC800] hover:underline">{{ setting('developer_name') }}</a>
-                    </div>
+                    </span>
                 @endif
                 
-                <div class="hidden md:block">|</div>
-                <div class="font-semibold text-gray-400 mt-2 md:mt-0">
+                <span>|</span>
+                <span class="font-semibold text-gray-400">
                     Total Visitors: <span class="text-[#FFC800]">{{ \App\Models\Visitor::count() }}</span>
-                </div>
+                </span>
             </div>
         </footer>
     </body>
