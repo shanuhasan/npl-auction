@@ -41,7 +41,7 @@
             }
         </style>
     </head>
-    <body class="antialiased bg-[#0B0F19] text-white min-h-screen flex flex-col relative overflow-hidden">
+    <body class="antialiased bg-[#0B0F19] text-white min-h-screen flex flex-col relative overflow-x-hidden">
         
         <!-- Navigation / Header -->
         <header class="relative z-10 w-full p-6 flex justify-end">
