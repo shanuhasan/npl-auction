@@ -94,6 +94,44 @@
         </div>
     @endif
 
+    <!-- Core Committee Section -->
+    @if(isset($coreCommittees) && $coreCommittees->count() > 0)
+        <div class="bg-[#141B2D] py-12 border-b border-white/5">
+            <div class="max-w-[1400px] mx-auto px-4 md:px-8">
+                <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
+                    <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
+                        <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> Core Committee
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    @foreach($coreCommittees as $member)
+                        <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg">
+                            <div class="relative bg-[#0B0F19] overflow-hidden" style="padding-bottom: 100%;">
+                                @if($member->image_path)
+                                    <img src="{{ asset('storage/' . $member->image_path) }}" alt="{{ $member->name }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                @else
+                                    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+                                        <span class="text-4xl font-bold text-gray-600 uppercase">{{ substr($member->name, 0, 1) }}</span>
+                                    </div>
+                                @endif
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                            <div class="p-4 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 text-center">
+                                <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors uppercase">{{ $member->name }}</h3>
+                                @if($member->role)
+                                    <span class="text-[10px] font-bold px-2 py-1 rounded mt-2 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
+                                        {{ $member->role }}
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+
     <!-- Teams Grid -->
     @if(isset($teams) && $teams->count() > 0)
         <div class="bg-[#0B0F19] py-12">
@@ -221,44 +259,6 @@
                 });
             });
         </script>
-    @endif
-
-    <!-- Core Committee Section -->
-    @if(isset($coreCommittees) && $coreCommittees->count() > 0)
-        <div class="bg-[#141B2D] py-12 border-b border-white/5">
-            <div class="max-w-[1400px] mx-auto px-4 md:px-8">
-                <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
-                    <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
-                        <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> Core Committee
-                    </h2>
-                </div>
-
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                    @foreach($coreCommittees as $member)
-                        <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg">
-                            <div class="relative bg-[#0B0F19] overflow-hidden" style="padding-bottom: 100%;">
-                                @if($member->image_path)
-                                    <img src="{{ asset('storage/' . $member->image_path) }}" alt="{{ $member->name }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                @else
-                                    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-                                        <span class="text-4xl font-bold text-gray-600 uppercase">{{ substr($member->name, 0, 1) }}</span>
-                                    </div>
-                                @endif
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            </div>
-                            <div class="p-4 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 text-center">
-                                <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors uppercase">{{ $member->name }}</h3>
-                                @if($member->role)
-                                    <span class="text-[10px] font-bold px-2 py-1 rounded mt-2 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
-                                        {{ $member->role }}
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
     @endif
 
     <!-- Photos & Videos Gallery -->
