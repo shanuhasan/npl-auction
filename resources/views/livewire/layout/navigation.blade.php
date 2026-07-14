@@ -105,6 +105,9 @@ new class extends Component
                     <x-responsive-nav-link :href="route('admin.analytics')" :active="request()->routeIs('admin.analytics')" wire:navigate>
                         Analytics
                     </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.banners')" :active="request()->routeIs('admin.banners')" wire:navigate>
+                        Manage Banners
+                    </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.settings')" :active="request()->routeIs('admin.settings')" wire:navigate>
                         Settings
                     </x-responsive-nav-link>

@@ -43,29 +43,96 @@
         </div>
     </div>
 
-    <!-- Hero Section / Featured -->
-    <div class="relative w-full h-[500px] md:h-[600px] bg-gray-900 overflow-hidden">
-        <!-- Hero Background Placeholder (Gradient/Pattern) -->
-        <div class="absolute inset-0 bg-gradient-to-r from-[#0B0F19] to-[#141B2D]">
-            <div class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+PHBhdGggZD0iTTAgNDBoNDBWMEgweiIvPjwvZz48L3N2Zz4=')]"></div>
-        </div>
+    <!-- Hero Section / Featured (Dynamic Swiper Slider) -->
+    @if(isset($banners) && $banners->count() > 0)
+        <!-- Include Swiper's CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
         
-        <!-- Hero Content (Mock Featured News) -->
-        <div class="absolute bottom-0 left-0 w-full p-8 md:p-16 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/80 to-transparent">
-            <div class="max-w-[1400px] mx-auto">
-                <span class="inline-block bg-[#FFC800] text-black text-xs font-bold px-3 py-1 uppercase tracking-wider mb-4 rounded-sm">Featured</span>
-                <h1 class="text-4xl md:text-6xl text-white heading-font uppercase leading-tight max-w-4xl drop-shadow-lg">
-                    The Grand Auction Approaches: Prepare for the Ultimate Showdown
-                </h1>
-                <p class="text-gray-300 mt-4 max-w-2xl text-lg hidden md:block">
-                    Franchises are gearing up to rebuild their squads. Who will command the highest bid this season?
-                </p>
-                <div class="mt-8 flex space-x-4">
-                    <a href="{{ route('public.players') }}" class="bg-transparent border-2 border-[#FFC800] text-[#FFC800] px-8 py-3 font-bold uppercase hover:bg-[#FFC800] hover:text-black transition-colors rounded-sm">View Players</a>
+        <div class="swiper myHeroSwiper relative w-full h-[500px] md:h-[600px] bg-gray-900 overflow-hidden">
+            <div class="swiper-wrapper">
+                @foreach($banners as $banner)
+                <div class="swiper-slide relative">
+                    <!-- Banner Background Image -->
+                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('storage/' . $banner->image_path) }}');"></div>
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/60 to-transparent"></div>
+                    
+                    <!-- Content -->
+                    <div class="absolute bottom-0 left-0 w-full p-8 md:p-16">
+                        <div class="max-w-[1400px] mx-auto">
+                            @if($banner->title)
+                                <h1 class="text-4xl md:text-6xl text-white heading-font uppercase leading-tight max-w-4xl drop-shadow-lg">
+                                    {{ $banner->title }}
+                                </h1>
+                            @endif
+                            @if($banner->description)
+                                <p class="text-gray-300 mt-4 max-w-2xl text-lg hidden md:block">
+                                    {{ $banner->description }}
+                                </p>
+                            @endif
+                            @if($banner->link)
+                                <div class="mt-8 flex space-x-4">
+                                    <a href="{{ $banner->link }}" target="_blank" class="bg-transparent border-2 border-[#FFC800] text-[#FFC800] px-8 py-3 font-bold uppercase hover:bg-[#FFC800] hover:text-black transition-colors rounded-sm">Learn More</a>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Navigation -->
+            <div class="swiper-button-next !text-[#FFC800]"></div>
+            <div class="swiper-button-prev !text-[#FFC800]"></div>
+        </div>
+
+        <!-- Include Swiper's JS -->
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var swiper = new Swiper(".myHeroSwiper", {
+                    loop: true,
+                    autoplay: {
+                        delay: 5000,
+                        disableOnInteraction: false,
+                    },
+                    pagination: {
+                        el: ".swiper-pagination",
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: ".swiper-button-next",
+                        prevEl: ".swiper-button-prev",
+                    },
+                });
+            });
+        </script>
+    @else
+        <!-- Hero Section / Featured (Static Fallback) -->
+        <div class="relative w-full h-[500px] md:h-[600px] bg-gray-900 overflow-hidden">
+            <!-- Hero Background Placeholder (Gradient/Pattern) -->
+            <div class="absolute inset-0 bg-gradient-to-r from-[#0B0F19] to-[#141B2D]">
+                <div class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+PHBhdGggZD0iTTAgNDBoNDBWMEgweiIvPjwvZz48L3N2Zz4=')]"></div>
+            </div>
+            
+            <!-- Hero Content (Mock Featured News) -->
+            <div class="absolute bottom-0 left-0 w-full p-8 md:p-16 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/80 to-transparent">
+                <div class="max-w-[1400px] mx-auto">
+                    <span class="inline-block bg-[#FFC800] text-black text-xs font-bold px-3 py-1 uppercase tracking-wider mb-4 rounded-sm">Featured</span>
+                    <h1 class="text-4xl md:text-6xl text-white heading-font uppercase leading-tight max-w-4xl drop-shadow-lg">
+                        The Grand Auction Approaches: Prepare for the Ultimate Showdown
+                    </h1>
+                    <p class="text-gray-300 mt-4 max-w-2xl text-lg hidden md:block">
+                        Franchises are gearing up to rebuild their squads. Who will command the highest bid this season?
+                    </p>
+                    <div class="mt-8 flex space-x-4">
+                        <a href="{{ route('public.players') }}" class="bg-transparent border-2 border-[#FFC800] text-[#FFC800] px-8 py-3 font-bold uppercase hover:bg-[#FFC800] hover:text-black transition-colors rounded-sm">View Players</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <!-- Content Sections -->
     <div class="max-w-[1400px] mx-auto px-4 md:px-8 py-12">

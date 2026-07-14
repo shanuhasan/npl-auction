@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
-Route::view('/home', 'home')->name('home');
+Route::get('/home', function () {
+    $banners = \App\Models\Banner::where('is_active', true)->orderBy('order', 'asc')->get();
+    return view('home', compact('banners'));
+})->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -29,6 +32,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/auctions/{auction}/edit', \App\Livewire\Admin\Auctions\Edit::class)->name('auctions.edit');
     Route::get('/auction/control/{auction}', \App\Livewire\Admin\Auctions\Control::class)->name('auction.control');
     Route::get('/settings', \App\Livewire\Admin\Settings::class)->name('settings');
+    Route::get('/banners', \App\Livewire\Admin\Banners\Index::class)->name('banners');
 });
 
 Route::get('/test-broadcast', function () {
