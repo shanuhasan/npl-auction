@@ -2,7 +2,7 @@
     <!-- Hero Section / Featured (Dynamic Swiper Slider) -->
     @if(isset($banners) && $banners->count() > 0)
         <!-- Include Swiper's CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+        <link rel="stylesheet" href="{{ asset('css/swiper-bundle.min.css') }}" />
         
         <div class="swiper myHeroSwiper relative w-full h-[500px] md:h-[600px] bg-[#0B0F19] overflow-hidden">
             <div class="swiper-wrapper">
@@ -48,7 +48,7 @@
         </div>
 
         <!-- Include Swiper's JS -->
-        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var swiper = new Swiper(".myHeroSwiper", {
