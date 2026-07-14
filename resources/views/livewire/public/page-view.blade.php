@@ -1,15 +1,15 @@
-<div class="bg-[#0B0F19] min-h-screen text-white pt-24 pb-16">
-    <div class="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8">
+<div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
         <!-- Page Header -->
-        <div class="mb-10 border-b border-white/10 pb-6 text-center md:text-left">
-            <h1 class="text-4xl md:text-5xl font-extrabold heading-font text-[#FFC800] uppercase tracking-wide">
+        <div class="mb-10 text-center md:text-left">
+            <h1 class="text-4xl md:text-5xl font-black text-white uppercase tracking-widest mb-4">
                 {{ $page->title }}
             </h1>
         </div>
 
         <!-- Rich Text Content -->
-        <div class="bg-[#141B2D] border border-white/5 rounded-2xl p-6 md:p-12 shadow-2xl page-content">
+        <div class="bg-[#141B2D] border border-white/5 rounded-3xl p-6 md:p-12 shadow-lg page-content">
             {!! $page->content !!}
         </div>
         
