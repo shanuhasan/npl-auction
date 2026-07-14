@@ -71,10 +71,12 @@
                 <a href="{{ route('home') }}" class="h-full flex items-center px-4 font-bold text-sm tracking-wide uppercase transition-colors border-b-4 {{ request()->routeIs('home') ? 'text-[#FFC800] border-[#FFC800]' : 'text-white border-transparent hover:text-[#FFC800] hover:border-[#FFC800]' }}">Home</a>
                 <a href="{{ route('public.teams') }}" class="h-full flex items-center px-4 font-bold text-sm tracking-wide uppercase transition-colors border-b-4 {{ request()->routeIs('public.teams*') ? 'text-[#FFC800] border-[#FFC800]' : 'text-white border-transparent hover:text-[#FFC800] hover:border-[#FFC800]' }}">Teams</a>
                 <a href="{{ route('public.players') }}" class="h-full flex items-center px-4 font-bold text-sm tracking-wide uppercase transition-colors border-b-4 {{ request()->routeIs('public.players*') ? 'text-[#FFC800] border-[#FFC800]' : 'text-white border-transparent hover:text-[#FFC800] hover:border-[#FFC800]' }}">Players</a>
-                <a href="#" class="h-full flex items-center px-4 font-bold text-sm tracking-wide uppercase transition-colors border-b-4 text-white border-transparent hover:text-[#FFC800] hover:border-[#FFC800]">Matches</a>
-                <a href="#" class="h-full flex items-center px-4 font-bold text-sm tracking-wide uppercase transition-colors border-b-4 text-white border-transparent hover:text-[#FFC800] hover:border-[#FFC800]">Videos</a>
-                <a href="#" class="h-full flex items-center px-4 font-bold text-sm tracking-wide uppercase transition-colors border-b-4 text-white border-transparent hover:text-[#FFC800] hover:border-[#FFC800]">Stats</a>
-                <a href="#" class="h-full flex items-center px-4 font-bold text-sm tracking-wide uppercase transition-colors border-b-4 text-white border-transparent hover:text-[#FFC800] hover:border-[#FFC800]">Point Table</a>
+                
+                @if(isset($globalPages) && $globalPages->count() > 0)
+                    @foreach($globalPages as $gPage)
+                        <a href="{{ route('public.page', $gPage->slug) }}" class="h-full flex items-center px-4 font-bold text-sm tracking-wide uppercase transition-colors border-b-4 {{ request()->is('pages/' . $gPage->slug) ? 'text-[#FFC800] border-[#FFC800]' : 'text-white border-transparent hover:text-[#FFC800] hover:border-[#FFC800]' }}">{{ $gPage->title }}</a>
+                    @endforeach
+                @endif
             </div>
 
             <!-- Right Actions -->
@@ -126,10 +128,12 @@
             <a href="{{ route('home') }}" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase {{ request()->routeIs('home') ? 'text-[#FFC800]' : 'text-white' }} border-b border-gray-800">Home</a>
             <a href="{{ route('public.teams') }}" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase {{ request()->routeIs('public.teams*') ? 'text-[#FFC800]' : 'text-white' }} border-b border-gray-800">Teams</a>
             <a href="{{ route('public.players') }}" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase {{ request()->routeIs('public.players*') ? 'text-[#FFC800]' : 'text-white' }} border-b border-gray-800">Players</a>
-            <a href="#" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase text-white border-b border-gray-800">Matches</a>
-            <a href="#" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase text-white border-b border-gray-800">Videos</a>
-            <a href="#" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase text-white border-b border-gray-800">Stats</a>
-            <a href="#" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase text-white border-b border-gray-800">Point Table</a>
+            
+            @if(isset($globalPages) && $globalPages->count() > 0)
+                @foreach($globalPages as $gPage)
+                    <a href="{{ route('public.page', $gPage->slug) }}" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase {{ request()->is('pages/' . $gPage->slug) ? 'text-[#FFC800]' : 'text-white' }} border-b border-gray-800">{{ $gPage->title }}</a>
+                @endforeach
+            @endif
             @if($auction)
                 <a href="{{ route('auction.live', $auction->guid) }}" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase text-red-500 border-b border-gray-800">Live Auction</a>
             @endif
@@ -176,10 +180,6 @@
                 <div class="pr-0 lg:pr-4">
                     @if(setting('logo'))
                         <img src="{{ asset('storage/' . setting('logo')) }}" alt="{{ setting('app_name', 'NPLT20') }}" class="h-24 w-auto max-w-[200px] object-contain mb-6 drop-shadow-xl">
-                    @else
-                        <div class="w-16 h-20 bg-gradient-to-br from-[#FFC800] to-[#D4A000] rounded-b-xl flex items-center justify-center mb-6 shadow-lg border border-[#FFC800]/30">
-                            <span class="text-black font-black text-2xl heading-font transform -skew-x-6">NPL</span>
-                        </div>
                     @endif
                     <div class="text-3xl heading-font text-white uppercase mb-4 tracking-wide">{{ setting('app_name', 'Naugawan Premier League') }}</div>
                     <p class="text-gray-400 text-sm leading-relaxed">The official home of the premier league. Get live scores, news, and exclusive videos directly from the field.</p>
@@ -188,18 +188,18 @@
                     <h4 class="font-bold uppercase mb-4 text-[#FFC800]">Quick Links</h4>
                     <ul class="space-y-3 text-sm text-gray-400">
                         <li><a href="#" class="hover:text-white">Home</a></li>
-                        <li><a href="#" class="hover:text-white">About Us</a></li>
                         <li><a href="{{ route('public.teams') }}" class="hover:text-[#FFC800] transition-colors">Teams</a></li>
                         <li><a href="{{ route('public.players') }}" class="hover:text-[#FFC800] transition-colors">Players</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold uppercase mb-4 text-[#FFC800]">Guidelines</h4>
+                    <h4 class="font-bold uppercase mb-4 text-[#FFC800]">Guidelines & Pages</h4>
                     <ul class="space-y-3 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white">Code of Conduct</a></li>
-                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-white">Terms of Use</a></li>
-                        <li><a href="#" class="hover:text-white">Contact Us</a></li>
+                        @if(isset($globalPages) && $globalPages->count() > 0)
+                            @foreach($globalPages as $gPage)
+                                <li><a href="{{ route('public.page', $gPage->slug) }}" class="hover:text-white transition-colors">{{ $gPage->title }}</a></li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
                 <div>

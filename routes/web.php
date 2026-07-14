@@ -33,7 +33,13 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/auction/control/{auction}', \App\Livewire\Admin\Auctions\Control::class)->name('auction.control');
     Route::get('/settings', \App\Livewire\Admin\Settings::class)->name('settings');
     Route::get('/banners', \App\Livewire\Admin\Banners\Index::class)->name('banners');
+    Route::get('/pages', \App\Livewire\Admin\Pages\Index::class)->name('pages.index');
+    Route::get('/pages/create', \App\Livewire\Admin\Pages\Form::class)->name('pages.form');
+    Route::get('/pages/{pageId}/edit', \App\Livewire\Admin\Pages\Form::class)->name('pages.form');
 });
+
+// Public Pages Route
+Route::get('/pages/{slug}', \App\Livewire\Public\PageView::class)->name('public.page');
 
 Route::get('/test-broadcast', function () {
     event(new \App\Events\PlayerOnAuction(1, ['name' => 'Virat Kohli', 'role' => 'Batsman'], 200));

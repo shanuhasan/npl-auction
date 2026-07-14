@@ -10,6 +10,10 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <!-- Quill Editor -->
+        <link href="{{ asset('css/quill.snow.css') }}" rel="stylesheet">
+        <script src="{{ asset('js/quill.min.js') }}"></script>
     </head>
     <body class="font-inter antialiased bg-primary-bg text-white">
         <div class="flex h-screen overflow-hidden">
@@ -31,6 +35,7 @@
                             <a href="{{ route('admin.auctions') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.auctions*') || request()->routeIs('admin.auction.*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Auctions</a>
                             <a href="{{ route('admin.analytics') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.analytics') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Analytics</a>
                             <a href="{{ route('admin.banners') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.banners') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Banners</a>
+                            <a href="{{ route('admin.pages.index') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.pages*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Pages</a>
                             <a href="{{ route('admin.settings') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.settings') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Settings</a>
                         @elseif(auth()->user()->role === 'team_owner')
                             @php

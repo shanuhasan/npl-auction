@@ -19,6 +19,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        \Illuminate\Support\Facades\View::composer('*', function ($view) {
+            // Only fetch pages if the table exists to avoid errors before migration
+            if (\Illuminate\Support\Facades\Schema::hasTable('pages')) {
+                $globalPages = \App\Models\Page::where('is_active', true)->select('id', 'title', 'slug')->get();
+                $view->with('globalPages', $globalPages);
+            } else {
+                $view->with('globalPages', collect());
+            }
+        });
     }
 }
