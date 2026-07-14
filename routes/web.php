@@ -6,7 +6,8 @@ Route::view('/', 'welcome');
 Route::get('/home', function () {
     $banners = \App\Models\Banner::where('is_active', true)->orderBy('order', 'asc')->get();
     $teams = \App\Models\Team::where('is_approved', true)->get();
-    return view('home', compact('banners', 'teams'));
+    $galleries = \App\Models\Gallery::where('is_active', true)->orderBy('created_at', 'desc')->take(8)->get();
+    return view('home', compact('banners', 'teams', 'galleries'));
 })->name('home');
 
 Route::view('dashboard', 'dashboard')
@@ -37,6 +38,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/pages', \App\Livewire\Admin\Pages\Index::class)->name('pages.index');
     Route::get('/pages/create', \App\Livewire\Admin\Pages\Form::class)->name('pages.form');
     Route::get('/pages/{pageId}/edit', \App\Livewire\Admin\Pages\Form::class)->name('pages.form');
+    Route::get('/gallery', \App\Livewire\Admin\Gallery\Index::class)->name('gallery');
 });
 
 // Public Pages Route

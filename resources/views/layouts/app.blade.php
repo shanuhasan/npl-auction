@@ -36,6 +36,7 @@
                             <a href="{{ route('admin.analytics') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.analytics') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Analytics</a>
                             <a href="{{ route('admin.banners') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.banners') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Banners</a>
                             <a href="{{ route('admin.pages.index') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.pages*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Pages</a>
+                            <a href="{{ route('admin.gallery') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.gallery*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Gallery</a>
                             <a href="{{ route('admin.settings') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.settings') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Settings</a>
                         @elseif(auth()->user()->role === 'team_owner')
                             @php
