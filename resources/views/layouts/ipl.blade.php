@@ -54,7 +54,7 @@
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center space-x-2 group">
                 @if(setting('logo'))
-                    <img src="{{ asset('storage/' . setting('logo')) }}" alt="{{ setting('app_name', 'NPLT20') }}" class="h-16 w-auto max-w-[150px] object-contain transform group-hover:scale-105 transition-transform drop-shadow-xl">
+                    <img src="{{ asset('storage/' . setting('logo')) }}" alt="{{ setting('app_name', 'NPL') }}" class="h-16 w-auto max-w-[150px] object-contain transform group-hover:scale-105 transition-transform drop-shadow-xl">
                 @else
                     <!-- Mock Logo -->
                     <div class="w-12 h-14 bg-gradient-to-br from-[#FFC800] to-[#D4A000] rounded-b-xl flex items-center justify-center transform group-hover:scale-105 transition-transform shadow-lg border border-[#FFC800]/30">
@@ -62,8 +62,7 @@
                     </div>
                 @endif
                 <div class="flex flex-col ml-2">
-                    <span class="text-white heading-font text-2xl leading-none uppercase">{{ setting('app_name', 'Premier League') }}</span>
-                    <span class="text-[#FFC800] text-[10px] font-bold tracking-widest uppercase">Official Site</span>
+                    <span class="text-white heading-font text-2xl leading-none uppercase">{{ setting('app_name', 'Naugawan Premier League') }}</span>
                 </div>
             </a>
 
