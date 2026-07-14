@@ -18,6 +18,7 @@ class Index extends Component
     public $role;
     public $image;
     public $order = 0;
+    public $editId = null;
 
     public function rules()
     {
@@ -55,17 +56,50 @@ class Index extends Component
             Storage::disk('public')->put($filename, $encodedImage->toString());
         }
 
-        CoreCommittee::create([
-            'name' => $this->name,
-            'role' => $this->role,
-            'image_path' => $filename,
-            'order' => $this->order,
-            'is_active' => true,
-        ]);
+        if ($this->editId) {
+            $member = CoreCommittee::findOrFail($this->editId);
+            $data = [
+                'name' => $this->name,
+                'role' => $this->role,
+                'order' => $this->order,
+            ];
+            if ($filename) {
+                if ($member->image_path && Storage::disk('public')->exists($member->image_path)) {
+                    Storage::disk('public')->delete($member->image_path);
+                }
+                $data['image_path'] = $filename;
+            }
+            $member->update($data);
+            $message = 'Member successfully updated.';
+        } else {
+            CoreCommittee::create([
+                'name' => $this->name,
+                'role' => $this->role,
+                'image_path' => $filename,
+                'order' => $this->order,
+                'is_active' => true,
+            ]);
+            $message = 'Member successfully added.';
+        }
 
-        $this->reset(['name', 'role', 'image', 'order']);
+        $this->reset(['name', 'role', 'image', 'order', 'editId']);
         
-        session()->flash('message', 'Member successfully added.');
+        session()->flash('message', $message);
+    }
+
+    public function edit($id)
+    {
+        $member = CoreCommittee::findOrFail($id);
+        $this->editId = $member->id;
+        $this->name = $member->name;
+        $this->role = $member->role;
+        $this->order = $member->order;
+        $this->image = null; // Clear any uploaded image
+    }
+
+    public function cancelEdit()
+    {
+        $this->reset(['name', 'role', 'image', 'order', 'editId']);
     }
 
     public function toggleActive($id)

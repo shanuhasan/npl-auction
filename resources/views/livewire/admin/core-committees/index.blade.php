@@ -11,16 +11,18 @@
 
     <!-- Upload Form -->
     <div class="bg-card-bg p-6 rounded-xl shadow-lg border border-gray-800 mb-8">
-        <h2 class="text-xl font-bold mb-4 text-white font-poppins">Add New Member</h2>
+        <h2 class="text-xl font-bold mb-4 text-white font-poppins">{{ $editId ? 'Edit Member' : 'Add New Member' }}</h2>
         <form wire:submit="save" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-400 mb-1">Member Image</label>
-                    <input type="file" wire:model="image" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-800 file:text-white hover:file:bg-gray-700 bg-primary-bg border border-gray-700 rounded-md">
+                    <input type="file" wire:model="image" id="image-{{ $editId }}" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-800 file:text-white hover:file:bg-gray-700 bg-primary-bg border border-gray-700 rounded-md">
                     @error('image') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                     <div wire:loading wire:target="image" class="text-xs text-accent-gold mt-1 block">Uploading...</div>
                     @if ($image)
                         <img src="{{ $image->temporaryUrl() }}" class="mt-3 h-32 object-cover rounded shadow-sm border border-gray-700">
+                    @elseif($editId)
+                        <span class="text-xs text-gray-500 mt-1 block">Leave empty to keep current image.</span>
                     @endif
                 </div>
                 
@@ -45,9 +47,14 @@
                 </div>
             </div>
 
-            <div class="flex justify-end mt-6">
+            <div class="flex justify-end mt-6 gap-3">
+                @if($editId)
+                    <button type="button" wire:click="cancelEdit" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded shadow transition-colors">
+                        Cancel
+                    </button>
+                @endif
                 <button type="submit" class="bg-accent-gold hover:bg-yellow-500 text-black font-bold py-2 px-6 rounded shadow transition-colors">
-                    Add Member
+                    {{ $editId ? 'Update Member' : 'Add Member' }}
                 </button>
             </div>
         </form>
@@ -91,6 +98,7 @@
                                 </button>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <button wire:click="edit({{ $member->id }})" class="text-blue-500 hover:text-blue-400 font-bold transition-colors mr-3">Edit</button>
                                 <button wire:click="delete({{ $member->id }})" wire:confirm="Are you sure you want to delete this member?" class="text-red-500 hover:text-red-400 font-bold transition-colors">Delete</button>
                             </td>
                         </tr>
