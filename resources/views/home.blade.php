@@ -118,13 +118,13 @@
                                         @endif
                                     </div>
 
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     
-                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 transform translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none">
-                                        <span class="text-xs font-bold px-2 py-1 rounded mb-2 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
+                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 transition-colors group-hover:bg-[#141B2D]/95">
+                                        <span class="text-[10px] font-bold px-2 py-1 rounded mb-1 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
                                             Team
                                         </span>
-                                        <h3 class="text-white font-bold text-lg leading-tight line-clamp-2 drop-shadow-md group-hover:text-[#FFC800] transition-colors">{{ $team->name }}</h3>
+                                        <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors">{{ $team->name }}</h3>
                                     </div>
                                 </a>
                             </div>
@@ -174,7 +174,7 @@
                     <div class="swiper-wrapper">
                         @foreach($players as $player)
                             <div class="swiper-slide">
-                                <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" style="padding-bottom: 75%;">
+                                <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" style="padding-bottom: 75%;" onclick="@if($player->photo) openMediaModal('{{ asset('storage/' . $player->photo) }}', 'image') @endif">
                                     <div class="absolute inset-0 bg-[#0B0F19] flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
                                         @if($player->photo)
                                             <img src="{{ asset('storage/' . $player->photo) }}" alt="{{ $player->name }}" class="w-full h-full object-cover object-top">
@@ -187,13 +187,13 @@
                                         @endif
                                     </div>
 
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     
-                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 transform translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none">
-                                        <span class="text-xs font-bold px-2 py-1 rounded mb-2 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
+                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 transition-colors group-hover:bg-[#141B2D]/95">
+                                        <span class="text-[10px] font-bold px-2 py-1 rounded mb-1 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
                                             {{ $player->role ?? 'Player' }}
                                         </span>
-                                        <h3 class="text-white font-bold text-lg leading-tight line-clamp-2 drop-shadow-md group-hover:text-[#FFC800] transition-colors uppercase">{{ $player->name }}</h3>
+                                        <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors uppercase">{{ $player->name }}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -240,7 +240,7 @@
                                 <div class="group block w-full cursor-pointer relative rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg" style="padding-bottom: 75%;">
                                     @if($media->type == 'photo' && $media->file_path)
                                         <img src="{{ asset('storage/' . $media->file_path) }}" alt="{{ $media->title }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                        <a href="{{ asset('storage/' . $media->file_path) }}" target="_blank" class="absolute inset-0 z-30"></a>
+                                        <a href="javascript:void(0)" onclick="openMediaModal('{{ asset('storage/' . $media->file_path) }}', 'image')" class="absolute inset-0 z-30"></a>
                                     @elseif($media->type == 'video')
                                         @if($media->video_url)
                                             @php
@@ -262,7 +262,7 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                                 </div>
                                             </div>
-                                            <a href="{{ $media->video_url }}" target="_blank" class="absolute inset-0 z-30"></a>
+                                            <a href="javascript:void(0)" onclick="openMediaModal('{{ $videoId }}', 'youtube')" class="absolute inset-0 z-30"></a>
                                         @elseif($media->file_path)
                                             <video class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80" muted onmouseover="this.play()" onmouseout="this.pause()">
                                                 <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
@@ -272,20 +272,20 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:text-black transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                                 </div>
                                             </div>
-                                            <a href="{{ asset('storage/' . $media->file_path) }}" target="_blank" class="absolute inset-0 z-30"></a>
+                                            <a href="javascript:void(0)" onclick="openMediaModal('{{ asset('storage/' . $media->file_path) }}', 'video')" class="absolute inset-0 z-30"></a>
                                         @endif
                                     @endif
-
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
                                     
-                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 transform translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none">
-                                        <span class="text-xs font-bold px-2 py-1 rounded mb-2 inline-block {{ $media->type == 'video' ? 'bg-red-600 text-white' : 'bg-[#FFC800] text-black' }} uppercase tracking-wider shadow-md">
-                                            {{ $media->type }}
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20"></div>
+
+                                    @if($media->title)
+                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 transition-colors group-hover:bg-[#141B2D]/95 pointer-events-none">
+                                        <span class="text-[10px] font-bold px-2 py-1 rounded mb-1 inline-block {{ $media->type == 'video' ? 'bg-red-600 text-white' : 'bg-[#FFC800] text-black' }} uppercase tracking-wider shadow-md">
+                                            {{ ucfirst($media->type) }}
                                         </span>
-                                        @if($media->title)
-                                            <h3 class="text-white font-bold text-lg leading-tight line-clamp-2 drop-shadow-md group-hover:text-[#FFC800] transition-colors">{{ $media->title }}</h3>
-                                        @endif
+                                        <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors">{{ $media->title }}</h3>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
@@ -314,4 +314,74 @@
         </script>
     @endif
    
+    <!-- Universal Media Modal -->
+    <div id="universalMediaModal" class="fixed inset-0 hidden items-center justify-center bg-black/95 p-4 md:p-8 backdrop-blur-md transition-opacity opacity-0" style="transition: opacity 0.3s ease; z-index: 9999;">
+        <button onclick="closeMediaModal()" style="position: absolute; top: 20px; right: 20px; z-index: 10000; width: 50px; height: 50px; background: rgba(255,200,0,0.8); border-radius: 50%; color: black; border: 2px solid #FFC800; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: all 0.2s;" onmouseover="this.style.background='#FFC800'; this.style.transform='scale(1.1)';" onmouseout="this.style.background='rgba(255,200,0,0.8)'; this.style.transform='scale(1)';">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+        <div id="modalMediaContainer" class="w-full max-w-5xl h-full max-h-[80vh] flex items-center justify-center transform scale-95 transition-transform duration-300">
+            <!-- Content gets injected here -->
+        </div>
+    </div>
+
+    <script>
+        function openMediaModal(url, type = 'image') {
+            const modal = document.getElementById('universalMediaModal');
+            const container = document.getElementById('modalMediaContainer');
+            
+            // Clear existing content
+            container.innerHTML = '';
+            
+            if (type === 'image') {
+                container.innerHTML = `<img src="${url}" class="max-w-full max-h-full rounded-xl shadow-[0_0_40px_rgba(255,200,0,0.15)] object-contain">`;
+            } else if (type === 'youtube') {
+                container.innerHTML = `<iframe src="https://www.youtube.com/embed/${url}?autoplay=1" class="w-full h-full aspect-video rounded-xl shadow-[0_0_40px_rgba(255,200,0,0.15)]" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            } else if (type === 'video') {
+                container.innerHTML = `<video src="${url}" class="max-w-full max-h-full rounded-xl shadow-[0_0_40px_rgba(255,200,0,0.15)]" controls autoplay></video>`;
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Force reflow
+            void modal.offsetWidth;
+            
+            modal.classList.remove('opacity-0');
+            container.classList.remove('scale-95');
+            container.classList.add('scale-100');
+            
+            // Prevent scrolling on body
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMediaModal() {
+            const modal = document.getElementById('universalMediaModal');
+            const container = document.getElementById('modalMediaContainer');
+            
+            modal.classList.add('opacity-0');
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+            
+            // Wait for transition
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                container.innerHTML = ''; // Stop video/iframe playback
+                document.body.style.overflow = '';
+            }, 300);
+        }
+        
+        // Close modal on Escape key or outside click
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !document.getElementById('universalMediaModal').classList.contains('hidden')) {
+                closeMediaModal();
+            }
+        });
+        
+        document.getElementById('universalMediaModal').addEventListener('click', function(e) {
+            if (e.target === this || e.target.id === 'modalMediaContainer') {
+                closeMediaModal();
+            }
+        });
+    </script>
 </x-ipl-layout>
