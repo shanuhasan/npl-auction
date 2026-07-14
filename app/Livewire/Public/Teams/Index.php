@@ -10,7 +10,7 @@ class Index extends Component
 {
     public function render()
     {
-        $teams = Team::withCount('players')->get();
+        $teams = Team::where('is_approved', true)->withCount('players')->get();
         return view('livewire.public.teams.index', [
             'teams' => $teams
         ])->layout('layouts.ipl');

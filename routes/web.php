@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome');
 Route::get('/home', function () {
     $banners = \App\Models\Banner::where('is_active', true)->orderBy('order', 'asc')->get();
-    return view('home', compact('banners'));
+    $teams = \App\Models\Team::where('is_approved', true)->get();
+    return view('home', compact('banners', 'teams'));
 })->name('home');
 
 Route::view('dashboard', 'dashboard')

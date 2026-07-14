@@ -117,4 +117,11 @@ class Index extends Component
         $team->delete();
         session()->flash('message', 'Team Deleted Successfully.');
     }
+
+    public function toggleStatus($id)
+    {
+        $team = Team::findOrFail($id);
+        $team->update(['is_approved' => !$team->is_approved]);
+        session()->flash('message', 'Team Status Updated Successfully.');
+    }
 }

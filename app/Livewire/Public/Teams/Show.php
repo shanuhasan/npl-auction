@@ -14,6 +14,10 @@ class Show extends Component
 
     public function mount(Team $team)
     {
+        if (!$team->is_approved) {
+            abort(404);
+        }
+
         $this->team = $team;
         $this->auctions = \App\Models\Auction::orderBy('created_at', 'desc')->get();
         

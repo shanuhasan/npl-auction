@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Team extends Model
 {
     protected $fillable = [
-        'name', 'short_name', 'logo', 'primary_color', 'budget', 'remaining_budget', 'owner_id',
+        'name', 'short_name', 'logo', 'primary_color', 'budget', 'remaining_budget', 'owner_id', 'is_approved'
     ];
 
     protected $casts = [

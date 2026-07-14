@@ -94,6 +94,66 @@
         </div>
     @endif
 
+    <!-- Teams Slider -->
+    @if(isset($teams) && $teams->count() > 0)
+        <div class="bg-[#141B2D] border-y border-white/10 py-6">
+            <div class="max-w-[1400px] mx-auto px-4 md:px-8">
+                <div class="flex justify-between items-end mb-4">
+                    <h2 class="text-xl md:text-2xl heading-font uppercase text-[#FFC800] flex items-center">
+                        <span class="w-1.5 h-5 bg-[#FFC800] mr-2 block"></span> All Teams
+                    </h2>
+                    <a href="{{ route('public.teams') }}" class="text-xs md:text-sm font-bold text-gray-400 hover:text-[#FFC800] uppercase transition-colors">View All</a>
+                </div>
+                
+                <!-- Swiper is loaded in the header if banners exist, but if not we should ensure Swiper is loaded. 
+                     Since we load Swiper conditionally for banners, let's include it unconditionally if teams or banners exist. -->
+                @if(!isset($banners) || $banners->count() == 0)
+                    <link rel="stylesheet" href="{{ asset('css/swiper-bundle.min.css') }}" />
+                    <script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
+                @endif
+
+                <div class="swiper teamsSwiper">
+                    <div class="swiper-wrapper">
+                        @foreach($teams as $team)
+                            <div class="swiper-slide">
+                                <a href="{{ route('public.teams.show', $team->id) }}" class="block bg-[#0B0F19] rounded-lg p-4 border border-white/5 hover:border-[#FFC800]/50 transition-colors group text-center flex flex-col items-center">
+                                    <div class="w-20 h-20 md:w-24 md:h-24 bg-[#141B2D] rounded-full flex items-center justify-center p-2 mb-3 shadow-lg border border-white/10 group-hover:border-[#FFC800]/50 transition-colors">
+                                        @if($team->logo)
+                                            <img src="{{ asset('storage/' . $team->logo) }}" alt="{{ $team->name }}" class="w-full h-full object-contain rounded-full">
+                                        @else
+                                            <span class="text-[#FFC800] font-bold text-xl uppercase">{{ substr($team->name, 0, 2) }}</span>
+                                        @endif
+                                    </div>
+                                    <h3 class="text-white font-bold text-sm md:text-base group-hover:text-[#FFC800] transition-colors truncate w-full">{{ $team->name }}</h3>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var teamSwiper = new Swiper(".teamsSwiper", {
+                    slidesPerView: 2,
+                    spaceBetween: 10,
+                    autoplay: {
+                        delay: 3000,
+                        disableOnInteraction: false,
+                    },
+                    loop: true,
+                    breakpoints: {
+                        640: { slidesPerView: 3, spaceBetween: 20 },
+                        768: { slidesPerView: 4, spaceBetween: 20 },
+                        1024: { slidesPerView: 6, spaceBetween: 30 },
+                        1280: { slidesPerView: 8, spaceBetween: 30 },
+                    },
+                });
+            });
+        </script>
+    @endif
+
     <!-- Content Sections -->
     <div class="max-w-[1400px] mx-auto px-4 md:px-8 py-12">
         

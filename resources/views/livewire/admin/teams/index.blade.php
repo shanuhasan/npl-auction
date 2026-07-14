@@ -30,6 +30,10 @@
                     <p class="text-gray-300">Remaining: <span class="text-success-green">₹{{ number_format($team->remaining_budget, 2) }}</span></p>
                 </div>
                 <div class="flex justify-end space-x-2 items-center">
+                    <button wire:click="toggleStatus({{ $team->id }})" 
+                            class="mr-2 relative inline-flex items-center h-6 rounded-full w-11 focus:outline-none transition-colors ease-in-out duration-200 {{ $team->is_approved ? 'bg-green-500' : 'bg-gray-600' }}" title="{{ $team->is_approved ? 'Approved' : 'Not Approved' }}">
+                        <span class="inline-block w-4 h-4 transform bg-white rounded-full transition ease-in-out duration-200 {{ $team->is_approved ? 'translate-x-6' : 'translate-x-1' }}"></span>
+                    </button>
                     <a href="{{ route('teams.pdf', $team->id) }}" target="_blank" class="text-blue-400 hover:text-blue-300 transition p-2" title="Download Squad PDF">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </a>
