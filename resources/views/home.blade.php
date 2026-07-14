@@ -105,30 +105,122 @@
                     <a href="{{ route('public.teams') }}" class="text-xs md:text-sm font-bold text-gray-400 hover:text-[#FFC800] uppercase transition-colors">View All</a>
                 </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    @foreach($teams as $team)
-                        <a href="{{ route('public.teams.show', $team->id) }}" class="block group cursor-pointer relative rounded-lg overflow-hidden bg-gray-900 aspect-[4/3] border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg">
-                            <div class="w-full h-full bg-[#141B2D] flex items-center justify-center p-12 group-hover:scale-105 transition-transform duration-500">
-                                @if($team->logo)
-                                    <img src="{{ asset('storage/' . $team->logo) }}" alt="{{ $team->name }}" class="w-full h-full object-contain drop-shadow-2xl">
-                                @else
-                                    <span class="text-[#FFC800] font-bold text-6xl uppercase">{{ substr($team->name, 0, 2) }}</span>
-                                @endif
-                            </div>
+                <div class="swiper teamsSwiper overflow-hidden" style="padding-bottom: 10px;">
+                    <div class="swiper-wrapper">
+                        @foreach($teams as $team)
+                            <div class="swiper-slide h-auto">
+                                <a href="{{ route('public.teams.show', $team->id) }}" class="block group cursor-pointer relative rounded-lg overflow-hidden bg-gray-900 aspect-[4/3] border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg h-full">
+                                    <div class="w-full h-full bg-[#141B2D] flex items-center justify-center p-12 group-hover:scale-105 transition-transform duration-500">
+                                        @if($team->logo)
+                                            <img src="{{ asset('storage/' . $team->logo) }}" alt="{{ $team->name }}" class="w-full h-full object-contain drop-shadow-2xl">
+                                        @else
+                                            <span class="text-[#FFC800] font-bold text-6xl uppercase">{{ substr($team->name, 0, 2) }}</span>
+                                        @endif
+                                    </div>
 
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
-                            
-                            <div class="absolute bottom-0 left-0 w-full p-4 z-40 transform translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none">
-                                <span class="text-xs font-bold px-2 py-1 rounded mb-2 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
-                                    Team
-                                </span>
-                                <h3 class="text-white font-bold text-lg leading-tight line-clamp-2 drop-shadow-md group-hover:text-[#FFC800] transition-colors">{{ $team->name }}</h3>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                                    
+                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 transform translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none">
+                                        <span class="text-xs font-bold px-2 py-1 rounded mb-2 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
+                                            Team
+                                        </span>
+                                        <h3 class="text-white font-bold text-lg leading-tight line-clamp-2 drop-shadow-md group-hover:text-[#FFC800] transition-colors">{{ $team->name }}</h3>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var teamsSwiper = new Swiper(".teamsSwiper", {
+                    slidesPerView: 1.5,
+                    spaceBetween: 15,
+                    autoplay: {
+                        delay: 2500,
+                        disableOnInteraction: false,
+                    },
+                    loop: true,
+                    breakpoints: {
+                        640: { slidesPerView: 2, spaceBetween: 20 },
+                        768: { slidesPerView: 3, spaceBetween: 20 },
+                        1024: { slidesPerView: 4, spaceBetween: 24 },
+                    },
+                });
+            });
+        </script>
+    @endif
+
+    <!-- Players Slider -->
+    @if(isset($players) && $players->count() > 0)
+        <div class="bg-[#141B2D] py-12 border-y border-white/5">
+            <div class="max-w-[1400px] mx-auto px-4 md:px-8">
+                <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
+                    <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
+                        <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> Featured Players
+                    </h2>
+                    <a href="{{ route('public.players') }}" class="text-xs md:text-sm font-bold text-gray-400 hover:text-[#FFC800] uppercase transition-colors">View All</a>
+                </div>
+                
+                @if(!isset($banners) || $banners->count() == 0)
+                    <link rel="stylesheet" href="{{ asset('css/swiper-bundle.min.css') }}" />
+                    <script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
+                @endif
+
+                <div class="swiper playersSwiper overflow-hidden" style="padding-bottom: 10px;">
+                    <div class="swiper-wrapper">
+                        @foreach($players as $player)
+                            <div class="swiper-slide">
+                                <div class="group relative rounded-lg overflow-hidden bg-gray-900 aspect-[4/3] border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer h-full">
+                                    <div class="w-full h-full bg-[#0B0F19] flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
+                                        @if($player->photo)
+                                            <img src="{{ asset('storage/' . $player->photo) }}" alt="{{ $player->name }}" class="w-full h-full object-cover object-top">
+                                        @else
+                                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                </svg>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                                    
+                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 transform translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none">
+                                        <span class="text-xs font-bold px-2 py-1 rounded mb-2 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
+                                            {{ $player->role ?? 'Player' }}
+                                        </span>
+                                        <h3 class="text-white font-bold text-lg leading-tight line-clamp-2 drop-shadow-md group-hover:text-[#FFC800] transition-colors uppercase">{{ $player->name }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var playersSwiper = new Swiper(".playersSwiper", {
+                    slidesPerView: 1.5,
+                    spaceBetween: 15,
+                    autoplay: {
+                        delay: 3000,
+                        disableOnInteraction: false,
+                    },
+                    loop: true,
+                    breakpoints: {
+                        640: { slidesPerView: 2, spaceBetween: 20 },
+                        768: { slidesPerView: 3, spaceBetween: 20 },
+                        1024: { slidesPerView: 4, spaceBetween: 24 },
+                    },
+                });
+            });
+        </script>
     @endif
 
     <!-- Photos & Videos Gallery -->
@@ -141,62 +233,85 @@
                     </h2>
                 </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    @foreach($galleries as $media)
-                        <div class="group cursor-pointer relative rounded-lg overflow-hidden bg-gray-900 aspect-[4/3] border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg">
-                            @if($media->type == 'photo' && $media->file_path)
-                                <img src="{{ asset('storage/' . $media->file_path) }}" alt="{{ $media->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                <a href="{{ asset('storage/' . $media->file_path) }}" target="_blank" class="absolute inset-0 z-30"></a>
-                            @elseif($media->type == 'video')
-                                @if($media->video_url)
-                                    @php
-                                        $videoId = '';
-                                        if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $media->video_url, $matches)) {
-                                            $videoId = $matches[1];
-                                        }
-                                    @endphp
-                                    @if($videoId)
-                                        <img src="https://img.youtube.com/vi/{{ $videoId }}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/{{ $videoId }}/hqdefault.jpg'" alt="{{ $media->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
-                                    @else
-                                        <div class="w-full h-full bg-gray-800 flex items-center justify-center opacity-80">
-                                            <span class="text-gray-500 font-bold uppercase">Video</span>
-                                        </div>
+                <div class="swiper gallerySwiper overflow-hidden" style="padding-bottom: 10px;">
+                    <div class="swiper-wrapper">
+                        @foreach($galleries as $media)
+                            <div class="swiper-slide h-auto">
+                                <div class="group cursor-pointer relative rounded-lg overflow-hidden bg-gray-900 aspect-[4/3] border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg h-full">
+                                    @if($media->type == 'photo' && $media->file_path)
+                                        <img src="{{ asset('storage/' . $media->file_path) }}" alt="{{ $media->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                        <a href="{{ asset('storage/' . $media->file_path) }}" target="_blank" class="absolute inset-0 z-30"></a>
+                                    @elseif($media->type == 'video')
+                                        @if($media->video_url)
+                                            @php
+                                                $videoId = '';
+                                                if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $media->video_url, $matches)) {
+                                                    $videoId = $matches[1];
+                                                }
+                                            @endphp
+                                            @if($videoId)
+                                                <img src="https://img.youtube.com/vi/{{ $videoId }}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/{{ $videoId }}/hqdefault.jpg'" alt="{{ $media->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
+                                            @else
+                                                <div class="w-full h-full bg-gray-800 flex items-center justify-center opacity-80">
+                                                    <span class="text-gray-500 font-bold uppercase">Video</span>
+                                                </div>
+                                            @endif
+                                            
+                                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                                                <div class="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center shadow-lg border-2 border-white/20 group-hover:bg-red-500 transition-colors group-hover:scale-110 duration-300">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                                </div>
+                                            </div>
+                                            <a href="{{ $media->video_url }}" target="_blank" class="absolute inset-0 z-30"></a>
+                                        @elseif($media->file_path)
+                                            <video class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80" muted onmouseover="this.play()" onmouseout="this.pause()">
+                                                <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
+                                            </video>
+                                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                                                <div class="w-14 h-14 rounded-full bg-black/60 backdrop-blur flex items-center justify-center shadow-lg border-2 border-white/20 group-hover:bg-[#FFC800] transition-colors group-hover:scale-110 duration-300">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:text-black transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                                </div>
+                                            </div>
+                                            <a href="{{ asset('storage/' . $media->file_path) }}" target="_blank" class="absolute inset-0 z-30"></a>
+                                        @endif
                                     @endif
-                                    
-                                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                                        <div class="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center shadow-lg border-2 border-white/20 group-hover:bg-red-500 transition-colors group-hover:scale-110 duration-300">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                        </div>
-                                    </div>
-                                    <a href="{{ $media->video_url }}" target="_blank" class="absolute inset-0 z-30"></a>
-                                @elseif($media->file_path)
-                                    <video class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80" muted onmouseover="this.play()" onmouseout="this.pause()">
-                                        <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
-                                    </video>
-                                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                                        <div class="w-14 h-14 rounded-full bg-black/60 backdrop-blur flex items-center justify-center shadow-lg border-2 border-white/20 group-hover:bg-[#FFC800] transition-colors group-hover:scale-110 duration-300">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:text-black transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                        </div>
-                                    </div>
-                                    <a href="{{ asset('storage/' . $media->file_path) }}" target="_blank" class="absolute inset-0 z-30"></a>
-                                @endif
-                            @endif
 
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
-                            
-                            <div class="absolute bottom-0 left-0 w-full p-4 z-40 transform translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none">
-                                <span class="text-xs font-bold px-2 py-1 rounded mb-2 inline-block {{ $media->type == 'video' ? 'bg-red-600 text-white' : 'bg-[#FFC800] text-black' }} uppercase tracking-wider shadow-md">
-                                    {{ $media->type }}
-                                </span>
-                                @if($media->title)
-                                    <h3 class="text-white font-bold text-lg leading-tight line-clamp-2 drop-shadow-md group-hover:text-[#FFC800] transition-colors">{{ $media->title }}</h3>
-                                @endif
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                                    
+                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 transform translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none">
+                                        <span class="text-xs font-bold px-2 py-1 rounded mb-2 inline-block {{ $media->type == 'video' ? 'bg-red-600 text-white' : 'bg-[#FFC800] text-black' }} uppercase tracking-wider shadow-md">
+                                            {{ $media->type }}
+                                        </span>
+                                        @if($media->title)
+                                            <h3 class="text-white font-bold text-lg leading-tight line-clamp-2 drop-shadow-md group-hover:text-[#FFC800] transition-colors">{{ $media->title }}</h3>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var gallerySwiper = new Swiper(".gallerySwiper", {
+                    slidesPerView: 1.5,
+                    spaceBetween: 15,
+                    autoplay: {
+                        delay: 3500,
+                        disableOnInteraction: false,
+                    },
+                    loop: true,
+                    breakpoints: {
+                        640: { slidesPerView: 2, spaceBetween: 20 },
+                        768: { slidesPerView: 3, spaceBetween: 20 },
+                        1024: { slidesPerView: 4, spaceBetween: 24 },
+                    },
+                });
+            });
+        </script>
     @endif
     <!-- Content Sections -->
     <div class="max-w-[1400px] mx-auto px-4 md:px-8 py-12">

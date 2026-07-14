@@ -7,7 +7,8 @@ Route::get('/home', function () {
     $banners = \App\Models\Banner::where('is_active', true)->orderBy('order', 'asc')->get();
     $teams = \App\Models\Team::where('is_approved', true)->get();
     $galleries = \App\Models\Gallery::where('is_active', true)->orderBy('created_at', 'desc')->take(8)->get();
-    return view('home', compact('banners', 'teams', 'galleries'));
+    $players = \App\Models\Player::where('is_approved', true)->inRandomOrder()->take(8)->get();
+    return view('home', compact('banners', 'teams', 'galleries', 'players'));
 })->name('home');
 
 Route::view('dashboard', 'dashboard')
