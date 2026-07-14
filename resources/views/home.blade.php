@@ -1,78 +1,38 @@
 <x-ipl-layout>
-    <!-- Match Center Strip (Mocked) -->
-    <div class="bg-gray-100 border-b border-gray-200 overflow-x-auto whitespace-nowrap scrollbar-hide">
-        <div class="flex items-center px-4 py-2 space-x-2 w-max mx-auto">
-            <span class="text-xs font-bold uppercase text-gray-500 mr-2">Matches</span>
-            <!-- Match Card 1 -->
-            <div class="bg-white border border-gray-200 rounded shadow-sm px-4 py-2 flex flex-col justify-center min-w-[250px] cursor-pointer hover:shadow-md transition-shadow">
-                <div class="text-[10px] text-gray-500 font-bold mb-1">MATCH 1 • T20 • COMPLETED</div>
-                <div class="flex justify-between items-center mb-1">
-                    <div class="flex items-center space-x-2"><div class="w-4 h-4 bg-yellow-400 rounded-full"></div><span class="font-bold text-sm">CSK</span></div>
-                    <span class="font-bold text-sm">180/5 (20)</span>
-                </div>
-                <div class="flex justify-between items-center mb-1">
-                    <div class="flex items-center space-x-2"><div class="w-4 h-4 bg-blue-600 rounded-full"></div><span class="font-bold text-sm text-gray-500">MI</span></div>
-                    <span class="font-bold text-sm text-gray-500">165/8 (20)</span>
-                </div>
-                <div class="text-[10px] text-[#D4A000] font-bold mt-1">CSK won by 15 runs</div>
-            </div>
-            <!-- Match Card 2 -->
-            <div class="bg-white border border-gray-200 rounded shadow-sm px-4 py-2 flex flex-col justify-center min-w-[250px] cursor-pointer hover:shadow-md transition-shadow">
-                <div class="text-[10px] text-red-600 font-bold mb-1 flex items-center"><span class="w-1.5 h-1.5 bg-red-600 rounded-full mr-1 animate-pulse"></span> MATCH 2 • T20 • LIVE</div>
-                <div class="flex justify-between items-center mb-1">
-                    <div class="flex items-center space-x-2"><div class="w-4 h-4 bg-red-500 rounded-full"></div><span class="font-bold text-sm">RCB</span></div>
-                    <span class="font-bold text-sm">120/2 (12.4)</span>
-                </div>
-                <div class="flex justify-between items-center mb-1">
-                    <div class="flex items-center space-x-2"><div class="w-4 h-4 bg-purple-600 rounded-full"></div><span class="font-bold text-sm text-gray-500">KKR</span></div>
-                    <span class="font-bold text-sm text-gray-500">Yet to bat</span>
-                </div>
-                <div class="text-[10px] text-gray-500 font-bold mt-1">RCB elect to bat</div>
-            </div>
-            <!-- Match Card 3 -->
-            <div class="bg-white border border-gray-200 rounded shadow-sm px-4 py-2 flex flex-col justify-center min-w-[250px] cursor-pointer hover:shadow-md transition-shadow">
-                <div class="text-[10px] text-gray-500 font-bold mb-1">MATCH 3 • T20 • UPCOMING</div>
-                <div class="flex justify-between items-center mb-1">
-                    <div class="flex items-center space-x-2"><div class="w-4 h-4 bg-pink-500 rounded-full"></div><span class="font-bold text-sm">RR</span></div>
-                </div>
-                <div class="flex justify-between items-center mb-1">
-                    <div class="flex items-center space-x-2"><div class="w-4 h-4 bg-blue-400 rounded-full"></div><span class="font-bold text-sm">DC</span></div>
-                </div>
-                <div class="text-[10px] text-[#FFC800] font-bold mt-1">Tomorrow, 7:30 PM IST</div>
-            </div>
-        </div>
-    </div>
-
     <!-- Hero Section / Featured (Dynamic Swiper Slider) -->
     @if(isset($banners) && $banners->count() > 0)
         <!-- Include Swiper's CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
         
-        <div class="swiper myHeroSwiper relative w-full h-[500px] md:h-[600px] bg-gray-900 overflow-hidden">
+        <div class="swiper myHeroSwiper relative w-full h-[500px] md:h-[600px] bg-[#0B0F19] overflow-hidden">
             <div class="swiper-wrapper">
                 @foreach($banners as $banner)
-                <div class="swiper-slide relative">
-                    <!-- Banner Background Image -->
-                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('storage/' . $banner->image_path) }}');"></div>
+                <div class="swiper-slide relative w-full h-full flex justify-center items-center">
+                    <!-- Blurred Background (fills empty space with matching colors) -->
+                    <div class="absolute inset-0 bg-cover bg-center blur-2xl opacity-40" style="background-image: url('{{ asset('storage/' . $banner->image_path) }}');"></div>
+                    
+                    <!-- Banner Image (dictates the height of the slide) -->
+                    <img src="{{ asset('storage/' . $banner->image_path) }}" alt="Banner" class="relative z-10 w-full h-full object-contain">
+                    
                     <!-- Overlay -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/60 to-transparent"></div>
+                    <div class="absolute inset-0 z-20 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent pointer-events-none"></div>
                     
                     <!-- Content -->
-                    <div class="absolute bottom-0 left-0 w-full p-8 md:p-16">
-                        <div class="max-w-[1400px] mx-auto">
+                    <div class="absolute inset-0 z-30 flex flex-col justify-end p-6 md:p-16 pointer-events-none">
+                        <div class="max-w-[1400px] mx-auto w-full pointer-events-auto">
                             @if($banner->title)
-                                <h1 class="text-4xl md:text-6xl text-white heading-font uppercase leading-tight max-w-4xl drop-shadow-lg">
+                                <h1 class="text-2xl md:text-5xl lg:text-6xl text-white heading-font uppercase leading-tight max-w-4xl drop-shadow-lg">
                                     {{ $banner->title }}
                                 </h1>
                             @endif
                             @if($banner->description)
-                                <p class="text-gray-300 mt-4 max-w-2xl text-lg hidden md:block">
+                                <p class="text-gray-300 mt-2 md:mt-4 max-w-2xl text-sm md:text-lg hidden md:block drop-shadow-md">
                                     {{ $banner->description }}
                                 </p>
                             @endif
                             @if($banner->link)
-                                <div class="mt-8 flex space-x-4">
-                                    <a href="{{ $banner->link }}" target="_blank" class="bg-transparent border-2 border-[#FFC800] text-[#FFC800] px-8 py-3 font-bold uppercase hover:bg-[#FFC800] hover:text-black transition-colors rounded-sm">Learn More</a>
+                                <div class="mt-4 md:mt-8 flex space-x-4">
+                                    <a href="{{ $banner->link }}" target="_blank" class="bg-black/50 backdrop-blur-sm border-2 border-[#FFC800] text-[#FFC800] px-6 py-2 md:px-8 md:py-3 font-bold uppercase hover:bg-[#FFC800] hover:text-black transition-colors rounded-sm">Learn More</a>
                                 </div>
                             @endif
                         </div>
@@ -92,7 +52,7 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var swiper = new Swiper(".myHeroSwiper", {
-                    loop: true,
+                    loop: {{ $banners->count() > 1 ? 'true' : 'false' }},
                     autoplay: {
                         delay: 5000,
                         disableOnInteraction: false,
