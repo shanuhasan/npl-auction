@@ -29,7 +29,11 @@
     </style>
 </head>
 <body class="bg-[#0B0F19] text-white antialiased overflow-x-hidden">
-
+    @php
+        $globalPages = \Illuminate\Support\Facades\Schema::hasTable('pages') 
+            ? \App\Models\Page::where('is_active', true)->select('id', 'title', 'slug')->get() 
+            : collect();
+    @endphp
     <!-- Top Bar (BCCI/WPL links) -->
     <div class="bg-[#0B0F19] text-gray-400 text-xs font-medium py-1.5 px-4 md:px-8 flex justify-between items-center hidden sm:flex">
         <div class="flex space-x-4">
