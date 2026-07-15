@@ -86,40 +86,76 @@ new class extends Component
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             @auth
-                @if(auth()->user()->role === 'admin')
+                @if(in_array(auth()->user()->role, ['admin', 'sub_admin']))
                     <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" wire:navigate class="text-accent-red font-bold">
                         Dashboard (Admin)
                     </x-responsive-nav-link>
+                    
+                    @if(auth()->user()->hasPermission('manage_users'))
                     <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users*')" wire:navigate>
                         Manage Users
                     </x-responsive-nav-link>
+                    @endif
+                    
+                    @if(auth()->user()->hasPermission('manage_teams'))
                     <x-responsive-nav-link :href="route('admin.teams')" :active="request()->routeIs('admin.teams*')" wire:navigate>
                         Manage Teams
                     </x-responsive-nav-link>
+                    @endif
+                    
+                    @if(auth()->user()->hasPermission('manage_players'))
                     <x-responsive-nav-link :href="route('admin.players')" :active="request()->routeIs('admin.players*')" wire:navigate>
                         Manage Players
                     </x-responsive-nav-link>
+                    @endif
+                    
+                    @if(auth()->user()->hasPermission('manage_auctions'))
                     <x-responsive-nav-link :href="route('admin.auctions')" :active="request()->routeIs('admin.auctions*')" wire:navigate>
                         Manage Auctions
                     </x-responsive-nav-link>
+                    @endif
+                    
+                    @if(auth()->user()->hasPermission('view_analytics'))
                     <x-responsive-nav-link :href="route('admin.analytics')" :active="request()->routeIs('admin.analytics')" wire:navigate>
                         Analytics
                     </x-responsive-nav-link>
+                    @endif
+                    
+                    @if(auth()->user()->hasPermission('manage_banners'))
                     <x-responsive-nav-link :href="route('admin.banners')" :active="request()->routeIs('admin.banners')" wire:navigate>
                         Manage Banners
                     </x-responsive-nav-link>
+                    @endif
+                    
+                    @if(auth()->user()->hasPermission('manage_core_committees'))
                     <x-responsive-nav-link :href="route('admin.core-committees')" :active="request()->routeIs('admin.core-committees')" wire:navigate>
                         Manage Committees
                     </x-responsive-nav-link>
+                    @endif
+                    
+                    @if(auth()->user()->hasPermission('manage_sponsors'))
+                    <x-responsive-nav-link :href="route('admin.sponsors')" :active="request()->routeIs('admin.sponsors')" wire:navigate>
+                        Manage Sponsors
+                    </x-responsive-nav-link>
+                    @endif
+                    
+                    @if(auth()->user()->hasPermission('manage_pages'))
                     <x-responsive-nav-link :href="route('admin.pages.index')" :active="request()->routeIs('admin.pages.index')" wire:navigate>
                         Manage Pages
                     </x-responsive-nav-link>
+                    @endif
+                    
+                    @if(auth()->user()->hasPermission('manage_gallery'))
                     <x-responsive-nav-link :href="route('admin.gallery')" :active="request()->routeIs('admin.gallery')" wire:navigate>
                         Manage Gallery
                     </x-responsive-nav-link>
+                    @endif
+                    
+                    @if(auth()->user()->hasPermission('manage_settings'))
                     <x-responsive-nav-link :href="route('admin.settings')" :active="request()->routeIs('admin.settings')" wire:navigate>
                         Settings
                     </x-responsive-nav-link>
+                    @endif
                 @elseif(auth()->user()->role === 'team_owner')
                     @php
                         $myTeam = \App\Models\Team::where('owner_id', auth()->id())->first();

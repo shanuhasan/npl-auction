@@ -26,24 +26,24 @@ Route::get('/teams/{team}', \App\Livewire\Public\Teams\Show::class)->name('publi
 Route::get('/players/register', \App\Livewire\Public\Players\Register::class)->name('public.players.register');
 Route::get('/players', \App\Livewire\Public\Players\Index::class)->name('public.players');
 
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('dashboard');
-    Route::get('/teams', \App\Livewire\Admin\Teams\Index::class)->name('teams');
-    Route::get('/players', \App\Livewire\Admin\Players\Index::class)->name('players');
-    Route::get('/users', \App\Livewire\Admin\Users\Index::class)->name('users');
-    Route::get('/analytics', \App\Livewire\Admin\Analytics::class)->name('analytics');
-    Route::get('/auctions', \App\Livewire\Admin\Auctions\Index::class)->name('auctions');
-    Route::get('/auctions/create', \App\Livewire\Admin\Auctions\Create::class)->name('auctions.create');
-    Route::get('/auctions/{auction}/edit', \App\Livewire\Admin\Auctions\Edit::class)->name('auctions.edit');
-    Route::get('/auction/control/{auction}', \App\Livewire\Admin\Auctions\Control::class)->name('auction.control');
-    Route::get('/settings', \App\Livewire\Admin\Settings::class)->name('settings');
-    Route::get('/banners', \App\Livewire\Admin\Banners\Index::class)->name('banners');
-    Route::get('/pages', \App\Livewire\Admin\Pages\Index::class)->name('pages.index');
-    Route::get('/pages/create', \App\Livewire\Admin\Pages\Form::class)->name('pages.form');
-    Route::get('/pages/{pageId}/edit', \App\Livewire\Admin\Pages\Form::class)->name('pages.form');
-    Route::get('/gallery', \App\Livewire\Admin\Gallery\Index::class)->name('gallery');
-    Route::get('/core-committees', \App\Livewire\Admin\CoreCommittees\Index::class)->name('core-committees');
-    Route::get('/sponsors', \App\Livewire\Admin\Sponsors\Index::class)->name('sponsors');
+Route::middleware(['auth', 'role:admin,sub_admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('dashboard'); // Basic dashboard accessible to both
+    Route::get('/teams', \App\Livewire\Admin\Teams\Index::class)->middleware('permission:manage_teams')->name('teams');
+    Route::get('/players', \App\Livewire\Admin\Players\Index::class)->middleware('permission:manage_players')->name('players');
+    Route::get('/users', \App\Livewire\Admin\Users\Index::class)->middleware('permission:manage_users')->name('users');
+    Route::get('/analytics', \App\Livewire\Admin\Analytics::class)->middleware('permission:view_analytics')->name('analytics');
+    Route::get('/auctions', \App\Livewire\Admin\Auctions\Index::class)->middleware('permission:manage_auctions')->name('auctions');
+    Route::get('/auctions/create', \App\Livewire\Admin\Auctions\Create::class)->middleware('permission:manage_auctions')->name('auctions.create');
+    Route::get('/auctions/{auction}/edit', \App\Livewire\Admin\Auctions\Edit::class)->middleware('permission:manage_auctions')->name('auctions.edit');
+    Route::get('/auction/control/{auction}', \App\Livewire\Admin\Auctions\Control::class)->middleware('permission:manage_auctions')->name('auction.control');
+    Route::get('/settings', \App\Livewire\Admin\Settings::class)->middleware('permission:manage_settings')->name('settings');
+    Route::get('/banners', \App\Livewire\Admin\Banners\Index::class)->middleware('permission:manage_banners')->name('banners');
+    Route::get('/pages', \App\Livewire\Admin\Pages\Index::class)->middleware('permission:manage_pages')->name('pages.index');
+    Route::get('/pages/create', \App\Livewire\Admin\Pages\Form::class)->middleware('permission:manage_pages')->name('pages.form');
+    Route::get('/pages/{pageId}/edit', \App\Livewire\Admin\Pages\Form::class)->middleware('permission:manage_pages')->name('pages.form');
+    Route::get('/gallery', \App\Livewire\Admin\Gallery\Index::class)->middleware('permission:manage_gallery')->name('gallery');
+    Route::get('/core-committees', \App\Livewire\Admin\CoreCommittees\Index::class)->middleware('permission:manage_core_committees')->name('core-committees');
+    Route::get('/sponsors', \App\Livewire\Admin\Sponsors\Index::class)->middleware('permission:manage_sponsors')->name('sponsors');
 });
 
 // Public Pages Route

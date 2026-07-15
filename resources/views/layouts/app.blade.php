@@ -27,19 +27,52 @@
                 </div>
                 <nav class="flex-1 mt-6 space-y-1">
                     @auth
-                        @if(auth()->user()->role === 'admin')
+                        @if(in_array(auth()->user()->role, ['admin', 'sub_admin']))
                             <a href="{{ route('admin.dashboard') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.dashboard') ? 'bg-gray-800 border-l-4 border-accent-red text-accent-red font-bold' : 'hover:bg-gray-800 text-accent-red font-semibold' }}">Dashboard (Admin)</a>
+                            
+                            @if(auth()->user()->hasPermission('manage_users'))
                             <a href="{{ route('admin.users') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.users*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Users</a>
+                            @endif
+                            
+                            @if(auth()->user()->hasPermission('manage_teams'))
                             <a href="{{ route('admin.teams') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.teams*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Teams</a>
+                            @endif
+                            
+                            @if(auth()->user()->hasPermission('manage_players'))
                             <a href="{{ route('admin.players') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.players*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Players</a>
+                            @endif
+                            
+                            @if(auth()->user()->hasPermission('manage_auctions'))
                             <a href="{{ route('admin.auctions') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.auctions*') || request()->routeIs('admin.auction.*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Auctions</a>
+                            @endif
+                            
+                            @if(auth()->user()->hasPermission('view_analytics'))
                             <a href="{{ route('admin.analytics') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.analytics') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Analytics</a>
+                            @endif
+                            
+                            @if(auth()->user()->hasPermission('manage_banners'))
                             <a href="{{ route('admin.banners') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.banners') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Banners</a>
+                            @endif
+                            
+                            @if(auth()->user()->hasPermission('manage_core_committees'))
                             <a href="{{ route('admin.core-committees') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.core-committees') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Core Committee</a>
+                            @endif
+                            
+                            @if(auth()->user()->hasPermission('manage_sponsors'))
                             <a href="{{ route('admin.sponsors') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.sponsors') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Sponsors</a>
+                            @endif
+                            
+                            @if(auth()->user()->hasPermission('manage_pages'))
                             <a href="{{ route('admin.pages.index') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.pages*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Pages</a>
+                            @endif
+                            
+                            @if(auth()->user()->hasPermission('manage_gallery'))
                             <a href="{{ route('admin.gallery') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.gallery*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Gallery</a>
+                            @endif
+                            
+                            @if(auth()->user()->hasPermission('manage_settings'))
                             <a href="{{ route('admin.settings') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.settings') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Settings</a>
+                            @endif
                         @elseif(auth()->user()->role === 'team_owner')
                             @php
                                 $myTeam = \App\Models\Team::where('owner_id', auth()->id())->first();

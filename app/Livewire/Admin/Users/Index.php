@@ -15,7 +15,8 @@ class Index extends Component
     public $search = '';
     public $filterRole = '';
 
-    public $user_id, $name, $email, $role = 'user', $password;
+    public $user_id, $name, $email, $role = 'viewer', $password;
+    public $permissions = [];
     public $isModalOpen = false;
 
     protected function rules()
@@ -23,7 +24,8 @@ class Index extends Component
         return [
             'name' => 'required|string|max:255',
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($this->user_id)],
-            'role' => 'required|string|in:admin,team_owner,user',
+            'role' => 'required|string|in:admin,team_owner,viewer,sub_admin',
+            'permissions' => 'nullable|array',
             'password' => $this->user_id ? 'nullable|string|min:8' : 'required|string|min:8',
         ];
     }
@@ -77,7 +79,8 @@ class Index extends Component
         $this->user_id = '';
         $this->name = '';
         $this->email = '';
-        $this->role = 'user';
+        $this->role = 'viewer';
+        $this->permissions = [];
         $this->password = '';
     }
 
@@ -89,6 +92,7 @@ class Index extends Component
             'name' => $this->name,
             'email' => $this->email,
             'role' => $this->role,
+            'permissions' => $this->role === 'sub_admin' ? $this->permissions : null,
         ];
 
         if ($this->password) {
@@ -109,6 +113,7 @@ class Index extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->role = $user->role;
+        $this->permissions = $user->permissions ?? [];
         // Password is left blank unless they want to change it
         
         $this->openModal();
