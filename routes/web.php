@@ -9,7 +9,8 @@ Route::get('/home', function () {
     $galleries = \App\Models\Gallery::where('is_active', true)->orderBy('created_at', 'desc')->take(8)->get();
     $players = \App\Models\Player::where('is_approved', true)->inRandomOrder()->take(8)->get();
     $coreCommittees = \App\Models\CoreCommittee::where('is_active', true)->orderBy('order', 'asc')->get();
-    return view('home', compact('banners', 'teams', 'galleries', 'players', 'coreCommittees'));
+    $sponsors = \App\Models\Sponsor::where('is_active', true)->orderBy('order', 'asc')->get();
+    return view('home', compact('banners', 'teams', 'galleries', 'players', 'coreCommittees', 'sponsors'));
 })->name('home');
 
 Route::view('dashboard', 'dashboard')
@@ -42,6 +43,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/pages/{pageId}/edit', \App\Livewire\Admin\Pages\Form::class)->name('pages.form');
     Route::get('/gallery', \App\Livewire\Admin\Gallery\Index::class)->name('gallery');
     Route::get('/core-committees', \App\Livewire\Admin\CoreCommittees\Index::class)->name('core-committees');
+    Route::get('/sponsors', \App\Livewire\Admin\Sponsors\Index::class)->name('sponsors');
 });
 
 // Public Pages Route

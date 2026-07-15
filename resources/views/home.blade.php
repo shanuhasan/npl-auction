@@ -94,6 +94,74 @@
         </div>
     @endif
 
+    <!-- Sponsors & Partners Section -->
+    @if(isset($sponsors) && $sponsors->count() > 0)
+        <div class="bg-[#0B0F19] py-12 border-b border-white/5">
+            <div class="max-w-[1400px] mx-auto px-4 md:px-8 text-center">
+                
+                @php
+                    $titleSponsors = $sponsors->where('type', 'title_sponsor');
+                    $premierPartners = $sponsors->where('type', 'premier_partner');
+                    $generalSponsors = $sponsors->where('type', 'sponsor');
+                @endphp
+
+                <!-- Title Sponsor -->
+                @if($titleSponsors->count() > 0)
+                    <div class="mb-12">
+                        <h2 class="text-sm font-bold text-[#FFC800] uppercase tracking-widest mb-6">Title Sponsor</h2>
+                        <div class="flex justify-center items-center flex-wrap gap-8">
+                            @foreach($titleSponsors as $sponsor)
+                                <a href="{{ $sponsor->url ?? '#' }}" target="{{ $sponsor->url ? '_blank' : '_self' }}" class="group block bg-white p-4 rounded-xl shadow-lg border border-gray-700 hover:border-[#FFC800] transition-all transform hover:-translate-y-1">
+                                    @if($sponsor->logo_path)
+                                        <img src="{{ asset('storage/' . $sponsor->logo_path) }}" alt="{{ $sponsor->name }}" class="h-24 md:h-32 object-contain w-auto max-w-[200px] md:max-w-[250px]">
+                                    @else
+                                        <span class="text-2xl font-bold text-gray-800">{{ $sponsor->name }}</span>
+                                    @endif
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Premier Partners -->
+                @if($premierPartners->count() > 0)
+                    <div class="mb-12">
+                        <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Premier Partners</h2>
+                        <div class="flex justify-center items-center flex-wrap gap-6">
+                            @foreach($premierPartners as $sponsor)
+                                <a href="{{ $sponsor->url ?? '#' }}" target="{{ $sponsor->url ? '_blank' : '_self' }}" class="group block bg-white p-3 rounded-lg shadow-md border border-gray-800 hover:border-blue-400 transition-all transform hover:-translate-y-1">
+                                    @if($sponsor->logo_path)
+                                        <img src="{{ asset('storage/' . $sponsor->logo_path) }}" alt="{{ $sponsor->name }}" class="h-16 md:h-20 object-contain w-auto max-w-[150px] md:max-w-[180px]">
+                                    @else
+                                        <span class="text-xl font-bold text-gray-800">{{ $sponsor->name }}</span>
+                                    @endif
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                <!-- General Sponsors -->
+                @if($generalSponsors->count() > 0)
+                    <div>
+                        <h2 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Sponsors & Partners</h2>
+                        <div class="flex justify-center items-center flex-wrap gap-4">
+                            @foreach($generalSponsors as $sponsor)
+                                <a href="{{ $sponsor->url ?? '#' }}" target="{{ $sponsor->url ? '_blank' : '_self' }}" class="group block bg-gray-50 p-2 rounded shadow border border-gray-200 hover:border-gray-400 transition-all opacity-80 hover:opacity-100">
+                                    @if($sponsor->logo_path)
+                                        <img src="{{ asset('storage/' . $sponsor->logo_path) }}" alt="{{ $sponsor->name }}" class="h-10 md:h-12 object-contain w-auto max-w-[100px] md:max-w-[120px]">
+                                    @else
+                                        <span class="text-sm font-bold text-gray-600">{{ $sponsor->name }}</span>
+                                    @endif
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    @endif
+
     <!-- Core Committee Section -->
     @if(isset($coreCommittees) && $coreCommittees->count() > 0)
         <div class="bg-[#141B2D] py-12 border-b border-white/5">
