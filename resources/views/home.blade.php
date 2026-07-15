@@ -373,7 +373,7 @@
             if (type === 'image') {
                 container.innerHTML = `
                 <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden">
-                    <img src="${url}" class="w-full h-full object-contain rounded-lg drop-shadow-2xl">
+                    <img src="${url}" class="max-w-full max-h-full object-contain rounded-lg drop-shadow-2xl">
                 </div>`;
             } else if (type === 'youtube') {
                 container.innerHTML = `
@@ -383,7 +383,7 @@
             } else if (type === 'video') {
                 container.innerHTML = `
                 <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden">
-                    <video src="${url}" class="w-full h-full object-contain rounded-xl drop-shadow-2xl" controls autoplay></video>
+                    <video src="${url}" class="max-w-full max-h-full object-contain rounded-xl drop-shadow-2xl" controls autoplay></video>
                 </div>`;
             }
 
