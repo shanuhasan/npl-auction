@@ -108,6 +108,15 @@ new class extends Component
                     <x-responsive-nav-link :href="route('admin.banners')" :active="request()->routeIs('admin.banners')" wire:navigate>
                         Manage Banners
                     </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.core-committees')" :active="request()->routeIs('admin.core-committees')" wire:navigate>
+                        Manage Committees
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.pages.index')" :active="request()->routeIs('admin.pages.index')" wire:navigate>
+                        Manage Pages
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.gallery')" :active="request()->routeIs('admin.gallery')" wire:navigate>
+                        Manage Gallery
+                    </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.settings')" :active="request()->routeIs('admin.settings')" wire:navigate>
                         Settings
                     </x-responsive-nav-link>
