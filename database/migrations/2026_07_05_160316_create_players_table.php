@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('country');
             $table->string('batting_style')->nullable();
             $table->string('bowling_style')->nullable();
-            $table->decimal('base_price', 15, 2);
+            $table->decimal('base_price', 15, 2)->default(1000);
             $table->enum('category', ['marquee', 'set-a', 'set-b', 'set-c']);
             $table->json('stats')->nullable();
             $table->enum('status', ['available', 'sold', 'unsold'])->default('available');

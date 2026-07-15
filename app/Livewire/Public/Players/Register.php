@@ -71,7 +71,7 @@ class Register extends Component
             'contact_no' => $this->contact_no,
             'batting_style' => $this->batting_style,
             'bowling_style' => $this->bowling_style,
-            'base_price' => 0,
+            'base_price' => 1000,
             'category' => 'set-c',
             'status' => 'available',
             'stats' => $this->stats,

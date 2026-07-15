@@ -121,7 +121,7 @@ class Index extends Component
         $this->contact_no = '';
         $this->batting_style = '';
         $this->bowling_style = '';
-        $this->base_price = 0;
+        $this->base_price = 1000;
         $this->category = 'set-a';
         $this->status = 'available';
         $this->is_approved = true;
