@@ -371,11 +371,20 @@
             container.innerHTML = '';
             
             if (type === 'image') {
-                container.innerHTML = `<img src="${url}" class="max-w-full max-h-full rounded-xl shadow-[0_0_40px_rgba(255,200,0,0.15)] object-contain">`;
+                container.innerHTML = `
+                <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6">
+                    <img src="${url}" class="max-w-full max-h-full object-contain rounded-lg drop-shadow-2xl">
+                </div>`;
             } else if (type === 'youtube') {
-                container.innerHTML = `<iframe src="https://www.youtube.com/embed/${url}?autoplay=1" class="w-full h-full aspect-video rounded-xl shadow-[0_0_40px_rgba(255,200,0,0.15)]" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                container.innerHTML = `
+                <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6">
+                    <iframe src="https://www.youtube.com/embed/${url}?autoplay=1" class="w-full h-full rounded-xl" style="aspect-ratio: 16/9; max-width: 100%; max-height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>`;
             } else if (type === 'video') {
-                container.innerHTML = `<video src="${url}" class="max-w-full max-h-full rounded-xl shadow-[0_0_40px_rgba(255,200,0,0.15)]" controls autoplay></video>`;
+                container.innerHTML = `
+                <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6">
+                    <video src="${url}" class="max-w-full max-h-full object-contain rounded-xl drop-shadow-2xl" controls autoplay></video>
+                </div>`;
             }
 
             modal.classList.remove('hidden');
