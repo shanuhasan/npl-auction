@@ -73,6 +73,25 @@
                                 <input type="text" id="contact_phone" wire:model="contact_phone" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="+91 9876543210">
                                 @error('contact_phone') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                             </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-6">
+                            <!-- Our Mission -->
+                            <div>
+                                <label for="our_mission" class="block text-sm font-medium text-gray-400 mb-1">Our Mission</label>
+                                <textarea id="our_mission" wire:model="our_mission" rows="4" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="Enter mission statement..."></textarea>
+                                @error('our_mission') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                            </div>
+
+                            <!-- Our Vision -->
+                            <div>
+                                <label for="our_vision" class="block text-sm font-medium text-gray-400 mb-1">Our Vision</label>
+                                <textarea id="our_vision" wire:model="our_vision" rows="4" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="Enter vision statement..."></textarea>
+                                @error('our_vision') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             
                             <!-- Developer Name -->
                             <div>

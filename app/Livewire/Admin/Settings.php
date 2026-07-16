@@ -20,6 +20,8 @@ class Settings extends Component
     public $season;
     public $developer_name;
     public $developer_url;
+    public $our_mission;
+    public $our_vision;
 
     public function mount()
     {
@@ -31,6 +33,8 @@ class Settings extends Component
         $this->contact_phone = setting('contact_phone', '');
         $this->developer_name = setting('developer_name', 'Shanu Saifi');
         $this->developer_url = setting('developer_url', '#');
+        $this->our_mission = setting('our_mission', '');
+        $this->our_vision = setting('our_vision', '');
     }
 
     public function save()
@@ -44,6 +48,8 @@ class Settings extends Component
             'contact_phone' => 'nullable|string|max:255',
             'developer_name' => 'nullable|string|max:255',
             'developer_url' => 'nullable|string|max:255',
+            'our_mission' => 'nullable|string',
+            'our_vision' => 'nullable|string',
         ]);
 
         \App\Models\Setting::set('app_name', $this->app_name);
@@ -81,6 +87,8 @@ class Settings extends Component
         \App\Models\Setting::set('contact_phone', $this->contact_phone);
         \App\Models\Setting::set('developer_name', $this->developer_name);
         \App\Models\Setting::set('developer_url', $this->developer_url);
+        \App\Models\Setting::set('our_mission', $this->our_mission);
+        \App\Models\Setting::set('our_vision', $this->our_vision);
 
         session()->flash('success', 'Settings updated successfully.');
     }

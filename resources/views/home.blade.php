@@ -94,6 +94,7 @@
         </div>
     @endif
 
+
     <!-- Sponsors & Partners Section -->
     @if(isset($sponsors) && $sponsors->count() > 0)
         <div class="bg-[#0B0F19] py-12 border-b border-white/5">
@@ -195,6 +196,64 @@
                             </div>
                         </div>
                     @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <!-- Our Mission & Vision Section -->
+    @php
+        $mission = setting('our_mission');
+        $vision = setting('our_vision');
+    @endphp
+    @if($mission || $vision)
+        <div class="bg-[#141B2D] py-16 border-b border-white/5 relative overflow-hidden">
+            <!-- Background Elements -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-[#FFC800]/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+            
+            <div class="max-w-[1400px] mx-auto px-4 md:px-8 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+                    <!-- Mission -->
+                    @if($mission)
+                        <div class="group bg-[#0B0F19] rounded-2xl p-8 md:p-10 border border-white/5 hover:border-[#FFC800]/30 transition-all duration-300 shadow-xl hover:shadow-[0_0_30px_rgba(255,200,0,0.1)] relative">
+                            <div class="absolute -top-6 -left-6 w-20 h-20 bg-[#FFC800]/10 rounded-full blur-2xl group-hover:bg-[#FFC800]/20 transition-all"></div>
+                            
+                            <div class="flex items-center mb-6 relative">
+                                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#FFC800] to-[#D4A000] flex items-center justify-center mr-5 shadow-[0_0_15px_rgba(255,200,0,0.3)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                </div>
+                                <h2 class="text-3xl heading-font uppercase text-white tracking-wide">Our Mission</h2>
+                            </div>
+                            
+                            <div class="text-gray-300 text-lg leading-relaxed relative z-10">
+                                {!! nl2br(e($mission)) !!}
+                            </div>
+                        </div>
+                    @endif
+                    
+                    <!-- Vision -->
+                    @if($vision)
+                        <div class="group bg-[#0B0F19] rounded-2xl p-8 md:p-10 border border-white/5 hover:border-blue-400/30 transition-all duration-300 shadow-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] relative mt-8 md:mt-12 lg:mt-0">
+                            <div class="absolute -top-6 -right-6 w-20 h-20 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all"></div>
+                            
+                            <div class="flex items-center mb-6 relative">
+                                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mr-5 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                </div>
+                                <h2 class="text-3xl heading-font uppercase text-white tracking-wide">Our Vision</h2>
+                            </div>
+                            
+                            <div class="text-gray-300 text-lg leading-relaxed relative z-10">
+                                {!! nl2br(e($vision)) !!}
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
