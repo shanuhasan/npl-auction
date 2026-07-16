@@ -25,6 +25,7 @@ Route::get('/teams', \App\Livewire\Public\Teams\Index::class)->name('public.team
 Route::get('/teams/{team}', \App\Livewire\Public\Teams\Show::class)->name('public.teams.show');
 Route::get('/players/register', \App\Livewire\Public\Players\Register::class)->name('public.players.register');
 Route::get('/players', \App\Livewire\Public\Players\Index::class)->name('public.players');
+Route::get('/contact', \App\Livewire\Public\Contact::class)->name('public.contact');
 
 Route::middleware(['auth', 'role:admin,sub_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('dashboard'); // Basic dashboard accessible to both

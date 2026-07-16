@@ -92,6 +92,36 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Facebook -->
+                            <div>
+                                <label for="facebook" class="block text-sm font-medium text-gray-400 mb-1">Facebook URL</label>
+                                <input type="url" id="facebook" wire:model="facebook" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="https://facebook.com/npl">
+                                @error('facebook') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                            </div>
+
+                            <!-- Instagram -->
+                            <div>
+                                <label for="instagram" class="block text-sm font-medium text-gray-400 mb-1">Instagram URL</label>
+                                <input type="url" id="instagram" wire:model="instagram" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="https://instagram.com/npl">
+                                @error('instagram') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                            </div>
+
+                            <!-- Twitter -->
+                            <div>
+                                <label for="twitter" class="block text-sm font-medium text-gray-400 mb-1">Twitter / X URL</label>
+                                <input type="url" id="twitter" wire:model="twitter" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="https://twitter.com/npl">
+                                @error('twitter') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                            </div>
+
+                            <!-- YouTube -->
+                            <div>
+                                <label for="youtube" class="block text-sm font-medium text-gray-400 mb-1">YouTube Channel URL</label>
+                                <input type="url" id="youtube" wire:model="youtube" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="https://youtube.com/c/npl">
+                                @error('youtube') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             
                             <!-- Developer Name -->
                             <div>

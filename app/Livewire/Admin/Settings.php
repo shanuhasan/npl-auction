@@ -22,6 +22,10 @@ class Settings extends Component
     public $developer_url;
     public $our_mission;
     public $our_vision;
+    public $facebook;
+    public $instagram;
+    public $twitter;
+    public $youtube;
 
     public function mount()
     {
@@ -35,6 +39,10 @@ class Settings extends Component
         $this->developer_url = setting('developer_url', '#');
         $this->our_mission = setting('our_mission', '');
         $this->our_vision = setting('our_vision', '');
+        $this->facebook = setting('facebook', '');
+        $this->instagram = setting('instagram', '');
+        $this->twitter = setting('twitter', '');
+        $this->youtube = setting('youtube', '');
     }
 
     public function save()
@@ -50,6 +58,10 @@ class Settings extends Component
             'developer_url' => 'nullable|string|max:255',
             'our_mission' => 'nullable|string',
             'our_vision' => 'nullable|string',
+            'facebook' => 'nullable|url|max:255',
+            'instagram' => 'nullable|url|max:255',
+            'twitter' => 'nullable|url|max:255',
+            'youtube' => 'nullable|url|max:255',
         ]);
 
         \App\Models\Setting::set('app_name', $this->app_name);
@@ -89,6 +101,10 @@ class Settings extends Component
         \App\Models\Setting::set('developer_url', $this->developer_url);
         \App\Models\Setting::set('our_mission', $this->our_mission);
         \App\Models\Setting::set('our_vision', $this->our_vision);
+        \App\Models\Setting::set('facebook', $this->facebook);
+        \App\Models\Setting::set('instagram', $this->instagram);
+        \App\Models\Setting::set('twitter', $this->twitter);
+        \App\Models\Setting::set('youtube', $this->youtube);
 
         session()->flash('success', 'Settings updated successfully.');
     }
