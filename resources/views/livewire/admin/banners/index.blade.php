@@ -42,11 +42,16 @@
                         @error('description') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-400 mb-1">Link URL</label>
                             <input type="url" wire:model="link" placeholder="https://" class="block w-full rounded-md border-gray-700 bg-primary-bg text-white shadow-sm focus:border-accent-gold focus:ring-accent-gold sm:text-sm">
                             @error('link') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Button Name</label>
+                            <input type="text" wire:model="button_name" placeholder="Learn More" class="block w-full rounded-md border-gray-700 bg-primary-bg text-white shadow-sm focus:border-accent-gold focus:ring-accent-gold sm:text-sm">
+                            @error('button_name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-400 mb-1">Order</label>

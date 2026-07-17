@@ -17,6 +17,7 @@ class Index extends Component
     public $title;
     public $description;
     public $link;
+    public $button_name;
     public $image;
     public $order = 0;
     public $editId = null;
@@ -27,6 +28,7 @@ class Index extends Component
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'link' => 'nullable|url',
+            'button_name' => 'nullable|string|max:50',
             'image' => $this->editId ? 'nullable|image|max:5120' : 'required|image|max:5120', // 5MB Max
             'order' => 'integer',
         ];
@@ -63,6 +65,7 @@ class Index extends Component
                 'title' => $this->title,
                 'description' => $this->description,
                 'link' => $this->link,
+                'button_name' => $this->button_name,
                 'order' => $this->order,
             ];
             if ($filename) {
@@ -78,6 +81,7 @@ class Index extends Component
                 'title' => $this->title,
                 'description' => $this->description,
                 'link' => $this->link,
+                'button_name' => $this->button_name,
                 'image_path' => $filename,
                 'order' => $this->order,
                 'is_active' => true,
@@ -85,7 +89,7 @@ class Index extends Component
             $message = 'Banner successfully uploaded and compressed.';
         }
 
-        $this->reset(['title', 'description', 'link', 'image', 'order', 'editId']);
+        $this->reset(['title', 'description', 'link', 'button_name', 'image', 'order', 'editId']);
         
         session()->flash('message', $message);
     }
@@ -97,13 +101,14 @@ class Index extends Component
         $this->title = $banner->title;
         $this->description = $banner->description;
         $this->link = $banner->link;
+        $this->button_name = $banner->button_name;
         $this->order = $banner->order;
         $this->image = null; // Clear any uploaded image
     }
 
     public function cancelEdit()
     {
-        $this->reset(['title', 'description', 'link', 'image', 'order', 'editId']);
+        $this->reset(['title', 'description', 'link', 'button_name', 'image', 'order', 'editId']);
     }
 
     public function toggleActive($id)

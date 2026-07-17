@@ -18,7 +18,7 @@
                     <div class="absolute inset-0 z-20 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent pointer-events-none"></div>
                     
                     <!-- Content -->
-                    <div class="absolute inset-0 z-30 flex flex-col justify-end p-6 md:p-16 pointer-events-none">
+                    <div class="absolute inset-0 z-30 flex flex-col justify-end p-6 pb-12 md:p-16 md:pb-16 pointer-events-none">
                         <div class="max-w-[1400px] mx-auto w-full pointer-events-auto">
                             @if($banner->title)
                                 <h1 class="text-2xl md:text-5xl lg:text-6xl text-white heading-font uppercase leading-tight max-w-4xl drop-shadow-lg">
@@ -31,8 +31,8 @@
                                 </p>
                             @endif
                             @if($banner->link)
-                                <div class="mt-4 md:mt-8 flex space-x-4">
-                                    <a href="{{ $banner->link }}" target="_blank" class="bg-black/50 backdrop-blur-sm border-2 border-[#FFC800] text-[#FFC800] px-6 py-2 md:px-8 md:py-3 font-bold uppercase hover:bg-[#FFC800] hover:text-black transition-colors rounded-sm">Learn More</a>
+                                <div class="mt-4 md:mt-8 flex space-x-4 relative" style="z-index: 999; pointer-events: auto;">
+                                    <a href="{{ $banner->link }}" target="_blank" class="animate-pulse bg-[#FFC800] text-white border-none px-6 py-2 md:px-8 md:py-3 font-bold uppercase hover:bg-yellow-500 hover:animate-none transition-colors rounded-sm inline-block cursor-pointer shadow-[0_4px_14px_0_rgba(255,200,0,0.39)]" style="pointer-events: auto; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">{{ $banner->button_name ?: 'Learn More' }}</a>
                                 </div>
                             @endif
                         </div>
