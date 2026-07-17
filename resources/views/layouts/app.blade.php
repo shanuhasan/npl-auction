@@ -56,6 +56,7 @@
                             
                             @if(auth()->user()->hasPermission('manage_core_committees'))
                             <a href="{{ route('admin.core-committees') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.core-committees') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Core Committee</a>
+                            <a href="{{ route('admin.guests') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.guests') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Guests</a>
                             @endif
                             
                             @if(auth()->user()->hasPermission('manage_sponsors'))

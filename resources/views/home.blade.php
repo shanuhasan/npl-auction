@@ -163,6 +163,45 @@
         </div>
     @endif
 
+    <!-- Guests Section -->
+    @if(isset($guests) && $guests->count() > 0)
+        <div class="bg-[#141B2D] py-12 border-b border-white/5">
+            <div class="max-w-[1400px] mx-auto px-4 md:px-8">
+                <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
+                    <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
+                        <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> Chief Guests & Guests
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    @foreach($guests as $guest)
+                        <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg">
+                            <div class="relative bg-[#0B0F19] overflow-hidden" style="padding-bottom: 100%;">
+                                @if($guest->image_path)
+                                    <img src="{{ asset('storage/' . $guest->image_path) }}" alt="{{ $guest->name }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                @else
+                                    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+                                        <span class="text-4xl font-bold text-gray-600 uppercase">{{ substr($guest->name, 0, 1) }}</span>
+                                    </div>
+                                @endif
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                            <div class="p-4 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 text-center">
+                                <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors uppercase">{{ $guest->name }}</h3>
+                                @if($guest->designation)
+                                    <div class="text-xs text-gray-400 mt-1 line-clamp-2">{{ $guest->designation }}</div>
+                                @endif
+                                <span class="text-[10px] font-bold px-2 py-1 rounded mt-2 inline-block {{ $guest->type === 'chief_guest' ? 'bg-[#FFC800] text-black' : 'bg-gray-700 text-white' }} uppercase tracking-wider shadow-md">
+                                    {{ $guest->type === 'chief_guest' ? 'Chief Guest' : 'Guest' }}
+                                </span>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+
     <!-- Core Committee Section -->
     @if(isset($coreCommittees) && $coreCommittees->count() > 0)
         <div class="bg-[#141B2D] py-12 border-b border-white/5">
