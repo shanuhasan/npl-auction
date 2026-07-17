@@ -42,13 +42,21 @@ class Index extends Component
 
     public function render()
     {
-        $users = User::query()
-            ->when($this->search, function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                      ->orWhere('email', 'like', '%' . $this->search . '%');
-            })
-            ->when($this->filterRole, function ($query) {
-                $query->where('role', $this->filterRole);
+        $query = User::query();
+
+        if (auth()->user()->role === 'sub_admin') {
+            $query->where('role', 'team_owner');
+        } else {
+            $query->when($this->filterRole, function ($q) {
+                $q->where('role', $this->filterRole);
+            });
+        }
+
+        $users = $query->when($this->search, function ($q) {
+                $q->where(function($subQ) {
+                    $subQ->where('name', 'like', '%' . $this->search . '%')
+                         ->orWhere('email', 'like', '%' . $this->search . '%');
+                });
             })
             ->latest()
             ->paginate(10);
@@ -79,7 +87,7 @@ class Index extends Component
         $this->user_id = '';
         $this->name = '';
         $this->email = '';
-        $this->role = 'viewer';
+        $this->role = auth()->user()->role === 'sub_admin' ? 'team_owner' : 'viewer';
         $this->permissions = [];
         $this->password = '';
     }
