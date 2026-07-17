@@ -46,7 +46,7 @@ Route::middleware(['auth', 'role:admin,sub_admin'])->prefix('admin')->name('admi
     Route::get('/pages/{pageId}/edit', \App\Livewire\Admin\Pages\Form::class)->middleware('permission:manage_pages')->name('pages.edit');
     Route::get('/gallery', \App\Livewire\Admin\Gallery\Index::class)->middleware('permission:manage_gallery')->name('gallery');
     Route::get('/core-committees', \App\Livewire\Admin\CoreCommittees\Index::class)->middleware('permission:manage_core_committees')->name('core-committees');
-    Route::get('/guests', \App\Livewire\Admin\Guests\Index::class)->middleware('permission:manage_core_committees')->name('guests');
+    Route::get('/guests', \App\Livewire\Admin\Guests\Index::class)->middleware('permission:manage_guests')->name('guests');
     Route::get('/sponsors', \App\Livewire\Admin\Sponsors\Index::class)->middleware('permission:manage_sponsors')->name('sponsors');
 });
 

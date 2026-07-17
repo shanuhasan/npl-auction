@@ -132,6 +132,10 @@
                                     <span class="ml-2 text-gray-300">Manage Core Committees</span>
                                 </label>
                                 <label class="inline-flex items-center">
+                                    <input type="checkbox" wire:model="permissions" value="manage_guests" class="form-checkbox h-5 w-5 text-accent-gold rounded border-gray-600 bg-gray-800 focus:ring-accent-gold focus:ring-offset-gray-900">
+                                    <span class="ml-2 text-gray-300">Manage Guests</span>
+                                </label>
+                                <label class="inline-flex items-center">
                                     <input type="checkbox" wire:model="permissions" value="manage_sponsors" class="form-checkbox h-5 w-5 text-accent-gold rounded border-gray-600 bg-gray-800 focus:ring-accent-gold focus:ring-offset-gray-900">
                                     <span class="ml-2 text-gray-300">Manage Sponsors</span>
                                 </label>
