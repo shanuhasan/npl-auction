@@ -46,16 +46,12 @@
                             <a href="{{ route('admin.auctions') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.auctions*') || request()->routeIs('admin.auction.*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Auctions</a>
                             @endif
                             
-                            @if(auth()->user()->hasPermission('view_analytics'))
-                            <a href="{{ route('admin.analytics') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.analytics') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Analytics</a>
-                            @endif
-                            
                             @if(auth()->user()->hasPermission('manage_banners'))
                             <a href="{{ route('admin.banners') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.banners') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Banners</a>
                             @endif
                             
                             @if(auth()->user()->hasPermission('manage_core_committees'))
-                            <a href="{{ route('admin.core-committees') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.core-committees') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Core Committee</a>
+                            <a href="{{ route('admin.core-committees') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.core-committees') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Committee</a>
                             @endif
                             
                             @if(auth()->user()->hasPermission('manage_guests'))
@@ -65,13 +61,17 @@
                             @if(auth()->user()->hasPermission('manage_sponsors'))
                             <a href="{{ route('admin.sponsors') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.sponsors') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Sponsors</a>
                             @endif
+
+                            @if(auth()->user()->hasPermission('manage_gallery'))
+                            <a href="{{ route('admin.gallery') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.gallery*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Gallery</a>
+                            @endif
                             
                             @if(auth()->user()->hasPermission('manage_pages'))
                             <a href="{{ route('admin.pages.index') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.pages*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Pages</a>
                             @endif
-                            
-                            @if(auth()->user()->hasPermission('manage_gallery'))
-                            <a href="{{ route('admin.gallery') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.gallery*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Gallery</a>
+
+                            @if(auth()->user()->hasPermission('view_analytics'))
+                            <a href="{{ route('admin.analytics') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.analytics') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Analytics</a>
                             @endif
                             
                             @if(auth()->user()->hasPermission('manage_settings'))

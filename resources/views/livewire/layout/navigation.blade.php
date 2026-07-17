@@ -88,7 +88,7 @@ new class extends Component
             @auth
                 @if(in_array(auth()->user()->role, ['admin', 'sub_admin']))
                     <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" wire:navigate class="text-accent-red font-bold">
-                        Dashboard (Admin)
+                        Dashboard
                     </x-responsive-nav-link>
                     
                     @if(auth()->user()->hasPermission('manage_users'))
@@ -114,22 +114,22 @@ new class extends Component
                         Manage Auctions
                     </x-responsive-nav-link>
                     @endif
-                    
-                    @if(auth()->user()->hasPermission('view_analytics'))
-                    <x-responsive-nav-link :href="route('admin.analytics')" :active="request()->routeIs('admin.analytics')" wire:navigate>
-                        Analytics
-                    </x-responsive-nav-link>
-                    @endif
-                    
+
                     @if(auth()->user()->hasPermission('manage_banners'))
                     <x-responsive-nav-link :href="route('admin.banners')" :active="request()->routeIs('admin.banners')" wire:navigate>
                         Manage Banners
                     </x-responsive-nav-link>
-                    @endif
+                    @endif                   
                     
                     @if(auth()->user()->hasPermission('manage_core_committees'))
                     <x-responsive-nav-link :href="route('admin.core-committees')" :active="request()->routeIs('admin.core-committees')" wire:navigate>
                         Manage Committees
+                    </x-responsive-nav-link>
+                    @endif
+                    
+                    @if(auth()->user()->hasPermission('manage_guests'))
+                    <x-responsive-nav-link :href="route('admin.guests')" :active="request()->routeIs('admin.guests')" wire:navigate>
+                        Manage Guests
                     </x-responsive-nav-link>
                     @endif
                     
@@ -138,16 +138,22 @@ new class extends Component
                         Manage Sponsors
                     </x-responsive-nav-link>
                     @endif
+
+                    @if(auth()->user()->hasPermission('manage_gallery'))
+                    <x-responsive-nav-link :href="route('admin.gallery')" :active="request()->routeIs('admin.gallery')" wire:navigate>
+                        Manage Gallery
+                    </x-responsive-nav-link>
+                    @endif
                     
                     @if(auth()->user()->hasPermission('manage_pages'))
                     <x-responsive-nav-link :href="route('admin.pages.index')" :active="request()->routeIs('admin.pages.index')" wire:navigate>
                         Manage Pages
                     </x-responsive-nav-link>
                     @endif
-                    
-                    @if(auth()->user()->hasPermission('manage_gallery'))
-                    <x-responsive-nav-link :href="route('admin.gallery')" :active="request()->routeIs('admin.gallery')" wire:navigate>
-                        Manage Gallery
+
+                    @if(auth()->user()->hasPermission('view_analytics'))
+                    <x-responsive-nav-link :href="route('admin.analytics')" :active="request()->routeIs('admin.analytics')" wire:navigate>
+                        Analytics
                     </x-responsive-nav-link>
                     @endif
                     
