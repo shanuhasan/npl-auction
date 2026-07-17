@@ -267,7 +267,10 @@
                     <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
                         <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> All Teams
                     </h2>
-                    <a href="{{ route('public.teams') }}" class="text-xs md:text-sm font-bold text-gray-400 hover:text-[#FFC800] uppercase transition-colors">View All</a>
+                    <div class="flex items-center space-x-3 md:space-x-4">
+                        <a href="{{ route('public.teams') }}" class="text-xs md:text-sm font-bold text-gray-400 hover:text-[#FFC800] uppercase transition-colors">View All</a>
+                        <a href="{{ route('public.teams.register') }}" class="text-xs md:text-sm font-bold bg-[#FFC800] text-black px-3 py-1.5 md:px-4 md:py-2 rounded hover:bg-yellow-500 uppercase transition-colors shadow-lg">Register Team</a>
+                    </div>
                 </div>
                 
                 <div class="swiper teamsSwiper overflow-hidden" style="padding-bottom: 10px;">
@@ -327,7 +330,10 @@
                     <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
                         <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> Featured Players
                     </h2>
-                    <a href="{{ route('public.players') }}" class="text-xs md:text-sm font-bold text-gray-400 hover:text-[#FFC800] uppercase transition-colors">View All</a>
+                    <div class="flex items-center space-x-3 md:space-x-4">
+                        <a href="{{ route('public.players') }}" class="text-xs md:text-sm font-bold text-gray-400 hover:text-[#FFC800] uppercase transition-colors">View All</a>
+                        <a href="{{ route('public.players.register') }}" class="text-xs md:text-sm font-bold bg-[#FFC800] text-black px-3 py-1.5 md:px-4 md:py-2 rounded hover:bg-yellow-500 uppercase transition-colors shadow-lg">Register Player</a>
+                    </div>
                 </div>
                 
                 @if(!isset($banners) || $banners->count() == 0)

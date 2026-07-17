@@ -1,8 +1,13 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     
-    <div class="mb-10 text-center md:text-left">
-        <h1 class="text-4xl md:text-5xl font-black text-white uppercase tracking-widest mb-4">Franchises</h1>
-        <p class="text-gray-400 text-lg">Explore the official teams and their squads.</p>
+    <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between text-center md:text-left gap-4">
+        <div>
+            <h1 class="text-4xl md:text-5xl font-black text-white uppercase tracking-widest mb-2 md:mb-4">Franchises</h1>
+            <p class="text-gray-400 text-lg">Explore the official teams and their squads.</p>
+        </div>
+        <div>
+            <a href="{{ route('public.teams.register') }}" class="inline-block bg-[#FFC800] hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg uppercase tracking-wider transition-colors shadow-lg">Register Your Team</a>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

@@ -22,6 +22,7 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 Route::get('/teams', \App\Livewire\Public\Teams\Index::class)->name('public.teams');
+Route::get('/teams/register', \App\Livewire\Public\Teams\Register::class)->name('public.teams.register');
 Route::get('/teams/{team}', \App\Livewire\Public\Teams\Show::class)->name('public.teams.show');
 Route::get('/players/register', \App\Livewire\Public\Players\Register::class)->name('public.players.register');
 Route::get('/players', \App\Livewire\Public\Players\Index::class)->name('public.players');
