@@ -32,7 +32,7 @@
                             @endif
                             @if($banner->link)
                                 <div class="mt-4 md:mt-8 flex space-x-4 relative" style="z-index: 999; pointer-events: auto;">
-                                    <a href="{{ $banner->link }}" target="_blank" class="animate-pulse bg-[#FFC800] text-white border-none px-6 py-2 md:px-8 md:py-3 font-bold uppercase hover:bg-yellow-500 hover:animate-none transition-colors rounded-sm inline-block cursor-pointer shadow-[0_4px_14px_0_rgba(255,200,0,0.39)]" style="pointer-events: auto; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">{{ $banner->button_name ?: 'Learn More' }}</a>
+                                    <a href="{{ $banner->link }}" target="_blank" class="animate-pulse bg-black text-white border border-[#FFC800]/50 px-6 py-2 md:px-8 md:py-3 font-bold uppercase hover:border-[#FFC800] hover:bg-gray-900 hover:animate-none transition-colors rounded-sm inline-block cursor-pointer shadow-[0_4px_15px_rgba(0,0,0,0.5)]" style="pointer-events: auto;">{{ $banner->button_name ?: 'Learn More' }}</a>
                                 </div>
                             @endif
                         </div>

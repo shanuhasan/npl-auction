@@ -92,7 +92,7 @@
                     @forelse ($banners as $banner)
                         <tr class="hover:bg-gray-800/30 transition-colors">
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <input type="number" value="{{ $banner->order }}" wire:change="updateOrder({{ $banner->id }}, $event.target.value)" class="w-16 rounded border-gray-700 bg-primary-bg text-white text-sm focus:border-accent-gold focus:ring-accent-gold">
+                                <input type="number" value="{{ $banner->order }}" x-on:change="$wire.updateOrder({{ $banner->id }}, $event.target.value)" class="w-16 rounded border-gray-700 bg-primary-bg text-white text-sm focus:border-accent-gold focus:ring-accent-gold">
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <img src="{{ asset('storage/' . $banner->image_path) }}" alt="Banner" class="h-16 w-32 object-cover rounded shadow border border-gray-700">
