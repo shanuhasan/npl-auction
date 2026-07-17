@@ -52,4 +52,16 @@ class PdfController extends Controller
 
         return $pdf->download($team->short_name . '_Squad.pdf');
     }
+
+    public function playersList()
+    {
+        // Get approved players sorted by category then name, or just latest
+        $players = \App\Models\Player::where('is_approved', true)->orderBy('name')->get();
+        
+        $pdf = Pdf::loadView('pdf.players-list', [
+            'players' => $players
+        ]);
+
+        return $pdf->download('Players_List.pdf');
+    }
 }

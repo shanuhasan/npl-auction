@@ -33,6 +33,7 @@ Route::middleware(['auth', 'role:admin,sub_admin'])->prefix('admin')->name('admi
     Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('dashboard'); // Basic dashboard accessible to both
     Route::get('/teams', \App\Livewire\Admin\Teams\Index::class)->middleware('permission:manage_teams')->name('teams');
     Route::get('/players', \App\Livewire\Admin\Players\Index::class)->middleware('permission:manage_players')->name('players');
+    Route::get('/players/pdf', [\App\Http\Controllers\Admin\PdfController::class, 'playersList'])->middleware('permission:manage_players')->name('players.pdf');
     Route::get('/users', \App\Livewire\Admin\Users\Index::class)->middleware('permission:manage_users')->name('users');
     Route::get('/analytics', \App\Livewire\Admin\Analytics::class)->middleware('permission:view_analytics')->name('analytics');
     Route::get('/auctions', \App\Livewire\Admin\Auctions\Index::class)->middleware('permission:manage_auctions')->name('auctions');
