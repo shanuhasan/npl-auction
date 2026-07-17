@@ -6,7 +6,9 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\Player;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Title;
 
+#[Title('Player Registration')]
 class Register extends Component
 {
     use WithFileUploads;

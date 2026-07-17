@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ setting('app_name', 'Naugawan Premier League') }} | Naugawan Premier League</title>
+    <title>{{ setting('app_name', 'Naugawan Premier League') }} | Naugawan Premier League {{ isset($title) ? ' | ' . $title : '' }}</title>
     <link rel="icon" href="{{ setting('favicon') ? asset('storage/' . setting('favicon')) : asset('favicon.ico') }}">
     
     <!-- Fonts -->

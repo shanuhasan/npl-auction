@@ -9,7 +9,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Title;
 
+#[Title('Team Registration')]
 class Register extends Component
 {
     use WithFileUploads;
