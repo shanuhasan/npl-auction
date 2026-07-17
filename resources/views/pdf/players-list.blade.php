@@ -26,7 +26,7 @@
 
     <div class="header">
         <h1>Registered Players</h1>
-        <p>Official {{ setting('app_name', 'NPLT20') }} Players List</p>
+        <p>Official {{ setting('app_name', 'NPLT20') }} {{ setting('season', '') }} Players List</p>
     </div>
 
     <table class="players">
