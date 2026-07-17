@@ -33,7 +33,7 @@
         <thead>
             <tr>
                 <th>S.No</th>
-                <th>Photo</th>
+                <!-- <th>Photo</th> -->
                 <th>Name</th>
                 <th>Role</th>
                 <th>Base Price</th>
@@ -43,14 +43,20 @@
             @foreach($players as $player)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>
+                    <!-- <td>
                         @php
                             $imagePath = $player->photo ? public_path('storage/' . $player->photo) : null;
                             $imageData = null;
                             if ($imagePath && file_exists($imagePath)) {
-                                $type = pathinfo($imagePath, PATHINFO_EXTENSION);
-                                $data = file_get_contents($imagePath);
-                                $imageData = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                                try {
+                                    $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+                                    $img = $manager->read($imagePath)->scaleDown(100, 100)->toJpeg(60);
+                                    $imageData = 'data:image/jpeg;base64,' . base64_encode((string) $img);
+                                } catch (\Exception $e) {
+                                    $type = pathinfo($imagePath, PATHINFO_EXTENSION);
+                                    $data = file_get_contents($imagePath);
+                                    $imageData = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                                }
                             }
                         @endphp
                         @if($imageData)
@@ -60,7 +66,7 @@
                                 {{ substr($player->name, 0, 1) }}
                             </div>
                         @endif
-                    </td>
+                    </td> -->
                     <td>
                         <strong>{{ $player->name }}</strong><br>
                         <span style="font-size: 12px; color: #666;">{{ $player->city ? $player->city . ', ' : '' }}{{ $player->country }}</span>
