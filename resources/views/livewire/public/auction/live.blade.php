@@ -176,6 +176,7 @@
                             @foreach($team['auction_players'] as $ap)
                                 <div class="flex items-center justify-between bg-white/5 rounded-lg p-2">
                                     <div class="flex items-center gap-2">
+                                        <span class="text-xs font-bold text-gray-500 w-4">{{ $loop->iteration }}.</span>
                                         <img src="{{ $ap['player']['photo'] ? Storage::url($ap['player']['photo']) : 'https://ui-avatars.com/api/?name='.urlencode($ap['player']['name']).'&background=random' }}" 
                                              class="w-6 h-6 rounded-full object-cover">
                                         <div>
