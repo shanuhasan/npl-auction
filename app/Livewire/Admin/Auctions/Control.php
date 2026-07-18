@@ -146,6 +146,20 @@ class Control extends Component
         $this->loadData();
     }
 
+    public function deleteBid($bidId)
+    {
+        if (!$this->currentPlayer || $this->currentPlayer['status'] !== 'current') return;
+
+        $service = app(AuctionService::class);
+        $result = $service->deleteBid($bidId);
+        if (!$result['success']) {
+            session()->flash('error', $result['message']);
+        } else {
+            session()->flash('success', $result['message']);
+        }
+        $this->loadData();
+    }
+
     public function markUnsold()
     {
         if (!$this->currentPlayer || $this->currentPlayer['status'] !== 'current') return;

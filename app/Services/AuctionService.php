@@ -214,6 +214,49 @@ class AuctionService
     }
 
     /**
+     * Deletes a bid and updates the highest bid.
+     */
+    public function deleteBid($bidId)
+    {
+        return DB::transaction(function () use ($bidId) {
+            $bid = Bid::findOrFail($bidId);
+            $auctionPlayerId = $bid->auction_player_id;
+            
+            $auctionPlayer = AuctionPlayer::findOrFail($auctionPlayerId);
+            $state = AuctionState::where('auction_id', $auctionPlayer->auction_id)->firstOrFail();
+
+            if ($auctionPlayer->status !== 'current') {
+                return ['success' => false, 'message' => 'Cannot delete bid for a player who is not currently on auction.'];
+            }
+
+            // Delete the bid
+            $bid->delete();
+
+            // Find the new highest bid for this player
+            $newHighestBid = Bid::where('auction_player_id', $auctionPlayerId)
+                                ->orderBy('bid_amount', 'desc')
+                                ->first();
+
+            if ($newHighestBid) {
+                $state->update([
+                    'current_highest_bid' => $newHighestBid->bid_amount,
+                    'current_highest_team_id' => $newHighestBid->team_id,
+                ]);
+                event(new BidPlaced($auctionPlayer->auction_id, $newHighestBid->team_id, $newHighestBid->team->name, $newHighestBid->bid_amount));
+            } else {
+                // No bids left
+                $state->update([
+                    'current_highest_bid' => null,
+                    'current_highest_team_id' => null,
+                ]);
+                event(new PlayerOnAuction($auctionPlayer->auction_id, $auctionPlayer->player_id, $auctionPlayer->player->base_price));
+            }
+
+            return ['success' => true, 'message' => 'Bid deleted successfully!'];
+        });
+    }
+
+    /**
      * Marks the current player as sold.
      */
     public function markSold($auctionPlayerId)

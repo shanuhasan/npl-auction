@@ -200,6 +200,9 @@
                                         <button wire:click="sellToBid({{ $bid['id'] }})" wire:confirm="Sell player to {{ $bid['team']['short_name'] }} for ₹{{ number_format($bid['bid_amount']) }}?" class="bg-[#00C853] hover:bg-green-600 text-white text-xs font-bold px-2 py-1 rounded shadow uppercase">
                                             Sold
                                         </button>
+                                        <button wire:click="deleteBid({{ $bid['id'] }})" wire:confirm="Are you sure you want to delete this bid?" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-2 py-1 rounded shadow uppercase ml-2" title="Delete Bid">
+                                            <svg class="w-3 h-3 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                        </button>
                                     @endif
                                 </div>
                             </div>
