@@ -87,37 +87,48 @@
                             @endif
                         </div>
 
-                        <!-- Current Bid Display -->
-                        <div class="bg-black/40 rounded-2xl p-6 border border-white/5 relative overflow-hidden" 
-                             x-bind:class="{ 'ring-2 ring-[#FFC800] shadow-[0_0_30px_rgba(255,200,0,0.3)] scale-105': isPulsing }"
-                             style="transition: all 0.3s ease-out;">
-                            <p class="text-gray-400 uppercase tracking-widest text-sm font-semibold mb-2">Current Bid</p>
-                            
-                            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-                                <div class="text-4xl sm:text-5xl md:text-7xl font-black text-[#FFC800]">
+                        <!-- Current Bid & Leading Team Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Current Bid Display -->
+                            <div class="bg-black/40 rounded-2xl p-8 lg:p-12 min-h-[160px] md:min-h-[200px] lg:min-h-[240px] border border-white/5 relative overflow-hidden flex flex-col justify-center" 
+                                 x-bind:class="{ 'ring-2 ring-[#FFC800] shadow-[0_0_30px_rgba(255,200,0,0.3)] scale-105 z-10': isPulsing }"
+                                 style="transition: all 0.3s ease-out;">
+                                <p class="text-gray-400 uppercase tracking-widest text-sm md:text-lg font-semibold mb-2 lg:mb-4 text-center md:text-left">Current Bid</p>
+                                <div class="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-[#FFC800] text-center md:text-left tracking-tight">
                                     ₹{{ number_format($currentHighestBid > 0 ? $currentHighestBid : $currentPlayer['player']['base_price']) }}
                                 </div>
+                            </div>
+                            
+                            <!-- Leading Team Display -->
+                            <div class="bg-black/40 rounded-2xl p-8 lg:p-12 min-h-[160px] md:min-h-[200px] lg:min-h-[240px] border border-white/5 relative overflow-hidden flex flex-col justify-center"
+                                 x-bind:class="{ 'ring-2 ring-[#FFC800] shadow-[0_0_30px_rgba(255,200,0,0.3)] scale-105 z-10': isPulsing }"
+                                 style="transition: all 0.3s ease-out;">
+                                <p class="text-gray-400 uppercase tracking-widest text-sm font-semibold mb-2 text-center md:text-left">Leading Team</p>
                                 
                                 @if($currentHighestTeam)
-                                    <div class="flex items-center gap-3 bg-[#141B2D] p-3 rounded-xl border border-white/10">
+                                    <div class="flex items-center justify-center md:justify-start gap-4">
                                         <img src="{{ $currentHighestTeam['logo'] ? Storage::url($currentHighestTeam['logo']) : 'https://ui-avatars.com/api/?name='.urlencode($currentHighestTeam['name']).'&background=random' }}" 
                                              alt="{{ $currentHighestTeam['name'] }}" 
-                                             class="w-10 h-10 rounded-full object-cover">
+                                             class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-[#FFC800] shadow-[0_0_15px_rgba(255,200,0,0.4)]">
                                         <div class="flex flex-col text-left">
-                                            <span class="font-bold text-sm leading-tight">{{ $currentHighestTeam['name'] }}</span>
-                                            <span class="text-xs text-[#FFC800] font-black uppercase tracking-wider">{{ $currentHighestTeam['short_name'] }}</span>
+                                            <span class="font-black text-2xl md:text-4xl text-white leading-tight uppercase">{{ $currentHighestTeam['short_name'] }}</span>
+                                            <span class="text-sm md:text-base text-gray-400 font-semibold">{{ $currentHighestTeam['name'] }}</span>
                                         </div>
                                     </div>
                                 @else
-                                    <div class="text-gray-500 font-semibold italic">Awaiting bids...</div>
+                                    <div class="flex h-full items-center justify-center md:justify-start">
+                                        <span class="text-xl md:text-3xl font-black text-gray-600 uppercase tracking-widest animate-pulse">Waiting for bids...</span>
+                                    </div>
                                 @endif
                             </div>
+                        </div>
 
-                            <!-- Timer Bar -->
-                            <div class="mt-6 h-2 w-full bg-gray-800 rounded-full overflow-hidden relative">
+                        <!-- Timer Bar -->
+                        <div class="mt-4 bg-black/40 rounded-2xl p-4 border border-white/5 relative overflow-hidden">
+                            <div class="h-3 w-full bg-gray-900 rounded-full overflow-hidden relative shadow-inner">
                                 <div class="absolute top-0 left-0 h-full transition-all duration-100 ease-linear rounded-full"
                                      x-bind:style="'width: ' + timerProgress + '%'"
-                                     x-bind:class="timerProgress < 20 ? 'bg-red-500 shadow-[0_0_10px_#ef4444]' : 'bg-[#00C853] shadow-[0_0_10px_#00c853]'">
+                                     x-bind:class="timerProgress < 20 ? 'bg-red-500 shadow-[0_0_15px_#ef4444]' : 'bg-[#00C853] shadow-[0_0_15px_#00c853]'">
                                 </div>
                             </div>
                         </div>
