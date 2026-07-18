@@ -27,12 +27,12 @@
                 @endif
 
                 <!-- Auction Status / Actions Panel -->
-                <div class="bg-card-bg shadow border border-gray-800 sm:rounded-lg p-6 flex justify-between items-center">
+                <div class="bg-card-bg shadow border border-gray-800 sm:rounded-lg p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <h3 class="text-lg font-bold text-gray-300 uppercase tracking-wider mb-1">Auction Status</h3>
                         <p class="text-sm text-gray-500">Control the flow of your auction.</p>
                     </div>
-                    <div class="flex items-center gap-4">
+                    <div class="flex flex-wrap items-center gap-4">
                         @if($auction->status === 'live')
                             <span class="flex h-3 w-3 relative">
                               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -56,7 +56,7 @@
 
                 <!-- Current Player Panel -->
                 <div class="bg-card-bg shadow border border-gray-800 sm:rounded-lg p-6">
-                    <div class="flex justify-between items-center mb-4">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
                         <h3 class="text-lg font-bold text-gray-300 uppercase tracking-wider">Current Player</h3>
                         <div class="flex flex-col sm:flex-row items-center gap-4">
                             <!-- Manual Bid Increment -->
