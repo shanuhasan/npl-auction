@@ -37,7 +37,7 @@ class Register extends Component
         'role' => 'required|in:batsman,bowler,all-rounder,wicketkeeper',
         'country' => 'required|string|max:100',
         'city' => 'nullable|string|max:100',
-        'contact_no' => 'required|string|max:20|unique:players,contact_no',
+        'contact_no' => 'required|digits:10|unique:players,contact_no',
         'batting_style' => 'nullable|string|max:100',
         'bowling_style' => 'nullable|string|max:100',
         'photo' => 'required|image|max:2048', // 2MB Max

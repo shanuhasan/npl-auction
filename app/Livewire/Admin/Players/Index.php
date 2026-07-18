@@ -48,7 +48,7 @@ class Index extends Component
             'role' => 'required|in:batsman,bowler,all-rounder,wicketkeeper',
             'country' => 'required|string|max:100',
             'city' => 'nullable|string|max:100',
-            'contact_no' => 'required|string|max:20|unique:players,contact_no,' . $this->player_id,
+            'contact_no' => 'required|digits:10|unique:players,contact_no,' . $this->player_id,
             'batting_style' => 'nullable|string|max:100',
             'bowling_style' => 'nullable|string|max:100',
             'base_price' => 'required|numeric|min:0',
