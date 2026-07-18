@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>{{ $team->name }} Squad</title>
     <style>
-        body { font-family: sans-serif; color: #333; margin: 0; padding: 20px; }
+        body { font-family: 'DejaVu Sans', sans-serif; color: #333; margin: 0; padding: 20px; }
         .header { text-align: center; border-bottom: 2px solid {{ $team->primary_color }}; padding-bottom: 20px; margin-bottom: 20px; }
         .header h1 { margin: 0; font-size: 32px; text-transform: uppercase; color: {{ $team->primary_color }}; }
         .header p { margin: 5px 0 0 0; font-size: 16px; color: #666; }
@@ -48,6 +48,7 @@
         </tr>
     </table>
 
+    @php $sno = 1; @endphp
     @foreach(['batsman', 'all-rounder', 'wicketkeeper', 'bowler'] as $role)
         @if(isset($playersByRole[$role]) && $playersByRole[$role]->count() > 0)
             <div class="role-section">
@@ -55,20 +56,16 @@
                 <table class="squad">
                     <thead>
                         <tr>
+                            <th width="5%">#</th>
                             <th>Player Name</th>
-                            <th>Country</th>
-                            <th>Category</th>
-                            <th>Base Price</th>
                             <th>Bought For</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($playersByRole[$role] as $player)
                             <tr>
+                                <td>{{ $sno++ }}</td>
                                 <td><strong>{{ $player->name }}</strong></td>
-                                <td>{{ $player->country }}</td>
-                                <td>{{ ucfirst($player->category) }}</td>
-                                <td>₹{{ number_format($player->base_price) }}</td>
                                 <td>
                                     @php
                                         $bought = $player->auctionPlayers->first();

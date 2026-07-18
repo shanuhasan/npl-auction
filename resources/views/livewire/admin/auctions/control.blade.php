@@ -216,8 +216,12 @@
 
                 <!-- Players List -->
                 <div class="bg-card-bg shadow border border-gray-800 sm:rounded-lg flex flex-col h-[400px]">
-                    <div class="p-4 border-b border-gray-800 bg-[#141B2D] rounded-t-lg">
+                    <div class="p-4 border-b border-gray-800 bg-[#141B2D] rounded-t-lg flex justify-between items-center">
                         <h3 class="font-bold text-accent-gold uppercase tracking-wider">Players List</h3>
+                        <button wire:click="exportResults" class="text-xs font-bold text-white bg-green-600 hover:bg-green-700 px-3 py-1.5 rounded uppercase flex items-center gap-2 transition" title="Download Auction Results">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            Export CSV
+                        </button>
                     </div>
                     <div class="flex-1 overflow-y-auto p-4 space-y-2">
                         @forelse($playersList as $ap)
@@ -261,6 +265,24 @@
                                 No players assigned.
                             </div>
                         @endforelse
+                    </div>
+                </div>
+
+                <!-- Team PDFs -->
+                <div class="bg-card-bg shadow border border-gray-800 sm:rounded-lg flex flex-col">
+                    <div class="p-4 border-b border-gray-800 bg-[#141B2D] rounded-t-lg">
+                        <h3 class="font-bold text-accent-gold uppercase tracking-wider">Download Team Squads (PDF)</h3>
+                    </div>
+                    <div class="p-4 space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
+                        @foreach($auction->teams as $team)
+                            <div class="flex justify-between items-center bg-primary-bg p-2 rounded border border-gray-800">
+                                <span class="text-white font-bold text-sm">{{ $team->name }}</span>
+                                <a href="{{ route('teams.pdf', ['team' => $team->id, 'auction_id' => $auction->id]) }}" target="_blank" class="text-xs bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded transition flex items-center gap-1" title="Download {{ $team->short_name }} PDF">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                    PDF
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 

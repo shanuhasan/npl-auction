@@ -272,4 +272,38 @@ class Control extends Component
         }
         $this->loadData();
     }
+    public function exportResults()
+    {
+        $players = AuctionPlayer::with(['player', 'soldToTeam'])
+            ->where('auction_id', $this->auction->id)
+            ->orderBy('order_no', 'asc')
+            ->get();
+
+        $csvHeader = ['Order No', 'Player Name', 'Role', 'Category', 'Base Price', 'Status', 'Sold To Team', 'Final Price'];
+        $csvData = [];
+        
+        foreach ($players as $ap) {
+            $csvData[] = [
+                $ap->order_no,
+                $ap->player->name ?? 'N/A',
+                ucfirst($ap->player->role ?? 'N/A'),
+                strtoupper($ap->player->category ?? 'N/A'),
+                $ap->player->base_price ?? 0,
+                ucfirst($ap->status),
+                $ap->soldToTeam ? $ap->soldToTeam->name : 'N/A',
+                $ap->final_price ?? 0,
+            ];
+        }
+
+        $fileName = 'auction_' . $this->auction->id . '_results_' . now()->format('Ymd_His') . '.csv';
+
+        return response()->streamDownload(function () use ($csvHeader, $csvData) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $csvHeader);
+            foreach ($csvData as $row) {
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        }, $fileName);
+    }
 }

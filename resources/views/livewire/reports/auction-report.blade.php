@@ -74,9 +74,15 @@
                                     <p class="text-xs text-gray-400">{{ $auctionPlayers->count() }} Players</p>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <p class="text-sm text-gray-400 uppercase tracking-wider">Total Spent</p>
-                                <p class="font-black text-accent-gold text-lg">₹{{ number_format($auctionPlayers->sum('final_price')) }}</p>
+                            <div class="flex items-center gap-4">
+                                <div class="text-right">
+                                    <p class="text-sm text-gray-400 uppercase tracking-wider">Total Spent</p>
+                                    <p class="font-black text-accent-gold text-lg">₹{{ number_format($auctionPlayers->sum('final_price')) }}</p>
+                                </div>
+                                <a href="{{ route('teams.pdf', ['team' => $team->id, 'auction_id' => $selectedAuctionId]) }}" target="_blank" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded transition flex items-center gap-1 text-sm font-bold shadow-md border border-red-500" title="Download Squad PDF">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                    PDF
+                                </a>
                             </div>
                         </div>
                         <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
