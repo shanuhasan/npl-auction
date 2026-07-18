@@ -399,4 +399,45 @@ class AuctionService
             return ['success' => true, 'message' => $unsoldPlayers->count() . ' unsold players recalled back to the auction.'];
         });
     }
+    /**
+     * Reverts a sold or unsold player back to the pending state and removes their bids.
+     */
+    public function revertPlayer($auctionPlayerId)
+    {
+        return DB::transaction(function () use ($auctionPlayerId) {
+            $auctionPlayer = AuctionPlayer::findOrFail($auctionPlayerId);
+            $player = $auctionPlayer->player;
+            
+            if ($auctionPlayer->status === 'sold') {
+                $team = Team::find($auctionPlayer->sold_to_team_id);
+                if ($team) {
+                    // Refund the team
+                    $team->update([
+                        'remaining_budget' => $team->remaining_budget + $auctionPlayer->final_price
+                    ]);
+                }
+            }
+
+            // Delete all bids for this player so it starts fresh next time
+            Bid::where('auction_player_id', $auctionPlayer->id)->delete();
+
+            // Reset AuctionPlayer
+            $auctionPlayer->update([
+                'status' => 'pending',
+                'final_price' => null,
+                'sold_to_team_id' => null,
+            ]);
+
+            // Reset Player
+            $player->update([
+                'status' => 'available',
+                'current_team_id' => null,
+            ]);
+
+            // We can emit AuctionEnded just as a generic trigger to refresh the UI for clients
+            event(new AuctionEnded($auctionPlayer->auction_id));
+
+            return ['success' => true, 'message' => 'Player reverted to pending state successfully.'];
+        });
+    }
 }

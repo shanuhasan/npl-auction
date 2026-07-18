@@ -237,10 +237,22 @@
                                     @elseif($ap->status === 'current')
                                         <span class="text-xs font-bold text-white bg-blue-600 px-2 py-1 rounded animate-pulse uppercase tracking-wider">Current</span>
                                     @elseif($ap->status === 'sold')
-                                        <span class="text-xs font-bold text-white bg-green-600 px-2 py-1 rounded uppercase tracking-wider">Sold</span>
-                                        <p class="text-[10px] text-accent-gold font-bold mt-1">{{ $ap->soldToTeam->short_name ?? '' }} (₹{{ number_format($ap->final_price) }})</p>
+                                        <div class="flex items-center justify-end gap-3">
+                                            <div class="text-right">
+                                                <span class="text-xs font-bold text-white bg-green-600 px-2 py-1 rounded uppercase tracking-wider">Sold</span>
+                                                <p class="text-[10px] text-accent-gold font-bold mt-1">{{ $ap->soldToTeam->short_name ?? '' }} (₹{{ number_format($ap->final_price) }})</p>
+                                            </div>
+                                            <button wire:click="revertPlayer({{ $ap->id }})" wire:confirm="Are you sure you want to revert this player to pending? This will refund the team and delete all previous bids for this player." class="p-1 bg-red-600/20 text-red-500 hover:bg-red-600 hover:text-white rounded transition" title="Revert to Pending">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
+                                            </button>
+                                        </div>
                                     @elseif($ap->status === 'unsold')
-                                        <span class="text-xs font-bold text-white bg-gray-600 px-2 py-1 rounded uppercase tracking-wider">Unsold</span>
+                                        <div class="flex items-center justify-end gap-3">
+                                            <span class="text-xs font-bold text-white bg-gray-600 px-2 py-1 rounded uppercase tracking-wider">Unsold</span>
+                                            <button wire:click="revertPlayer({{ $ap->id }})" wire:confirm="Are you sure you want to revert this player to pending?" class="p-1 bg-red-600/20 text-red-500 hover:bg-red-600 hover:text-white rounded transition" title="Revert to Pending">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
+                                            </button>
+                                        </div>
                                     @endif
                                 </div>
                             </div>

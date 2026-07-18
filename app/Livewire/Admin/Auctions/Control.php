@@ -261,4 +261,15 @@ class Control extends Component
             'playersList' => $playersList
         ]);
     }
+    public function revertPlayer($auctionPlayerId)
+    {
+        $service = app(AuctionService::class);
+        $result = $service->revertPlayer($auctionPlayerId);
+        if (!$result['success']) {
+            session()->flash('error', $result['message']);
+        } else {
+            session()->flash('success', $result['message']);
+        }
+        $this->loadData();
+    }
 }
