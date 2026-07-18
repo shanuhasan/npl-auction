@@ -27,10 +27,12 @@ class AuctionService
             $state = AuctionState::where('auction_id', $auctionId)->firstOrFail();
 
             // Find first pending player
-            $firstPlayer = AuctionPlayer::whereHas('player', fn($q) => $q->where('is_approved', true))
-                ->where('auction_id', $auctionId)
-                ->where('status', 'pending')
-                ->orderBy('order_no', 'asc')
+            $firstPlayer = AuctionPlayer::select('auction_players.*')
+                ->join('players', 'auction_players.player_id', '=', 'players.id')
+                ->where('players.is_approved', true)
+                ->where('auction_players.auction_id', $auctionId)
+                ->where('auction_players.status', 'pending')
+                ->orderBy('players.name', 'asc')
                 ->first();
 
             if (!$firstPlayer) {
@@ -109,10 +111,12 @@ class AuctionService
                 }
             }
 
-            $nextPlayer = AuctionPlayer::whereHas('player', fn($q) => $q->where('is_approved', true))
-                ->where('auction_id', $auctionId)
-                ->where('status', 'pending')
-                ->orderBy('order_no', 'asc')
+            $nextPlayer = AuctionPlayer::select('auction_players.*')
+                ->join('players', 'auction_players.player_id', '=', 'players.id')
+                ->where('players.is_approved', true)
+                ->where('auction_players.auction_id', $auctionId)
+                ->where('auction_players.status', 'pending')
+                ->orderBy('players.name', 'asc')
                 ->first();
 
             if (!$nextPlayer) {

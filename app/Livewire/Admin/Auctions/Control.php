@@ -240,8 +240,8 @@ class Control extends Component
         $playersList = AuctionPlayer::with(['player', 'soldToTeam'])
             ->whereHas('player', fn($q) => $q->where('is_approved', true))
             ->where('auction_id', $this->auction->id)
-            ->orderBy('order_no')
-            ->get();
+            ->get()
+            ->sortBy('player.name');
 
         return view('livewire.admin.auctions.control', [
             'playersList' => $playersList
