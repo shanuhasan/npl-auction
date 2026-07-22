@@ -218,10 +218,16 @@
                 <div class="bg-card-bg shadow border border-gray-800 sm:rounded-lg flex flex-col h-[400px]">
                     <div class="p-4 border-b border-gray-800 bg-[#141B2D] rounded-t-lg flex justify-between items-center">
                         <h3 class="font-bold text-accent-gold uppercase tracking-wider">Players List</h3>
-                        <button wire:click="exportResults" class="text-xs font-bold text-white bg-green-600 hover:bg-green-700 px-3 py-1.5 rounded uppercase flex items-center gap-2 transition" title="Download Auction Results">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            Export CSV
-                        </button>
+                        <div class="flex gap-2">
+                            <button wire:click="shufflePendingPlayers" class="text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded uppercase flex items-center gap-2 transition" title="Shuffle Pending Players">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                                Shuffle
+                            </button>
+                            <button wire:click="exportResults" class="text-xs font-bold text-white bg-green-600 hover:bg-green-700 px-3 py-1.5 rounded uppercase flex items-center gap-2 transition" title="Download Auction Results">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                Export
+                            </button>
+                        </div>
                     </div>
                     <div class="flex-1 overflow-y-auto p-4 space-y-2">
                         @forelse($playersList as $ap)

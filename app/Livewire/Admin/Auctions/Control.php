@@ -249,13 +249,30 @@ class Control extends Component
         $this->loadData();
     }
 
+    public function shufflePendingPlayers()
+    {
+        $pendingPlayers = AuctionPlayer::where('auction_id', $this->auction->id)
+            ->where('status', 'pending')
+            ->get()
+            ->shuffle();
+        
+        $order = 1;
+        foreach ($pendingPlayers as $ap) {
+            $ap->update(['order_no' => $order]);
+            $order++;
+        }
+        
+        session()->flash('success', 'Pending players have been shuffled successfully.');
+        $this->loadData();
+    }
+
     public function render()
     {
         $playersList = AuctionPlayer::with(['player', 'soldToTeam'])
             ->whereHas('player', fn($q) => $q->where('is_approved', true))
             ->where('auction_id', $this->auction->id)
-            ->get()
-            ->sortBy('player.name');
+            ->orderBy('order_no', 'asc')
+            ->get();
 
         return view('livewire.admin.auctions.control', [
             'playersList' => $playersList
@@ -279,19 +296,16 @@ class Control extends Component
             ->orderBy('order_no', 'asc')
             ->get();
 
-        $csvHeader = ['Order No', 'Player Name', 'Role', 'Category', 'Base Price', 'Status', 'Sold To Team', 'Final Price'];
+        $csvHeader = ['S.No', 'Player Name', 'Role', 'Status'];
         $csvData = [];
         
+        $sno = 1;
         foreach ($players as $ap) {
             $csvData[] = [
-                $ap->order_no,
+                $sno++,
                 $ap->player->name ?? 'N/A',
                 ucfirst($ap->player->role ?? 'N/A'),
-                strtoupper($ap->player->category ?? 'N/A'),
-                $ap->player->base_price ?? 0,
                 ucfirst($ap->status),
-                $ap->soldToTeam ? $ap->soldToTeam->name : 'N/A',
-                $ap->final_price ?? 0,
             ];
         }
 

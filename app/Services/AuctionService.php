@@ -32,7 +32,8 @@ class AuctionService
                 ->where('players.is_approved', true)
                 ->where('auction_players.auction_id', $auctionId)
                 ->where('auction_players.status', 'pending')
-                ->orderBy('players.name', 'asc')
+                ->orderBy('auction_players.order_no', 'asc')
+                ->orderBy('players.name', 'asc') // Fallback if order_no is same
                 ->first();
 
             if (!$firstPlayer) {
@@ -116,7 +117,8 @@ class AuctionService
                 ->where('players.is_approved', true)
                 ->where('auction_players.auction_id', $auctionId)
                 ->where('auction_players.status', 'pending')
-                ->orderBy('players.name', 'asc')
+                ->orderBy('auction_players.order_no', 'asc')
+                ->orderBy('players.name', 'asc') // Fallback if order_no is same
                 ->first();
 
             if (!$nextPlayer) {
