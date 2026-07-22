@@ -16,6 +16,7 @@ class Settings extends Component
     public $new_favicon;
     public $contact_email;
     public $contact_phone;
+    public $registration_fee;
 
     public $season;
     public $developer_name;
@@ -35,6 +36,7 @@ class Settings extends Component
         $this->favicon = setting('favicon', '');
         $this->contact_email = setting('contact_email', '');
         $this->contact_phone = setting('contact_phone', '');
+        $this->registration_fee = setting('registration_fee', '1500');
         $this->developer_name = setting('developer_name', 'Shanu Saifi');
         $this->developer_url = setting('developer_url', '#');
         $this->our_mission = setting('our_mission', '');
@@ -54,6 +56,7 @@ class Settings extends Component
             'new_favicon' => 'nullable|mimes:ico,png,jpg,jpeg|max:1024', // max 1MB
             'contact_email' => 'nullable|email|max:255',
             'contact_phone' => 'nullable|string|max:255',
+            'registration_fee' => 'nullable|numeric|min:0',
             'developer_name' => 'nullable|string|max:255',
             'developer_url' => 'nullable|string|max:255',
             'our_mission' => 'nullable|string',
@@ -97,6 +100,7 @@ class Settings extends Component
 
         \App\Models\Setting::set('contact_email', $this->contact_email);
         \App\Models\Setting::set('contact_phone', $this->contact_phone);
+        \App\Models\Setting::set('registration_fee', $this->registration_fee);
         \App\Models\Setting::set('developer_name', $this->developer_name);
         \App\Models\Setting::set('developer_url', $this->developer_url);
         \App\Models\Setting::set('our_mission', $this->our_mission);

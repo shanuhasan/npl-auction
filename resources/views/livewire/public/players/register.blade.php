@@ -1,6 +1,6 @@
 <div class="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
     <div class="bg-card-bg shadow-2xl rounded-lg p-8 border border-gray-800">
-        <h1 class="text-3xl font-poppins font-bold text-accent-gold mb-6 border-b border-gray-700 pb-4">Player Registration (Rs. 1500)</h1>
+        <h1 class="text-3xl font-poppins font-bold text-accent-gold mb-6 border-b border-gray-700 pb-4">Player Registration (Rs. {{ setting('registration_fee', '1500') }})</h1>
         
         @if($isSubmitted)
             <div class="bg-success-green text-white p-6 rounded-lg text-center shadow-lg">

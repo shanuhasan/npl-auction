@@ -73,6 +73,13 @@
                                 <input type="text" id="contact_phone" wire:model="contact_phone" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="+91 9876543210">
                                 @error('contact_phone') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                             </div>
+
+                            <!-- Registration Fee -->
+                            <div>
+                                <label for="registration_fee" class="block text-sm font-medium text-gray-400 mb-1">Player Registration Fee (Rs.)</label>
+                                <input type="number" id="registration_fee" wire:model="registration_fee" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="1500">
+                                @error('registration_fee') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 gap-6">
