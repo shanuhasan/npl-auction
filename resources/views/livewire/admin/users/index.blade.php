@@ -147,6 +147,10 @@
                                     <span class="ml-2 text-gray-300">Manage Sponsors</span>
                                 </label>
                                 <label class="inline-flex items-center">
+                                    <input type="checkbox" wire:model="permissions" value="manage_contacts" class="form-checkbox h-5 w-5 text-accent-gold rounded border-gray-600 bg-gray-800 focus:ring-accent-gold focus:ring-offset-gray-900">
+                                    <span class="ml-2 text-gray-300">Manage Contacts</span>
+                                </label>
+                                <label class="inline-flex items-center">
                                     <input type="checkbox" wire:model="permissions" value="manage_settings" class="form-checkbox h-5 w-5 text-accent-gold rounded border-gray-600 bg-gray-800 focus:ring-accent-gold focus:ring-offset-gray-900">
                                     <span class="ml-2 text-gray-300">Manage Settings</span>
                                 </label>

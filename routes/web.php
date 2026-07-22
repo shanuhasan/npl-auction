@@ -49,6 +49,7 @@ Route::middleware(['auth', 'role:admin,sub_admin'])->prefix('admin')->name('admi
     Route::get('/core-committees', \App\Livewire\Admin\CoreCommittees\Index::class)->middleware('permission:manage_core_committees')->name('core-committees');
     Route::get('/guests', \App\Livewire\Admin\Guests\Index::class)->middleware('permission:manage_guests')->name('guests');
     Route::get('/sponsors', \App\Livewire\Admin\Sponsors\Index::class)->middleware('permission:manage_sponsors')->name('sponsors');
+    Route::get('/contacts', \App\Livewire\Admin\Contacts\Index::class)->middleware('permission:manage_contacts')->name('contacts');
 });
 
 // Public Pages Route

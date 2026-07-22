@@ -62,6 +62,10 @@
                             <a href="{{ route('admin.sponsors') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.sponsors') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Sponsors</a>
                             @endif
 
+                            @if(auth()->user()->hasPermission('manage_contacts'))
+                            <a href="{{ route('admin.contacts') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.contacts') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Contact Messages</a>
+                            @endif
+
                             @if(auth()->user()->hasPermission('manage_gallery'))
                             <a href="{{ route('admin.gallery') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.gallery*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Gallery</a>
                             @endif
