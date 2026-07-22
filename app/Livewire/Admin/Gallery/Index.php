@@ -66,6 +66,10 @@ class Index extends Component
         if ($this->file_path) {
             if ($this->existing_file) {
                 Storage::disk('public')->delete($this->existing_file);
+                $publicPath = public_path('storage/' . $this->existing_file);
+                if (file_exists($publicPath)) {
+                    @unlink($publicPath);
+                }
             }
             
             if ($this->type == 'photo') {
@@ -113,6 +117,10 @@ class Index extends Component
         $gallery = Gallery::findOrFail($id);
         if ($gallery->file_path) {
             Storage::disk('public')->delete($gallery->file_path);
+            $publicPath = public_path('storage/' . $gallery->file_path);
+            if (file_exists($publicPath)) {
+                @unlink($publicPath);
+            }
         }
         $gallery->delete();
         session()->flash('message', 'Item Deleted Successfully.');

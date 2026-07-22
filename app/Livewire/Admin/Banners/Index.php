@@ -69,8 +69,12 @@ class Index extends Component
                 'order' => $this->order,
             ];
             if ($filename) {
-                if ($banner->image_path && Storage::disk('public')->exists($banner->image_path)) {
+                if ($banner->image_path) {
                     Storage::disk('public')->delete($banner->image_path);
+                    $publicPath = public_path('storage/' . $banner->image_path);
+                    if (file_exists($publicPath)) {
+                        @unlink($publicPath);
+                    }
                 }
                 $data['image_path'] = $filename;
             }
@@ -121,8 +125,12 @@ class Index extends Component
     public function delete($id)
     {
         $banner = Banner::findOrFail($id);
-        if (Storage::disk('public')->exists($banner->image_path)) {
+        if ($banner->image_path) {
             Storage::disk('public')->delete($banner->image_path);
+            $publicPath = public_path('storage/' . $banner->image_path);
+            if (file_exists($publicPath)) {
+                @unlink($publicPath);
+            }
         }
         $banner->delete();
         
