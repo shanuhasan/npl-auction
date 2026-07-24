@@ -139,6 +139,12 @@ new class extends Component
                     </x-responsive-nav-link>
                     @endif
 
+                    @if(auth()->user()->hasPermission('manage_contacts'))
+                    <x-responsive-nav-link :href="route('admin.contacts')" :active="request()->routeIs('admin.contacts')" wire:navigate>
+                        Contact Messages
+                    </x-responsive-nav-link>
+                    @endif
+
                     @if(auth()->user()->hasPermission('manage_gallery'))
                     <x-responsive-nav-link :href="route('admin.gallery')" :active="request()->routeIs('admin.gallery')" wire:navigate>
                         Manage Gallery
