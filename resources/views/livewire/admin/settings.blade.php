@@ -92,6 +92,7 @@
                             <div>
                                 <label for="active_payment_gateway" class="block text-sm font-medium text-gray-400 mb-1">Active Payment Gateway</label>
                                 <select id="active_payment_gateway" wire:model="active_payment_gateway" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition">
+                                    <option value="none">None (Direct Registration)</option>
                                     <option value="mock">Mock Gateway (Testing)</option>
                                     <option value="razorpay">Razorpay (Live/Test)</option>
                                 </select>

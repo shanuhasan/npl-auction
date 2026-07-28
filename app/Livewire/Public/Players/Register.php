@@ -81,10 +81,22 @@ class Register extends Component
             'payment_status' => 'pending',
         ]);
 
+        $activeGateway = setting('active_payment_gateway', 'mock');
+        
+        if ($activeGateway === 'none') {
+            // Direct registration without payment
+            $player->update([
+                'payment_status' => 'completed',
+                'is_approved' => false, // Will be approved by admin later
+            ]);
+            
+            $this->isSubmitted = true;
+            return;
+        }
+
         try {
             $paymentService = app(\App\Services\Payments\PaymentService::class);
             
-            $activeGateway = setting('active_payment_gateway', 'mock');
             if ($activeGateway === 'razorpay') {
                 $paymentService->setGateway(new \App\Services\Payments\Gateways\RazorpayGateway());
             } else {

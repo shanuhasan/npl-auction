@@ -62,7 +62,7 @@ class Settings extends Component
             'contact_phone' => 'nullable|string|max:255',
             'registration_fee' => 'nullable|numeric|min:0',
             'player_base_price' => 'nullable|numeric|min:0',
-            'active_payment_gateway' => 'required|in:mock,razorpay',
+            'active_payment_gateway' => 'required|in:none,mock,razorpay',
             'developer_name' => 'nullable|string|max:255',
             'developer_url' => 'nullable|string|max:255',
             'our_mission' => 'nullable|string',
