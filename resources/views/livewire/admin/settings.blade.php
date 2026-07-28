@@ -80,6 +80,13 @@
                                 <input type="number" id="registration_fee" wire:model="registration_fee" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="1500">
                                 @error('registration_fee') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                             </div>
+
+                            <!-- Player Base Price -->
+                            <div>
+                                <label for="player_base_price" class="block text-sm font-medium text-gray-400 mb-1">Player Base Price (Rs.)</label>
+                                <input type="number" id="player_base_price" wire:model="player_base_price" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition" placeholder="1000">
+                                @error('player_base_price') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 gap-6">

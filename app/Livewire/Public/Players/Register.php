@@ -64,7 +64,7 @@ class Register extends Component
             $photoPath = 'players/' . $filename;
         }
 
-        Player::create([
+        $player = Player::create([
             'name' => $this->name,
             'photo' => $photoPath,
             'role' => $this->role,
@@ -73,14 +73,21 @@ class Register extends Component
             'contact_no' => $this->contact_no,
             'batting_style' => $this->batting_style,
             'bowling_style' => $this->bowling_style,
-            'base_price' => 1000,
+            'base_price' => (float) setting('player_base_price', 1000),
             'category' => 'set-c',
             'status' => 'available',
             'stats' => $this->stats,
             'is_approved' => false,
+            'payment_status' => 'pending',
         ]);
 
-        $this->isSubmitted = true;
+        $paymentService = app(\App\Services\Payments\PaymentService::class);
+        // Using MockGateway for demonstration. Replace with RazorpayGateway when ready.
+        $paymentService->setGateway(new \App\Services\Payments\Gateways\MockGateway());
+        
+        $registrationFee = (float) setting('registration_fee', 1000); 
+
+        return $paymentService->initializePlayerRegistration($player, $registrationFee);
     }
 
     public function render()

@@ -17,6 +17,7 @@ class Settings extends Component
     public $contact_email;
     public $contact_phone;
     public $registration_fee;
+    public $player_base_price;
 
     public $season;
     public $developer_name;
@@ -37,6 +38,7 @@ class Settings extends Component
         $this->contact_email = setting('contact_email', '');
         $this->contact_phone = setting('contact_phone', '');
         $this->registration_fee = setting('registration_fee', '1500');
+        $this->player_base_price = setting('player_base_price', '1000');
         $this->developer_name = setting('developer_name', 'Shanu Saifi');
         $this->developer_url = setting('developer_url', '#');
         $this->our_mission = setting('our_mission', '');
@@ -57,6 +59,7 @@ class Settings extends Component
             'contact_email' => 'nullable|email|max:255',
             'contact_phone' => 'nullable|string|max:255',
             'registration_fee' => 'nullable|numeric|min:0',
+            'player_base_price' => 'nullable|numeric|min:0',
             'developer_name' => 'nullable|string|max:255',
             'developer_url' => 'nullable|string|max:255',
             'our_mission' => 'nullable|string',
@@ -109,6 +112,7 @@ class Settings extends Component
         \App\Models\Setting::set('instagram', $this->instagram);
         \App\Models\Setting::set('twitter', $this->twitter);
         \App\Models\Setting::set('youtube', $this->youtube);
+        \App\Models\Setting::set('player_base_price', $this->player_base_price);
 
         session()->flash('success', 'Settings updated successfully.');
     }

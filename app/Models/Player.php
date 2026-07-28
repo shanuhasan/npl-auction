@@ -8,7 +8,7 @@ class Player extends Model
 {
     protected $fillable = [
         'name', 'photo', 'role', 'country', 'city', 'batting_style', 'bowling_style',
-        'base_price', 'category', 'stats', 'status', 'current_team_id', 'is_approved', 'contact_no',
+        'base_price', 'category', 'stats', 'status', 'current_team_id', 'is_approved', 'contact_no', 'payment_status',
     ];
 
     protected $casts = [
@@ -24,5 +24,10 @@ class Player extends Model
     public function auctionPlayers()
     {
         return $this->hasMany(AuctionPlayer::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

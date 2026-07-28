@@ -29,6 +29,9 @@ Route::get('/players/register', \App\Livewire\Public\Players\Register::class)->n
 Route::get('/players', \App\Livewire\Public\Players\Index::class)->name('public.players');
 Route::get('/contact', \App\Livewire\Public\Contact::class)->name('public.contact');
 
+// Payment Callback
+Route::any('/payment/callback', [\App\Http\Controllers\PaymentController::class, 'callback'])->name('payment.callback');
+
 Route::middleware(['auth', 'role:admin,sub_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('dashboard'); // Basic dashboard accessible to both
     Route::get('/teams', \App\Livewire\Admin\Teams\Index::class)->middleware('permission:manage_teams')->name('teams');
