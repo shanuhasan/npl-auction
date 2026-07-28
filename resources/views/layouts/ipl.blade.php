@@ -10,8 +10,9 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=bebas-neue:400|roboto:400,500,700,900&display=swap" rel="stylesheet" />
 
-    <!-- Scripts -->
+    <!-- Scripts & Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 
     <!-- jQuery & Select2 -->
     <script src="{{ asset('js/jquery.min.js') }}"></script>
