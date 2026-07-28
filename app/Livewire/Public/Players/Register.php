@@ -83,7 +83,13 @@ class Register extends Component
 
         try {
             $paymentService = app(\App\Services\Payments\PaymentService::class);
-            $paymentService->setGateway(new \App\Services\Payments\Gateways\RazorpayGateway());
+            
+            $activeGateway = setting('active_payment_gateway', 'mock');
+            if ($activeGateway === 'razorpay') {
+                $paymentService->setGateway(new \App\Services\Payments\Gateways\RazorpayGateway());
+            } else {
+                $paymentService->setGateway(new \App\Services\Payments\Gateways\MockGateway());
+            }
             
             $registrationFee = (float) setting('registration_fee', 1000); 
 

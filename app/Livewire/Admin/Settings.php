@@ -18,6 +18,7 @@ class Settings extends Component
     public $contact_phone;
     public $registration_fee;
     public $player_base_price;
+    public $active_payment_gateway;
 
     public $season;
     public $developer_name;
@@ -39,6 +40,7 @@ class Settings extends Component
         $this->contact_phone = setting('contact_phone', '');
         $this->registration_fee = setting('registration_fee', '1500');
         $this->player_base_price = setting('player_base_price', '1000');
+        $this->active_payment_gateway = setting('active_payment_gateway', 'mock');
         $this->developer_name = setting('developer_name', 'Shanu Saifi');
         $this->developer_url = setting('developer_url', '#');
         $this->our_mission = setting('our_mission', '');
@@ -60,6 +62,7 @@ class Settings extends Component
             'contact_phone' => 'nullable|string|max:255',
             'registration_fee' => 'nullable|numeric|min:0',
             'player_base_price' => 'nullable|numeric|min:0',
+            'active_payment_gateway' => 'required|in:mock,razorpay',
             'developer_name' => 'nullable|string|max:255',
             'developer_url' => 'nullable|string|max:255',
             'our_mission' => 'nullable|string',
@@ -104,6 +107,8 @@ class Settings extends Component
         \App\Models\Setting::set('contact_email', $this->contact_email);
         \App\Models\Setting::set('contact_phone', $this->contact_phone);
         \App\Models\Setting::set('registration_fee', $this->registration_fee);
+        \App\Models\Setting::set('player_base_price', $this->player_base_price);
+        \App\Models\Setting::set('active_payment_gateway', $this->active_payment_gateway);
         \App\Models\Setting::set('developer_name', $this->developer_name);
         \App\Models\Setting::set('developer_url', $this->developer_url);
         \App\Models\Setting::set('our_mission', $this->our_mission);
