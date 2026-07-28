@@ -29,7 +29,19 @@ Route::get('/players/register', \App\Livewire\Public\Players\Register::class)->n
 Route::get('/players', \App\Livewire\Public\Players\Index::class)->name('public.players');
 Route::get('/contact', \App\Livewire\Public\Contact::class)->name('public.contact');
 
-// Payment Callback
+// Payment Callback & Checkout
+Route::get('/payment/checkout/{payment}', function (\App\Models\Payment $payment) {
+    if ($payment->status !== 'pending' || $payment->gateway !== 'razorpay') {
+        return redirect()->route('home');
+    }
+    return view('public.players.razorpay-checkout', [
+        'player' => $payment->player,
+        'payment' => $payment,
+        'order_id' => $payment->transaction_id,
+        'key' => config('services.razorpay.key')
+    ]);
+})->name('payment.checkout');
+
 Route::any('/payment/callback', [\App\Http\Controllers\PaymentController::class, 'callback'])->name('payment.callback');
 
 Route::middleware(['auth', 'role:admin,sub_admin'])->prefix('admin')->name('admin.')->group(function () {

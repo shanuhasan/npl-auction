@@ -7,33 +7,72 @@ use App\Models\Payment;
 use App\Models\Player;
 use Illuminate\Http\Request;
 
+use Razorpay\Api\Api;
+use Exception;
+use Illuminate\Support\Facades\Log;
+
 class RazorpayGateway implements PaymentGatewayInterface
 {
+    protected $api;
+
+    public function __construct()
+    {
+        $keyId = config('services.razorpay.key');
+        $keySecret = config('services.razorpay.secret');
+        
+        if ($keyId && $keySecret) {
+            $this->api = new Api($keyId, $keySecret);
+        }
+    }
+
     public function initializePayment(Player $player, Payment $payment)
     {
-        // 1. Initialize Razorpay API using config('services.razorpay.key') and secret
-        // 2. Create an order with Razorpay
-        // 3. Update $payment->transaction_id with the Razorpay order_id
-        // 4. Return a view that contains the Razorpay checkout form with the order_id
+        if (!$this->api) {
+            throw new Exception('Razorpay keys are not configured. Please add RAZORPAY_KEY and RAZORPAY_SECRET to your .env file.');
+        }
 
-        // For now, return a view that will render the Razorpay checkout button.
-        // We assume the view exists at resources/views/public/players/razorpay-checkout.blade.php
-        return view('public.players.razorpay-checkout', [
-            'player' => $player,
-            'payment' => $payment,
-            // 'order_id' => $razorpayOrder->id,
-            // 'key' => config('services.razorpay.key')
-        ]);
+        // Amount must be in paise (multiply by 100)
+        $amountInPaise = (int) ($payment->amount * 100);
+
+        $orderData = [
+            'receipt'         => 'rcptid_' . $payment->id,
+            'amount'          => $amountInPaise,
+            'currency'        => 'INR',
+            'payment_capture' => 1 // auto capture
+        ];
+
+        try {
+            $razorpayOrder = $this->api->order->create($orderData);
+            
+            // Update the transaction ID with the Razorpay order ID
+            $payment->update(['transaction_id' => $razorpayOrder['id']]);
+
+            return redirect()->route('payment.checkout', ['payment' => $payment->id]);
+        } catch (Exception $e) {
+            Log::error('Razorpay Order Creation Failed: ' . $e->getMessage());
+            throw new Exception('Could not initialize payment. Please try again later.');
+        }
     }
 
     public function verifyPayment(Request $request): bool
     {
-        // 1. Get razorpay_order_id, razorpay_payment_id, razorpay_signature from request
-        // 2. Verify signature using Razorpay API
-        // return true if verified, false otherwise
-        
-        // Placeholder implementation
-        return $request->has('razorpay_payment_id');
+        if (!$this->api) {
+            return false;
+        }
+
+        try {
+            $attributes = array(
+                'razorpay_order_id' => $request->input('razorpay_order_id'),
+                'razorpay_payment_id' => $request->input('razorpay_payment_id'),
+                'razorpay_signature' => $request->input('razorpay_signature')
+            );
+
+            $this->api->utility->verifyPaymentSignature($attributes);
+            return true;
+        } catch(Exception $e) {
+            Log::error('Razorpay Signature Verification Failed: ' . $e->getMessage());
+            return false;
+        }
     }
 
     public function getGatewayName(): string

@@ -81,13 +81,24 @@ class Register extends Component
             'payment_status' => 'pending',
         ]);
 
-        $paymentService = app(\App\Services\Payments\PaymentService::class);
-        // Using MockGateway for demonstration. Replace with RazorpayGateway when ready.
-        $paymentService->setGateway(new \App\Services\Payments\Gateways\MockGateway());
-        
-        $registrationFee = (float) setting('registration_fee', 1000); 
+        try {
+            $paymentService = app(\App\Services\Payments\PaymentService::class);
+            $paymentService->setGateway(new \App\Services\Payments\Gateways\RazorpayGateway());
+            
+            $registrationFee = (float) setting('registration_fee', 1000); 
 
-        return $paymentService->initializePlayerRegistration($player, $registrationFee);
+            return $paymentService->initializePlayerRegistration($player, $registrationFee);
+        } catch (\Exception $e) {
+            // If payment initialization fails (e.g. missing keys), delete the pending player 
+            // so they can try again, and show an error.
+            if ($photoPath) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($photoPath);
+            }
+            $player->delete();
+            
+            $this->addError('payment', $e->getMessage());
+            return;
+        }
     }
 
     public function render()

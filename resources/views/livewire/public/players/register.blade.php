@@ -10,6 +10,11 @@
                 <a href="{{ route('public.players') }}" class="inline-block mt-6 px-6 py-2 bg-white text-success-green font-bold rounded hover:bg-gray-100 transition">Back to Players Directory</a>
             </div>
         @else
+            @error('payment')
+                <div class="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded-lg mb-6">
+                    <strong>Payment Error:</strong> {{ $message }}
+                </div>
+            @enderror
             <form wire:submit.prevent="register">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     
