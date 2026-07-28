@@ -33,12 +33,11 @@
         
         <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
             <div class="w-full sm:w-64">
-                <select wire:model.live="selectedAuctionId" class="w-full bg-[#141B2D] border border-white/20 text-white rounded-lg py-2 px-4 focus:ring-[var(--team-color)] focus:border-[var(--team-color)] shadow">
-                    <option value="">Select Season/Auction</option>
+                <x-select2 id="teamShowAuctionId" wire:model.live="selectedAuctionId" placeholder="Select Season/Auction">
                     @foreach($auctions as $auction)
                         <option value="{{ $auction->id }}">{{ $auction->title }} ({{ \Carbon\Carbon::parse($auction->auction_date)->format('Y') }})</option>
                     @endforeach
-                </select>
+                </x-select2>
             </div>
             
             <a href="{{ route('teams.pdf', ['team' => $team->id, 'auction_id' => $selectedAuctionId]) }}" target="_blank" class="w-full sm:w-auto text-center bg-[var(--team-color)] text-white px-4 py-2 rounded-lg font-bold uppercase tracking-wider text-sm whitespace-nowrap hover:opacity-80 transition shadow-lg border border-white/20" title="Download Squad PDF">

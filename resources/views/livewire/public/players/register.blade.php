@@ -33,12 +33,12 @@
                     
                     <div>
                         <label class="block text-gray-300 text-sm font-bold mb-2">Role <span class="text-red-500">*</span></label>
-                        <select wire:model="role" class="w-full bg-primary-bg border border-gray-700 rounded py-3 px-4 text-white focus:outline-none focus:border-accent-gold transition">
+                        <x-select2 id="role" wire:model="role" placeholder="Select Role">
                             <option value="batsman">Batsman</option>
                             <option value="bowler">Bowler</option>
                             <option value="all-rounder">All-Rounder</option>
                             <option value="wicketkeeper">Wicketkeeper</option>
-                        </select>
+                        </x-select2>
                         @error('role') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
@@ -56,18 +56,16 @@
 
                     <div>
                         <label class="block text-gray-300 text-sm font-bold mb-2">Batting Style</label>
-                        <select wire:model="batting_style" class="w-full bg-primary-bg border border-gray-700 rounded py-3 px-4 text-white focus:outline-none focus:border-accent-gold transition">
-                            <option value="">Select Batting Style</option>
+                        <x-select2 id="batting_style" wire:model="batting_style" placeholder="Select Batting Style">
                             <option value="Right-hand bat">Right-hand bat</option>
                             <option value="Left-hand bat">Left-hand bat</option>
-                        </select>
+                        </x-select2>
                         @error('batting_style') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
                     <div>
                         <label class="block text-gray-300 text-sm font-bold mb-2">Bowling Style</label>
-                        <select wire:model="bowling_style" class="w-full bg-primary-bg border border-gray-700 rounded py-3 px-4 text-white focus:outline-none focus:border-accent-gold transition">
-                            <option value="">Select Bowling Style (or None)</option>
+                        <x-select2 id="bowling_style" wire:model="bowling_style" placeholder="Select Bowling Style (or None)">
                             <option value="None">None</option>
                             <option value="Right-arm fast">Right-arm fast</option>
                             <option value="Right-arm medium">Right-arm medium</option>
@@ -77,7 +75,7 @@
                             <option value="Left-arm medium">Left-arm medium</option>
                             <option value="Left-arm orthodox">Left-arm orthodox</option>
                             <option value="Left-arm chinaman">Left-arm chinaman</option>
-                        </select>
+                        </x-select2>
                         @error('bowling_style') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 

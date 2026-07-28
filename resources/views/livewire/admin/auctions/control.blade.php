@@ -126,12 +126,11 @@
                     <div class="flex gap-4 items-end">
                         <div class="flex-1">
                             <label class="block text-sm font-medium text-gray-300 mb-1">Select Team</label>
-                            <select wire:model="overrideTeamId" class="w-full bg-primary-bg border border-gray-700 rounded-md text-white px-3 py-2">
-                                <option value="">-- Choose Team --</option>
+                            <x-select2 id="overrideTeamId" wire:model="overrideTeamId" placeholder="-- Choose Team --">
                                 @foreach($teams as $t)
                                     <option value="{{ $t->id }}">{{ $t->name }} (Budget: ₹{{ $t->remaining_budget }})</option>
                                 @endforeach
-                            </select>
+                            </x-select2>
                         </div>
                         <div class="flex-1">
                             <label class="block text-sm font-medium text-gray-300 mb-1">Amount (₹)</label>

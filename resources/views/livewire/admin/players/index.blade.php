@@ -18,24 +18,21 @@
 
     <div class="bg-card-bg p-4 rounded-lg shadow mb-6 border border-gray-800 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
         <input type="text" wire:model.live="search" placeholder="Search by name..." class="w-full md:flex-1 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
-        <select wire:model.live="filterRole" class="w-full md:w-48 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
-            <option value="">All Roles</option>
+        <x-select2 id="filterRole" wire:model.live="filterRole" placeholder="All Roles">
             <option value="batsman">Batsman</option>
             <option value="bowler">Bowler</option>
             <option value="all-rounder">All-Rounder</option>
             <option value="wicketkeeper">Wicketkeeper</option>
-        </select>
-        <select wire:model.live="filterStatus" class="w-full md:w-48 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
-            <option value="">All Statuses</option>
+        </x-select2>
+        <x-select2 id="filterStatus" wire:model.live="filterStatus" placeholder="All Statuses">
             <option value="available">Available</option>
             <option value="sold">Sold</option>
             <option value="unsold">Unsold</option>
-        </select>
-        <select wire:model.live="filterApproval" class="w-full md:w-48 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
-            <option value="">All Approvals</option>
+        </x-select2>
+        <x-select2 id="filterApproval" wire:model.live="filterApproval" placeholder="All Approvals">
             <option value="1">Approved</option>
             <option value="0">Pending</option>
-        </select>
+        </x-select2>
     </div>
 
     <div class="bg-card-bg rounded-lg shadow overflow-x-auto border border-gray-800">
@@ -134,22 +131,22 @@
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Role</label>
-                            <select wire:model="role" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" required>
+                            <x-select2 id="role" wire:model="role" placeholder="Select Role" required>
                                 <option value="batsman">Batsman</option>
                                 <option value="bowler">Bowler</option>
                                 <option value="all-rounder">All-Rounder</option>
                                 <option value="wicketkeeper">Wicketkeeper</option>
-                            </select>
+                            </x-select2>
                             @error('role') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Category</label>
-                            <select wire:model="category" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" required>
+                            <x-select2 id="category" wire:model="category" placeholder="Select Category" required>
                                 <option value="marquee">Marquee</option>
                                 <option value="set-a">Set A</option>
                                 <option value="set-b">Set B</option>
                                 <option value="set-c">Set C</option>
-                            </select>
+                            </x-select2>
                             @error('category') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div>
@@ -159,34 +156,32 @@
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Status</label>
-                            <select wire:model="status" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" required>
+                            <x-select2 id="status" wire:model="status" placeholder="Select Status" required>
                                 <option value="available">Available</option>
                                 <option value="sold">Sold</option>
                                 <option value="unsold">Unsold</option>
-                            </select>
+                            </x-select2>
                             @error('status') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Approval</label>
-                            <select wire:model="is_approved" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" required>
+                            <x-select2 id="is_approved" wire:model="is_approved" placeholder="Select Approval" required>
                                 <option value="1">Approved</option>
                                 <option value="0">Pending</option>
-                            </select>
+                            </x-select2>
                             @error('is_approved') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Batting Style</label>
-                            <select wire:model="batting_style" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
-                                <option value="">Select Batting Style</option>
+                            <x-select2 id="batting_style" wire:model="batting_style" placeholder="Select Batting Style">
                                 <option value="Right-hand bat">Right-hand bat</option>
                                 <option value="Left-hand bat">Left-hand bat</option>
-                            </select>
+                            </x-select2>
                             @error('batting_style') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Bowling Style</label>
-                            <select wire:model="bowling_style" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
-                                <option value="">Select Bowling Style (or None)</option>
+                            <x-select2 id="bowling_style" wire:model="bowling_style" placeholder="Select Bowling Style (or None)">
                                 <option value="None">None</option>
                                 <option value="Right-arm fast">Right-arm fast</option>
                                 <option value="Right-arm medium">Right-arm medium</option>
@@ -196,7 +191,7 @@
                                 <option value="Left-arm medium">Left-arm medium</option>
                                 <option value="Left-arm orthodox">Left-arm orthodox</option>
                                 <option value="Left-arm chinaman">Left-arm chinaman</option>
-                            </select>
+                            </x-select2>
                             @error('bowling_style') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>
                         
@@ -255,12 +250,11 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Select Team</label>
-                            <select wire:model="assignTeamId" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" required>
-                                <option value="">-- Choose a Team --</option>
+                            <x-select2 id="assignTeamId" wire:model="assignTeamId" placeholder="-- Choose a Team --" required>
                                 @foreach($teams as $team)
                                     <option value="{{ $team->id }}">{{ $team->name }} (Remaining: ₹{{ number_format($team->remaining_budget) }})</option>
                                 @endforeach
-                            </select>
+                            </x-select2>
                             @error('assignTeamId') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div>

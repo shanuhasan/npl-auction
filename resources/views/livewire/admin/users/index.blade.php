@@ -19,13 +19,12 @@
     <div class="bg-card-bg p-4 rounded-lg shadow mb-6 border border-gray-800 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
         <input type="text" wire:model.live="search" placeholder="Search by name or email..." class="w-full md:flex-1 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
         @if(auth()->user()->role !== 'sub_admin')
-        <select wire:model.live="filterRole" class="w-full md:w-48 bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
-            <option value="">All Roles</option>
+        <x-select2 id="filterRole" wire:model.live="filterRole" placeholder="All Roles">
             <option value="admin">Admin</option>
             <option value="sub_admin">Sub Admin</option>
             <option value="team_owner">Team Owner</option>
             <option value="viewer">Viewer</option>
-        </select>
+        </x-select2>
         @endif
     </div>
 
@@ -92,12 +91,12 @@
                                 <input type="hidden" wire:model="role" value="team_owner">
                                 <input type="text" disabled value="Team Owner" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-gray-500 cursor-not-allowed">
                             @else
-                                <select wire:model.live="role" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" required>
+                                <x-select2 id="userRole" wire:model.live="role" placeholder="Select Role" required>
                                     <option value="viewer">Viewer</option>
                                     <option value="team_owner">Team Owner</option>
                                     <option value="sub_admin">Sub Admin</option>
                                     <option value="admin">Admin</option>
-                                </select>
+                                </x-select2>
                             @endif
                             @error('role') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>

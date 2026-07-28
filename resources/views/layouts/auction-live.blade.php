@@ -14,7 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
-        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+        <script src="{{ asset('js/confetti.browser.min.js') }}"></script>
         
         <style>
             body { font-family: 'Poppins', sans-serif; background-color: #0B0F19; color: #ffffff; margin: 0; overflow-x: hidden; }

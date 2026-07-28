@@ -14,6 +14,49 @@
         <!-- Quill Editor -->
         <link href="{{ asset('css/quill.snow.css') }}" rel="stylesheet">
         <script src="{{ asset('js/quill.min.js') }}"></script>
+        
+        <!-- jQuery & Select2 -->
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
+        <script src="{{ asset('js/select2.min.js') }}"></script>
+        <style>
+            /* Select2 Dark Theme Customization */
+            .select2-container--default .select2-selection--single,
+            .select2-container--default .select2-selection--multiple {
+                background-color: #111827; /* bg-gray-900 */
+                border: 1px solid #374151; /* border-gray-700 */
+                border-radius: 0.5rem;
+                padding: 0.5rem 1rem;
+                height: auto;
+                color: #ffffff;
+            }
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+                color: #ffffff;
+                line-height: normal;
+                padding-left: 0;
+            }
+            .select2-container--default .select2-selection--single .select2-selection__arrow {
+                height: 100%;
+                right: 10px;
+            }
+            .select2-dropdown {
+                background-color: #1f2937; /* bg-gray-800 */
+                border: 1px solid #374151;
+                color: #ffffff;
+            }
+            .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+                background-color: #FFC800; /* accent-gold */
+                color: #000000;
+            }
+            .select2-container--default .select2-results__option--selected {
+                background-color: #374151;
+            }
+            .select2-search--dropdown .select2-search__field {
+                background-color: #111827;
+                border: 1px solid #374151;
+                color: #ffffff;
+            }
+        </style>
     </head>
     <body class="font-inter antialiased bg-primary-bg text-white">
         <div class="flex h-screen overflow-hidden">
@@ -142,5 +185,6 @@
                 }
             });
         </script>
+        @stack('scripts')
     </body>
 </html>

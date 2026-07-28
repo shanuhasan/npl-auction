@@ -41,10 +41,10 @@
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-400 mb-1">Type *</label>
-                        <select wire:model="type" class="block w-full rounded-md border-gray-700 bg-primary-bg text-white shadow-sm focus:border-accent-gold focus:ring-accent-gold sm:text-sm" required>
+                        <x-select2 id="guestType" wire:model="type" placeholder="Select Type">
                             <option value="guest">Guest</option>
                             <option value="chief_guest">Chief Guest</option>
-                        </select>
+                        </x-select2>
                         @error('type') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 

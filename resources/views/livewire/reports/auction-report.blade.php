@@ -3,12 +3,11 @@
         <h1 class="text-3xl font-poppins font-bold text-white uppercase tracking-wider">Auction Reports</h1>
         
         <div class="w-full md:w-64">
-            <select wire:model.live="selectedAuctionId" class="w-full bg-card-bg border border-gray-700 text-white rounded-lg py-2 px-4 focus:ring-accent-gold focus:border-accent-gold shadow">
-                <option value="">Select Season/Auction</option>
+            <x-select2 id="selectedAuctionId" wire:model.live="selectedAuctionId" placeholder="Select Season/Auction">
                 @foreach($auctions as $auction)
                     <option value="{{ $auction->id }}">{{ $auction->title }} ({{ \Carbon\Carbon::parse($auction->auction_date)->format('M d, Y') }})</option>
                 @endforeach
-            </select>
+            </x-select2>
         </div>
     </div>
 

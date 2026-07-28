@@ -24,21 +24,19 @@
         </div>
 
         <!-- Role Filter -->
-        <select wire:model.live="role" class="w-full md:w-48 px-4 py-3 bg-black/30 border border-white/10 rounded-xl text-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FFC800] transition appearance-none cursor-pointer">
-            <option value="">All Roles</option>
+        <x-select2 id="publicRole" wire:model.live="role" placeholder="All Roles">
             <option value="batsman">Batsman</option>
             <option value="bowler">Bowler</option>
             <option value="all-rounder">All-Rounder</option>
             <option value="wicketkeeper">Wicketkeeper</option>
-        </select>
+        </x-select2>
 
         <!-- Status Filter -->
-        <select wire:model.live="status" class="w-full md:w-48 px-4 py-3 bg-black/30 border border-white/10 rounded-xl text-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FFC800] transition appearance-none cursor-pointer">
-            <option value="">All Statuses</option>
+        <x-select2 id="publicStatus" wire:model.live="status" placeholder="All Statuses">
             <option value="available">Available</option>
             <option value="sold">Sold</option>
             <option value="unsold">Unsold</option>
-        </select>
+        </x-select2>
     </div>
 
     <!-- Players Grid -->

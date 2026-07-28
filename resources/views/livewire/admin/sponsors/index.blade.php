@@ -35,11 +35,11 @@
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-400 mb-1">Type</label>
-                        <select wire:model="type" class="block w-full rounded-md border-gray-700 bg-primary-bg text-white shadow-sm focus:border-accent-gold focus:ring-accent-gold sm:text-sm">
+                        <x-select2 id="sponsorType" wire:model="type" placeholder="Select Type">
                             <option value="title_sponsor">Title Sponsor</option>
                             <option value="premier_partner">Premier Partner</option>
                             <option value="sponsor">Sponsor</option>
-                        </select>
+                        </x-select2>
                         @error('type') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 

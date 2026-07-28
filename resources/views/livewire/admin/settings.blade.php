@@ -91,11 +91,11 @@
                             <!-- Active Payment Gateway -->
                             <div>
                                 <label for="active_payment_gateway" class="block text-sm font-medium text-gray-400 mb-1">Active Payment Gateway</label>
-                                <select id="active_payment_gateway" wire:model="active_payment_gateway" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition">
+                                <x-select2 id="active_payment_gateway" wire:model="active_payment_gateway" placeholder="Select Gateway">
                                     <option value="none">None (Direct Registration)</option>
                                     <option value="mock">Mock Gateway (Testing)</option>
                                     <option value="razorpay">Razorpay (Live/Test)</option>
-                                </select>
+                                </x-select2>
                                 @error('active_payment_gateway') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                             </div>
                         </div>

@@ -83,12 +83,11 @@
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Owner</label>
-                            <select wire:model="owner_id" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" required>
-                                <option value="">Select Owner</option>
+                            <x-select2 id="owner_id" wire:model="owner_id" placeholder="Select Owner" required>
                                 @foreach($owners as $owner)
                                     <option value="{{ $owner->id }}">{{ $owner->name }}</option>
                                 @endforeach
-                            </select>
+                            </x-select2>
                             @error('owner_id') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>
                     </div>
