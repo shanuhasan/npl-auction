@@ -75,9 +75,9 @@
                                             ₹{{ $bought ? number_format($bought->final_price) : number_format($player->base_price) }}
                                         </p>
                                     </div>
-                                    <div class="text-[10px] text-gray-400 uppercase bg-white/5 px-2 py-1 rounded">
+                                    <!-- <div class="text-[10px] text-gray-400 uppercase bg-white/5 px-2 py-1 rounded">
                                         {{ $player->category }}
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

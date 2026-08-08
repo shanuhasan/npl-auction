@@ -96,7 +96,7 @@
             
             @forelse($playersByCategory as $category => $players)
                 <div class="mb-6">
-                    <h3 class="text-lg font-bold text-white uppercase tracking-wide mb-3 bg-gray-900 px-4 py-2 rounded">{{ str_replace('-', ' ', $category) }}</h3>
+                    <!-- <h3 class="text-lg font-bold text-white uppercase tracking-wide mb-3 bg-gray-900 px-4 py-2 rounded">{{ str_replace('-', ' ', $category) }}</h3> -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach($players as $player)
                             <label class="flex items-center space-x-3 bg-primary-bg p-3 rounded border border-gray-800 cursor-pointer hover:border-gray-600 transition">
