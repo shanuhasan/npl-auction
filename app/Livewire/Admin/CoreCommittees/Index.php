@@ -16,6 +16,11 @@ class Index extends Component
 
     public $name;
     public $role;
+    public $facebook;
+    public $instagram;
+    public $twitter;
+    public $linkedin;
+    public $whatsapp;
     public $image;
     public $order = 0;
     public $editId = null;
@@ -25,6 +30,11 @@ class Index extends Component
         return [
             'name' => 'required|string|max:255',
             'role' => 'nullable|string|max:255',
+            'facebook' => 'nullable|string|max:255',
+            'instagram' => 'nullable|string|max:255',
+            'twitter' => 'nullable|string|max:255',
+            'linkedin' => 'nullable|string|max:255',
+            'whatsapp' => 'nullable|string|max:255',
             'image' => 'nullable|image|max:5120', // 5MB Max
             'order' => 'integer',
         ];
@@ -61,6 +71,11 @@ class Index extends Component
             $data = [
                 'name' => $this->name,
                 'role' => $this->role,
+                'facebook' => $this->facebook,
+                'instagram' => $this->instagram,
+                'twitter' => $this->twitter,
+                'linkedin' => $this->linkedin,
+                'whatsapp' => $this->whatsapp,
                 'order' => $this->order,
             ];
             if ($filename) {
@@ -75,6 +90,11 @@ class Index extends Component
             CoreCommittee::create([
                 'name' => $this->name,
                 'role' => $this->role,
+                'facebook' => $this->facebook,
+                'instagram' => $this->instagram,
+                'twitter' => $this->twitter,
+                'linkedin' => $this->linkedin,
+                'whatsapp' => $this->whatsapp,
                 'image_path' => $filename,
                 'order' => $this->order,
                 'is_active' => true,
@@ -82,7 +102,7 @@ class Index extends Component
             $message = 'Member successfully added.';
         }
 
-        $this->reset(['name', 'role', 'image', 'order', 'editId']);
+        $this->reset(['name', 'role', 'facebook', 'instagram', 'twitter', 'linkedin', 'whatsapp', 'image', 'order', 'editId']);
         
         session()->flash('message', $message);
     }
@@ -93,13 +113,18 @@ class Index extends Component
         $this->editId = $member->id;
         $this->name = $member->name;
         $this->role = $member->role;
+        $this->facebook = $member->facebook;
+        $this->instagram = $member->instagram;
+        $this->twitter = $member->twitter;
+        $this->linkedin = $member->linkedin;
+        $this->whatsapp = $member->whatsapp;
         $this->order = $member->order;
         $this->image = null; // Clear any uploaded image
     }
 
     public function cancelEdit()
     {
-        $this->reset(['name', 'role', 'image', 'order', 'editId']);
+        $this->reset(['name', 'role', 'facebook', 'instagram', 'twitter', 'linkedin', 'whatsapp', 'image', 'order', 'editId']);
     }
 
     public function toggleActive($id)
