@@ -175,7 +175,7 @@
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                     @foreach($guests as $guest)
-                        <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg">
+                        <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" onclick="@if($guest->image_path) openMediaModal('{{ asset('storage/' . $guest->image_path) }}', 'image') @endif">
                             <div class="relative bg-[#0B0F19] overflow-hidden" style="padding-bottom: 100%;">
                                 @if($guest->image_path)
                                     <img src="{{ asset('storage/' . $guest->image_path) }}" alt="{{ $guest->name }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -214,7 +214,7 @@
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                     @foreach($coreCommittees as $member)
-                        <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg">
+                        <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" onclick="@if($member->image_path) openMediaModal('{{ asset('storage/' . $member->image_path) }}', 'image') @endif">
                             <div class="relative bg-[#0B0F19] overflow-hidden" style="padding-bottom: 100%;">
                                 @if($member->image_path)
                                     <img src="{{ asset('storage/' . $member->image_path) }}" alt="{{ $member->name }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
