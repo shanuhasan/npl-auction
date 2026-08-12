@@ -216,8 +216,12 @@
                 <!-- Players List -->
                 <div class="bg-card-bg shadow border border-gray-800 sm:rounded-lg flex flex-col h-[400px]">
                     <div class="p-4 border-b border-gray-800 bg-[#141B2D] rounded-t-lg flex justify-between items-center">
-                        <h3 class="font-bold text-accent-gold uppercase tracking-wider">Players List</h3>
+                        <!-- <h3 class="font-bold text-accent-gold uppercase tracking-wider">Players List</h3> -->
                         <div class="flex gap-2">
+                            <button wire:click="openAddPlayerModal" class="text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 px-3 py-1.5 rounded uppercase flex items-center gap-1 transition" title="Add Missed Player to Auction">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                + Add Player
+                            </button>
                             <button wire:click="shufflePendingPlayers" class="text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded uppercase flex items-center gap-2 transition" title="Shuffle Pending Players">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
                                 Shuffle
@@ -295,4 +299,146 @@
 
         </div>
     </div>
+
+    <!-- Add Missed Player Modal -->
+    @if($isAddPlayerModalOpen)
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm overflow-y-auto p-4 animate-in fade-in duration-200">
+        <div class="bg-card-bg rounded-xl w-full max-w-2xl border border-gray-800 shadow-2xl overflow-hidden my-8">
+            <!-- Modal Header -->
+            <div class="bg-[#141B2D] px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+                    <div>
+                        <h3 class="text-lg font-bold text-accent-gold uppercase tracking-wider">Add Missed Player</h3>
+                        <p class="text-xs text-gray-400">Include a missed player directly into this auction</p>
+                    </div>
+                </div>
+                <button wire:click="closeAddPlayerModal" class="text-gray-400 hover:text-white text-2xl font-bold transition">&times;</button>
+            </div>
+
+            <!-- Modal Tabs -->
+            <div class="flex border-b border-gray-800 bg-primary-bg">
+                <button type="button" wire:click="$set('addPlayerTab', 'existing')" class="flex-1 py-3 px-4 text-center text-xs sm:text-sm font-bold uppercase tracking-wider border-b-2 transition {{ $addPlayerTab === 'existing' ? 'border-accent-gold text-accent-gold bg-gray-900/60' : 'border-transparent text-gray-400 hover:text-gray-200' }}">
+                    Select System Player
+                </button>
+                <button type="button" wire:click="$set('addPlayerTab', 'new')" class="flex-1 py-3 px-4 text-center text-xs sm:text-sm font-bold uppercase tracking-wider border-b-2 transition {{ $addPlayerTab === 'new' ? 'border-accent-gold text-accent-gold bg-gray-900/60' : 'border-transparent text-gray-400 hover:text-gray-200' }}">
+                    + Quick Create New Player
+                </button>
+            </div>
+
+            <div class="p-6">
+                <!-- Auction Priority Selection -->
+                <div class="mb-5 bg-[#141B2D] p-3 rounded-lg border border-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <span class="text-xs font-bold text-gray-300 uppercase tracking-wider">Auction Priority:</span>
+                    <div class="flex gap-4">
+                        <label class="inline-flex items-center text-xs font-bold text-gray-300 cursor-pointer">
+                            <input type="radio" wire:model="addPosition" value="next" class="text-accent-gold focus:ring-accent-gold">
+                            <span class="ml-2 text-green-400 uppercase tracking-wider">Call Next (Top of Queue)</span>
+                        </label>
+                        <label class="inline-flex items-center text-xs font-bold text-gray-300 cursor-pointer">
+                            <input type="radio" wire:model="addPosition" value="end" class="text-accent-gold focus:ring-accent-gold">
+                            <span class="ml-2 uppercase tracking-wider">Add to End of Queue</span>
+                        </label>
+                    </div>
+                </div>
+
+                @if($addPlayerTab === 'existing')
+                    <!-- TAB 1: Select Existing Missed Player -->
+                    <form wire:submit.prevent="addExistingPlayer" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Search Available Player</label>
+                            <input type="text" wire:model.live.debounce.250ms="searchMissedPlayer" placeholder="Type player name, role, category..." class="w-full bg-primary-bg border border-gray-700 rounded-lg px-3 py-2 text-white text-sm focus:border-accent-gold">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Select Player from Database</label>
+                            <select wire:model="selectedMissedPlayerId" class="w-full bg-primary-bg border border-gray-700 rounded-lg px-3 py-2 text-white text-sm focus:border-accent-gold custom-scrollbar" size="6">
+                                @forelse($missedPlayers as $mp)
+                                    <option value="{{ $mp->id }}" class="p-2 border-b border-gray-800/50 hover:bg-gray-800">
+                                        {{ $mp->name }} — {{ ucfirst($mp->role) }} | {{ strtoupper($mp->category) }} | ₹{{ number_format($mp->base_price) }}
+                                    </option>
+                                @empty
+                                    <option value="" disabled class="p-4 text-center text-gray-500">
+                                        No available missed players found in system.
+                                    </option>
+                                @endforelse
+                            </select>
+                            @error('selectedMissedPlayerId') <span class="text-red-500 text-xs font-bold mt-1 block">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="flex justify-end gap-3 pt-4 border-t border-gray-800">
+                            <button type="button" wire:click="closeAddPlayerModal" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-lg text-xs uppercase tracking-wider">Cancel</button>
+                            <button type="submit" class="px-6 py-2 bg-accent-gold hover:bg-yellow-500 text-primary-bg font-black rounded-lg text-xs uppercase tracking-wider shadow">Add Selected Player</button>
+                        </div>
+                    </form>
+                @else
+                    <!-- TAB 2: Quick Create New Player -->
+                    <form wire:submit.prevent="quickCreatePlayer" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Player Name *</label>
+                                <input type="text" wire:model="new_name" required placeholder="e.g. Rahul Sharma" class="w-full bg-primary-bg border border-gray-700 rounded-lg px-3 py-2 text-white text-sm">
+                                @error('new_name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Role *</label>
+                                <select wire:model="new_role" required class="w-full bg-primary-bg border border-gray-700 rounded-lg px-3 py-2 text-white text-sm">
+                                    <option value="batsman">Batsman</option>
+                                    <option value="bowler">Bowler</option>
+                                    <option value="all-rounder">All-Rounder</option>
+                                    <option value="wicketkeeper">Wicketkeeper</option>
+                                </select>
+                                @error('new_role') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Base Price (₹) *</label>
+                                <input type="number" wire:model="new_base_price" required min="0" class="w-full bg-primary-bg border border-gray-700 rounded-lg px-3 py-2 text-white text-sm">
+                                @error('new_base_price') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Category *</label>
+                                <select wire:model="new_category" required class="w-full bg-primary-bg border border-gray-700 rounded-lg px-3 py-2 text-white text-sm">
+                                    <option value="marquee">Marquee</option>
+                                    <option value="set-a">Set A</option>
+                                    <option value="set-b">Set B</option>
+                                    <option value="set-c">Set C</option>
+                                </select>
+                                @error('new_category') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Contact No (Optional)</label>
+                                <input type="text" wire:model="new_contact_no" placeholder="10-digit number" class="w-full bg-primary-bg border border-gray-700 rounded-lg px-3 py-2 text-white text-sm">
+                                @error('new_contact_no') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">City / Village (Optional)</label>
+                                <input type="text" wire:model="new_city" placeholder="e.g. Mumbai" class="w-full bg-primary-bg border border-gray-700 rounded-lg px-3 py-2 text-white text-sm">
+                                @error('new_city') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Player Photo (Optional)</label>
+                                <input type="file" wire:model="new_photo" class="w-full bg-primary-bg border border-gray-700 rounded-lg px-3 py-2 text-white text-sm">
+                                @error('new_photo') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                @if($new_photo)
+                                    <img src="{{ $new_photo->temporaryUrl() }}" class="mt-2 w-14 h-14 object-cover rounded-full border border-gray-700">
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end gap-3 pt-4 border-t border-gray-800">
+                            <button type="button" wire:click="closeAddPlayerModal" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-lg text-xs uppercase tracking-wider">Cancel</button>
+                            <button type="submit" class="px-6 py-2 bg-accent-gold hover:bg-yellow-500 text-primary-bg font-black rounded-lg text-xs uppercase tracking-wider shadow">Create & Add Player</button>
+                        </div>
+                    </form>
+                @endif
+            </div>
+        </div>
+    </div>
+    @endif
 </div>

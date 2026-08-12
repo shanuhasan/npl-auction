@@ -4,16 +4,21 @@ namespace App\Livewire\Admin\Auctions;
 
 use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\WithFileUploads;
 use App\Models\Auction;
 use App\Models\AuctionState;
 use App\Models\AuctionPlayer;
 use App\Models\Team;
 use App\Models\Bid;
+use App\Models\Player;
 use App\Services\AuctionService;
+use Illuminate\Support\Facades\Storage;
 
 #[Layout('layouts.app')]
 class Control extends Component
 {
+    use WithFileUploads;
+
     public $auction;
     public $state;
     public $currentPlayer = null;
@@ -33,6 +38,23 @@ class Control extends Component
 
     // Bids
     public $recentBids = [];
+
+    // Add Missed Player Modal State
+    public $isAddPlayerModalOpen = false;
+    public $addPlayerTab = 'existing'; // 'existing' or 'new'
+    public $searchMissedPlayer = '';
+    public $selectedMissedPlayerId = '';
+    public $addPosition = 'next'; // 'next' or 'end'
+
+    // New Player Quick Create Form
+    public $new_name = '';
+    public $new_role = 'batsman';
+    public $new_country = 'India';
+    public $new_city = '';
+    public $new_contact_no = '';
+    public $new_base_price = 1000;
+    public $new_category = 'set-a';
+    public $new_photo = null;
 
     public function mount(Auction $auction)
     {
@@ -266,6 +288,150 @@ class Control extends Component
         $this->loadData();
     }
 
+    public function openAddPlayerModal()
+    {
+        $this->resetAddPlayerForm();
+        $this->isAddPlayerModalOpen = true;
+    }
+
+    public function closeAddPlayerModal()
+    {
+        $this->isAddPlayerModalOpen = false;
+        $this->resetAddPlayerForm();
+    }
+
+    public function resetAddPlayerForm()
+    {
+        $this->addPlayerTab = 'existing';
+        $this->searchMissedPlayer = '';
+        $this->selectedMissedPlayerId = '';
+        $this->addPosition = 'next';
+        $this->new_name = '';
+        $this->new_role = 'batsman';
+        $this->new_country = 'India';
+        $this->new_city = '';
+        $this->new_contact_no = '';
+        $this->new_base_price = 1000;
+        $this->new_category = 'set-a';
+        $this->new_photo = null;
+        $this->resetErrorBag();
+    }
+
+    public function addExistingPlayer()
+    {
+        $this->validate([
+            'selectedMissedPlayerId' => 'required|exists:players,id',
+            'addPosition' => 'required|in:end,next',
+        ], [
+            'selectedMissedPlayerId.required' => 'Please select a player to add.',
+        ]);
+
+        $exists = AuctionPlayer::where('auction_id', $this->auction->id)
+            ->where('player_id', $this->selectedMissedPlayerId)
+            ->exists();
+
+        if ($exists) {
+            session()->flash('error', 'This player is already in this auction.');
+            return;
+        }
+
+        $orderNo = 1;
+        if ($this->addPosition === 'next') {
+            $minOrder = AuctionPlayer::where('auction_id', $this->auction->id)
+                ->where('status', 'pending')
+                ->min('order_no');
+            $orderNo = ($minOrder !== null) ? ($minOrder - 1) : 1;
+        } else {
+            $maxOrder = AuctionPlayer::where('auction_id', $this->auction->id)->max('order_no') ?? 0;
+            $orderNo = $maxOrder + 1;
+        }
+
+        AuctionPlayer::create([
+            'auction_id' => $this->auction->id,
+            'player_id' => $this->selectedMissedPlayerId,
+            'order_no' => $orderNo,
+            'status' => 'pending',
+        ]);
+
+        Player::where('id', $this->selectedMissedPlayerId)->update(['status' => 'available']);
+
+        session()->flash('success', 'Player added to auction successfully!');
+        $this->closeAddPlayerModal();
+        $this->loadData();
+    }
+
+    public function quickCreatePlayer()
+    {
+        $this->validate([
+            'new_name' => 'required|string|max:255',
+            'new_role' => 'required|in:batsman,bowler,all-rounder,wicketkeeper',
+            'new_base_price' => 'required|numeric|min:0',
+            'new_category' => 'required|in:marquee,set-a,set-b,set-c',
+            'new_contact_no' => 'nullable|string|max:20',
+            'new_city' => 'nullable|string|max:100',
+            'new_country' => 'required|string|max:100',
+            'new_photo' => 'nullable|image|max:2048',
+            'addPosition' => 'required|in:end,next',
+        ]);
+
+        $photoPath = null;
+        if ($this->new_photo) {
+            try {
+                $filename = pathinfo($this->new_photo->hashName(), PATHINFO_FILENAME) . '.webp';
+                $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+                $image = $manager->read($this->new_photo->getRealPath())
+                    ->scaleDown(800, 800)
+                    ->toWebp(80);
+                Storage::disk('public')->put('players/' . $filename, (string) $image);
+                $photoPath = 'players/' . $filename;
+            } catch (\Throwable $e) {
+                $photoPath = $this->new_photo->store('players', 'public');
+            }
+        }
+
+        $player = Player::create([
+            'name' => $this->new_name,
+            'photo' => $photoPath,
+            'role' => $this->new_role,
+            'country' => $this->new_country ?: 'India',
+            'city' => $this->new_city,
+            'contact_no' => $this->new_contact_no ?: rand(1000000000, 9999999999),
+            'base_price' => $this->new_base_price,
+            'category' => $this->new_category,
+            'status' => 'available',
+            'is_approved' => true,
+            'stats' => [
+                'matches' => 0,
+                'runs' => 0,
+                'wickets' => 0,
+                'average' => 0,
+                'strike_rate' => 0,
+            ],
+        ]);
+
+        $orderNo = 1;
+        if ($this->addPosition === 'next') {
+            $minOrder = AuctionPlayer::where('auction_id', $this->auction->id)
+                ->where('status', 'pending')
+                ->min('order_no');
+            $orderNo = ($minOrder !== null) ? ($minOrder - 1) : 1;
+        } else {
+            $maxOrder = AuctionPlayer::where('auction_id', $this->auction->id)->max('order_no') ?? 0;
+            $orderNo = $maxOrder + 1;
+        }
+
+        AuctionPlayer::create([
+            'auction_id' => $this->auction->id,
+            'player_id' => $player->id,
+            'order_no' => $orderNo,
+            'status' => 'pending',
+        ]);
+
+        session()->flash('success', "Player {$player->name} created and added to auction!");
+        $this->closeAddPlayerModal();
+        $this->loadData();
+    }
+
     public function render()
     {
         $playersList = AuctionPlayer::with(['player', 'soldToTeam'])
@@ -274,8 +440,22 @@ class Control extends Component
             ->orderBy('order_no', 'asc')
             ->get();
 
+        $existingPlayerIds = AuctionPlayer::where('auction_id', $this->auction->id)->pluck('player_id');
+        $missedPlayers = Player::where('is_approved', true)
+            ->whereNotIn('id', $existingPlayerIds)
+            ->when($this->searchMissedPlayer, function ($query) {
+                $query->where(function ($q) {
+                    $q->where('name', 'like', '%' . $this->searchMissedPlayer . '%')
+                      ->orWhere('role', 'like', '%' . $this->searchMissedPlayer . '%')
+                      ->orWhere('category', 'like', '%' . $this->searchMissedPlayer . '%');
+                });
+            })
+            ->orderBy('name', 'asc')
+            ->get();
+
         return view('livewire.admin.auctions.control', [
-            'playersList' => $playersList
+            'playersList' => $playersList,
+            'missedPlayers' => $missedPlayers,
         ]);
     }
     public function revertPlayer($auctionPlayerId)
