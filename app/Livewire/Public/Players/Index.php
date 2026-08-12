@@ -15,12 +15,29 @@ class Index extends Component
     public $role = '';
     public $category = '';
     public $status = '';
+    public $selectedPlayer = null;
+    public $showModal = false;
 
     public function updating($property)
     {
         if (in_array($property, ['search', 'role', 'category', 'status'])) {
             $this->resetPage();
         }
+    }
+
+    public function showPlayer($id)
+    {
+        $this->selectedPlayer = Player::with(['currentTeam', 'auctionPlayers' => function($q) {
+            $q->where('status', 'sold')->latest();
+        }])->find($id);
+        
+        $this->showModal = true;
+    }
+
+    public function closeModal()
+    {
+        $this->showModal = false;
+        $this->selectedPlayer = null;
     }
 
     public function render()

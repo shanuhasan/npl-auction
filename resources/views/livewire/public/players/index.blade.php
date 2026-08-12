@@ -58,7 +58,7 @@
                     </div>
                 @endif
 
-                <div class="h-56 relative overflow-hidden bg-black/50 flex justify-center items-end pt-4">
+                <div class="h-56 relative overflow-hidden bg-black/50 flex justify-center items-end pt-4 cursor-pointer" wire:click="showPlayer({{ $player->id }})">
                     <img src="{{ $player->photo ? Storage::url($player->photo) : 'https://ui-avatars.com/api/?name='.urlencode($player->name).'&background=374151&color=fff&size=512' }}" 
                          class="h-full w-auto object-cover group-hover:scale-105 transition duration-500">
                     
@@ -133,5 +133,88 @@
             @apply bg-[#FFC800] text-[#0B0F19] border-[#FFC800];
         }
     </style>
+
+    <!-- Player Modal -->
+    @if($showModal && $selectedPlayer)
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm px-4 py-6" x-data="{ open: true }" x-show="open" @keydown.escape.window="$wire.closeModal()">
+        <div class="bg-[#141B2D] border border-white/10 rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col md:flex-row" @click.away="$wire.closeModal()">
+            <button wire:click="closeModal" class="absolute top-4 right-4 bg-black/50 text-white rounded-full p-2 hover:bg-red-500 transition z-50">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            
+            <div class="w-full md:w-1/2 bg-black/50 flex justify-center items-end p-6 md:p-8 relative min-h-[200px] md:min-h-[300px]">
+                <img src="{{ $selectedPlayer->photo ? Storage::url($selectedPlayer->photo) : 'https://ui-avatars.com/api/?name='.urlencode($selectedPlayer->name).'&background=374151&color=fff&size=512' }}" 
+                     class="max-h-56 md:max-h-80 w-auto object-contain z-10 drop-shadow-2xl">
+                     
+                @if($selectedPlayer->currentTeam)
+                    <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-color: {{ $selectedPlayer->currentTeam->primary_color }}"></div>
+                @endif
+            </div>
+            
+            <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
+                <div class="mb-4">
+                    <span class="inline-block px-3 py-1 bg-white/10 rounded-full text-xs font-bold text-gray-300 uppercase tracking-widest mb-2 border border-white/10">{{ $selectedPlayer->country }}</span>
+                    <h2 class="text-3xl font-black text-white leading-tight">{{ $selectedPlayer->name }}</h2>
+                    <p class="text-[#FFC800] font-bold uppercase tracking-widest text-sm mt-1">{{ $selectedPlayer->role }}</p>
+                </div>
+                
+                <div class="space-y-4 mb-8">
+                    @if($selectedPlayer->batting_style)
+                    <div>
+                        <p class="text-gray-500 text-xs uppercase font-bold tracking-wider">Batting Style</p>
+                        <p class="text-white font-medium">{{ $selectedPlayer->batting_style }}</p>
+                    </div>
+                    @endif
+                    
+                    @if($selectedPlayer->bowling_style)
+                    <div>
+                        <p class="text-gray-500 text-xs uppercase font-bold tracking-wider">Bowling Style</p>
+                        <p class="text-white font-medium">{{ $selectedPlayer->bowling_style }}</p>
+                    </div>
+                    @endif
+                    
+                    @if($selectedPlayer->city)
+                    <div>
+                        <p class="text-gray-500 text-xs uppercase font-bold tracking-wider">Address</p>
+                        <p class="text-white font-medium capitalize">{{ $selectedPlayer->city }}</p>
+                    </div>
+                    @endif
+                </div>
+                
+                <div class="mt-auto border-t border-white/10 pt-6">
+                    @if($selectedPlayer->status === 'sold' && $selectedPlayer->currentTeam)
+                        <div class="flex items-center gap-4">
+                            <img src="{{ $selectedPlayer->currentTeam->logo ? Storage::url($selectedPlayer->currentTeam->logo) : 'https://ui-avatars.com/api/?name='.urlencode($selectedPlayer->currentTeam->name).'&background=random' }}" class="w-12 h-12 rounded-full border-2 border-white/20">
+                            <div>
+                                <p class="text-gray-400 text-xs uppercase font-bold">Bought By</p>
+                                <p class="text-white font-black">{{ $selectedPlayer->currentTeam->name }}</p>
+                                <p class="text-[#00C853] font-bold mt-1 text-lg">
+                                    @php
+                                        $bought = $selectedPlayer->auctionPlayers->first();
+                                    @endphp
+                                    ₹{{ $bought ? number_format($bought->final_price) : number_format($selectedPlayer->base_price) }}
+                                </p>
+                            </div>
+                        </div>
+                    @else
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-gray-400 text-xs uppercase font-bold">Base Price</p>
+                                <p class="text-white font-black text-xl">₹{{ number_format($selectedPlayer->base_price) }}</p>
+                            </div>
+                            <div>
+                                @if($selectedPlayer->status === 'unsold')
+                                    <span class="bg-gray-600 text-white text-xs font-black uppercase px-3 py-1 rounded-full border border-white/20">Unsold</span>
+                                @else
+                                    <span class="bg-blue-600 text-white text-xs font-black uppercase px-3 py-1 rounded-full border border-white/20">Available</span>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 
 </div>
