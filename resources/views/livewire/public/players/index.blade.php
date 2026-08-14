@@ -176,38 +176,6 @@
                     </div>
                     @endif
                 </div>
-                
-                <!-- <div class="mt-auto border-t border-white/10 pt-6">
-                    @if($selectedPlayer->status === 'sold' && $selectedPlayer->currentTeam)
-                        <div class="flex items-center gap-4">
-                            <img src="{{ $selectedPlayer->currentTeam->logo ? Storage::url($selectedPlayer->currentTeam->logo) : 'https://ui-avatars.com/api/?name='.urlencode($selectedPlayer->currentTeam->name).'&background=random' }}" class="w-12 h-12 rounded-full border-2 border-white/20">
-                            <div>
-                                <p class="text-gray-400 text-xs uppercase font-bold">Bought By</p>
-                                <p class="text-white font-black">{{ $selectedPlayer->currentTeam->name }}</p>
-                                <p class="text-[#00C853] font-bold mt-1 text-lg">
-                                    @php
-                                        $bought = $selectedPlayer->auctionPlayers->first();
-                                    @endphp
-                                    ₹{{ $bought ? number_format($bought->final_price) : number_format($selectedPlayer->base_price) }}
-                                </p>
-                            </div>
-                        </div>
-                    @else
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <p class="text-gray-400 text-xs uppercase font-bold">Base Price</p>
-                                <p class="text-white font-black text-xl">₹{{ number_format($selectedPlayer->base_price) }}</p>
-                            </div>
-                            <div>
-                                @if($selectedPlayer->status === 'unsold')
-                                    <span class="bg-gray-600 text-white text-xs font-black uppercase px-3 py-1 rounded-full border border-white/20">Unsold</span>
-                                @else
-                                    <span class="bg-blue-600 text-white text-xs font-black uppercase px-3 py-1 rounded-full border border-white/20">Available</span>
-                                @endif
-                            </div>
-                        </div>
-                    @endif
-                </div> -->
             </div>
         </div>
     </div>
