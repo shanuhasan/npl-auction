@@ -164,7 +164,24 @@
     @endif
 
     <!-- Guests Section -->
+    @php
+        $guestsImageIndex = 0;
+    @endphp
     @if(isset($guests) && $guests->count() > 0)
+        <script>
+            window.guestsGallery = [
+                @foreach($guests as $guest)
+                    @if($guest->image_path)
+                    {
+                        url: '{{ asset('storage/' . $guest->image_path) }}',
+                        type: 'image',
+                        title: '{!! addslashes($guest->name) !!}',
+                        subtitle: '{!! addslashes($guest->designation ?? ($guest->type === 'chief_guest' ? 'Chief Guest' : 'Guest')) !!}'
+                    },
+                    @endif
+                @endforeach
+            ];
+        </script>
         <div class="bg-[#141B2D] py-12 border-b border-white/5">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
                 <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
@@ -175,7 +192,7 @@
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                     @foreach($guests as $guest)
-                        <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" onclick="@if($guest->image_path) openMediaModal('{{ asset('storage/' . $guest->image_path) }}', 'image') @endif">
+                        <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" onclick="@if($guest->image_path) openMediaModal('{{ asset('storage/' . $guest->image_path) }}', 'image', '{!! addslashes($guest->name) !!}', '{!! addslashes($guest->designation ?? ($guest->type === 'chief_guest' ? 'Chief Guest' : 'Guest')) !!}', window.guestsGallery, {{ $guestsImageIndex++ }}) @endif">
                             <div class="relative bg-[#0B0F19] overflow-hidden" style="padding-bottom: 100%;">
                                 @if($guest->image_path)
                                     <img src="{{ asset('storage/' . $guest->image_path) }}" alt="{{ $guest->name }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -203,7 +220,24 @@
     @endif
 
     <!-- Core Committee Section -->
+    @php
+        $coreCommitteesImageIndex = 0;
+    @endphp
     @if(isset($coreCommittees) && $coreCommittees->count() > 0)
+        <script>
+            window.coreCommitteesGallery = [
+                @foreach($coreCommittees as $member)
+                    @if($member->image_path)
+                    {
+                        url: '{{ asset('storage/' . $member->image_path) }}',
+                        type: 'image',
+                        title: '{!! addslashes($member->name) !!}',
+                        subtitle: '{!! addslashes($member->role ?? 'Core Committee') !!}'
+                    },
+                    @endif
+                @endforeach
+            ];
+        </script>
         <div class="bg-[#141B2D] py-12 border-b border-white/5">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
                 <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
@@ -215,7 +249,7 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                     @foreach($coreCommittees as $member)
                         <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg">
-                            <div class="relative bg-[#0B0F19] overflow-hidden @if($member->image_path) cursor-pointer @endif" @if($member->image_path) onclick="openMediaModal('{{ asset('storage/' . $member->image_path) }}', 'image')" @endif style="padding-bottom: 100%;">
+                            <div class="relative bg-[#0B0F19] overflow-hidden @if($member->image_path) cursor-pointer @endif" @if($member->image_path) onclick="openMediaModal('{{ asset('storage/' . $member->image_path) }}', 'image', '{!! addslashes($member->name) !!}', '{!! addslashes($member->role ?? 'Core Committee') !!}', window.coreCommitteesGallery, {{ $coreCommitteesImageIndex++ }})" @endif style="padding-bottom: 100%;">
                                 @if($member->image_path)
                                     <img src="{{ asset('storage/' . $member->image_path) }}" alt="{{ $member->name }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 @else
@@ -475,7 +509,24 @@
     @endif
 
     <!-- Players Slider -->
+    @php
+        $playerImageIndex = 0;
+    @endphp
     @if(isset($players) && $players->count() > 0)
+        <script>
+            window.playersGallery = [
+                @foreach($players as $player)
+                    @if($player->photo)
+                    {
+                        url: '{{ asset('storage/' . $player->photo) }}',
+                        type: 'image',
+                        title: '{!! addslashes($player->name) !!}',
+                        subtitle: '{!! addslashes($player->role ?? 'Player') !!}'
+                    },
+                    @endif
+                @endforeach
+            ];
+        </script>
         <div class="bg-[#141B2D] py-12 border-y border-white/5">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
                 <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
@@ -497,7 +548,7 @@
                     <div class="swiper-wrapper">
                         @foreach($players as $player)
                             <div class="swiper-slide">
-                                <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" style="padding-bottom: 75%;" onclick="@if($player->photo) openMediaModal('{{ asset('storage/' . $player->photo) }}', 'image') @endif">
+                                <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" style="padding-bottom: 75%;" onclick="@if($player->photo) openMediaModal('{{ asset('storage/' . $player->photo) }}', 'image', '{!! addslashes($player->name) !!}', '{!! addslashes($player->role ?? 'Player') !!}', window.playersGallery, {{ $playerImageIndex++ }}) @endif">
                                     <div class="absolute inset-0 bg-[#0B0F19] flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
                                         @if($player->photo)
                                             <img src="{{ asset('storage/' . $player->photo) }}" alt="{{ $player->name }}" class="w-full h-full object-contain">
@@ -547,7 +598,42 @@
     @endif
 
     <!-- Photos & Videos Gallery -->
+    @php
+        $mediaGalleryIndex = 0;
+    @endphp
     @if(isset($galleries) && $galleries->count() > 0)
+        <script>
+            window.mediaGalleryItems = [
+                @foreach($galleries as $media)
+                    @php
+                        $mediaUrl = '';
+                        $mediaType = 'image';
+                        if ($media->type == 'photo' && $media->file_path) {
+                            $mediaUrl = asset('storage/' . $media->file_path);
+                            $mediaType = 'image';
+                        } elseif ($media->type == 'video') {
+                            if ($media->video_url) {
+                                if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $media->video_url, $matches)) {
+                                    $mediaUrl = $matches[1];
+                                }
+                                $mediaType = 'youtube';
+                            } elseif ($media->file_path) {
+                                $mediaUrl = asset('storage/' . $media->file_path);
+                                $mediaType = 'video';
+                            }
+                        }
+                    @endphp
+                    @if($mediaUrl)
+                    {
+                        url: '{{ $mediaUrl }}',
+                        type: '{{ $mediaType }}',
+                        title: '{!! addslashes($media->title) !!}',
+                        subtitle: '{{ ucfirst($media->type) }}'
+                    },
+                    @endif
+                @endforeach
+            ];
+        </script>
         <div class="bg-[#0B0F19] py-12">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
                 <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
@@ -563,7 +649,7 @@
                                 <div class="group block w-full cursor-pointer relative rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg" style="padding-bottom: 75%;">
                                     @if($media->type == 'photo' && $media->file_path)
                                         <img src="{{ asset('storage/' . $media->file_path) }}" alt="{{ $media->title }}" class="absolute inset-0 w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
-                                        <a href="javascript:void(0)" onclick="openMediaModal('{{ asset('storage/' . $media->file_path) }}', 'image')" class="absolute inset-0 z-30"></a>
+                                        <a href="javascript:void(0)" onclick="openMediaModal('{{ asset('storage/' . $media->file_path) }}', 'image', '{!! addslashes($media->title) !!}', 'Photo', window.mediaGalleryItems, {{ $mediaGalleryIndex++ }})" class="absolute inset-0 z-30"></a>
                                     @elseif($media->type == 'video')
                                         @if($media->video_url)
                                             @php
@@ -585,7 +671,9 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                                 </div>
                                             </div>
-                                            <a href="javascript:void(0)" onclick="openMediaModal('{{ $videoId }}', 'youtube')" class="absolute inset-0 z-30"></a>
+                                            @if($videoId)
+                                                <a href="javascript:void(0)" onclick="openMediaModal('{{ $videoId }}', 'youtube', '{!! addslashes($media->title) !!}', 'Video', window.mediaGalleryItems, {{ $mediaGalleryIndex++ }})" class="absolute inset-0 z-30"></a>
+                                            @endif
                                         @elseif($media->file_path)
                                             <video class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80" muted onmouseover="this.play()" onmouseout="this.pause()">
                                                 <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
@@ -595,7 +683,7 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:text-black transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                                 </div>
                                             </div>
-                                            <a href="javascript:void(0)" onclick="openMediaModal('{{ asset('storage/' . $media->file_path) }}', 'video')" class="absolute inset-0 z-30"></a>
+                                            <a href="javascript:void(0)" onclick="openMediaModal('{{ asset('storage/' . $media->file_path) }}', 'video', '{!! addslashes($media->title) !!}', 'Video', window.mediaGalleryItems, {{ $mediaGalleryIndex++ }})" class="absolute inset-0 z-30"></a>
                                         @endif
                                     @endif
                                     
