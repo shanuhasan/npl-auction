@@ -164,13 +164,13 @@
             
             <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
                 <div class="mb-4">
-                    <span class="inline-block px-3 py-1 bg-white/10 rounded-full text-xs font-bold text-gray-300 uppercase tracking-widest mb-2 border border-white/10">{{ $selectedPlayer->country }}</span>
+                    <!-- <span class="inline-block px-3 py-1 bg-white/10 rounded-full text-xs font-bold text-gray-300 uppercase tracking-widest mb-2 border border-white/10">{{ $selectedPlayer->country }}</span> -->
                     <h2 class="text-3xl font-black text-white leading-tight">{{ $selectedPlayer->name }}</h2>
                     <p class="text-[#FFC800] font-bold uppercase tracking-widest text-sm mt-1">{{ $selectedPlayer->role }}</p>
                 </div>
                 
                 <div class="space-y-4 mb-8">
-                    @if($selectedPlayer->batting_style)
+                    <!-- @if($selectedPlayer->batting_style)
                     <div>
                         <p class="text-gray-500 text-xs uppercase font-bold tracking-wider">Batting Style</p>
                         <p class="text-white font-medium">{{ $selectedPlayer->batting_style }}</p>
@@ -182,7 +182,7 @@
                         <p class="text-gray-500 text-xs uppercase font-bold tracking-wider">Bowling Style</p>
                         <p class="text-white font-medium">{{ $selectedPlayer->bowling_style }}</p>
                     </div>
-                    @endif
+                    @endif -->
                     
                     @if($selectedPlayer->city)
                     <div>
@@ -208,7 +208,7 @@
                             </div>
                         </div>
                     @else
-                        <div class="flex justify-between items-center">
+                        <!-- <div class="flex justify-between items-center">
                             <div>
                                 <p class="text-gray-400 text-xs uppercase font-bold">Base Price</p>
                                 <p class="text-white font-black text-xl">₹{{ number_format($selectedPlayer->base_price) }}</p>
@@ -220,7 +220,7 @@
                                     <span class="bg-blue-600 text-white text-xs font-black uppercase px-3 py-1 rounded-full border border-white/20">Available</span>
                                 @endif
                             </div>
-                        </div>
+                        </div> -->
                     @endif
                 </div>
             </div>
