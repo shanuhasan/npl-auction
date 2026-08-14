@@ -5,12 +5,13 @@ namespace App\Livewire\Admin\Users;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class Index extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     public $search = '';
     public $filterRole = '';
@@ -18,6 +19,7 @@ class Index extends Component
     public $user_id, $name, $email, $role = 'viewer', $password;
     public $permissions = [];
     public $isModalOpen = false;
+    public $image, $newImage;
 
     protected function rules()
     {
@@ -27,6 +29,7 @@ class Index extends Component
             'role' => 'required|string|in:admin,team_owner,viewer,sub_admin',
             'permissions' => 'nullable|array',
             'password' => $this->user_id ? 'nullable|string|min:8' : 'required|string|min:8',
+            'newImage' => 'nullable|image|max:2048',
         ];
     }
 
@@ -90,6 +93,8 @@ class Index extends Component
         $this->role = auth()->user()->role === 'sub_admin' ? 'team_owner' : 'viewer';
         $this->permissions = [];
         $this->password = '';
+        $this->image = null;
+        $this->newImage = null;
     }
 
     public function store()
@@ -102,6 +107,13 @@ class Index extends Component
             'role' => $this->role,
             'permissions' => $this->role === 'sub_admin' ? $this->permissions : null,
         ];
+
+        if ($this->newImage) {
+            if ($this->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->image)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($this->image);
+            }
+            $data['image'] = $this->newImage->store('users', 'public');
+        }
 
         if ($this->password) {
             $data['password'] = Hash::make($this->password);
@@ -122,6 +134,8 @@ class Index extends Component
         $this->email = $user->email;
         $this->role = $user->role;
         $this->permissions = $user->permissions ?? [];
+        $this->image = $user->image;
+        $this->newImage = null;
         // Password is left blank unless they want to change it
         
         $this->openModal();

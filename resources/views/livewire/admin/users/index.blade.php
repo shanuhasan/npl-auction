@@ -32,7 +32,7 @@
         <table class="min-w-full divide-y divide-gray-800">
             <thead class="bg-gray-900">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Name</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">User</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Email</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Role</th>
                     <th class="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>
@@ -41,7 +41,14 @@
             <tbody class="bg-card-bg divide-y divide-gray-800">
                 @foreach($users as $user)
                 <tr class="hover:bg-gray-800 transition">
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <td class="px-6 py-4 whitespace-nowrap flex items-center">
+                        @if($user->image)
+                            <img src="{{ asset('storage/' . $user->image) }}" alt="{{ $user->name }}" class="h-10 w-10 rounded-full object-cover border border-gray-600 mr-3">
+                        @else
+                            <div class="h-10 w-10 rounded-full bg-gray-700 flex items-center justify-center border border-gray-600 text-gray-400 font-bold mr-3">
+                                {{ strtoupper(substr($user->name, 0, 1)) }}
+                            </div>
+                        @endif
                         <div class="text-sm font-medium text-white">{{ $user->name }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
@@ -84,6 +91,25 @@
                             <label class="block text-gray-300 text-sm font-bold mb-2">Email</label>
                             <input type="email" wire:model="email" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold" required>
                             @error('email') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Profile Image</label>
+                            <input type="file" wire:model="newImage" accept="image/*" class="w-full bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold">
+                            @error('newImage') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
+                            
+                            <div wire:loading wire:target="newImage" class="text-sm text-gray-400 mt-1">Uploading...</div>
+                            
+                            @if ($newImage)
+                                <div class="mt-2">
+                                    <span class="text-sm text-gray-400 block mb-1">Image Preview:</span>
+                                    <img src="{{ $newImage->temporaryUrl() }}" class="h-20 w-20 object-cover rounded border border-gray-600">
+                                </div>
+                            @elseif ($image)
+                                <div class="mt-2">
+                                    <span class="text-sm text-gray-400 block mb-1">Current Image:</span>
+                                    <img src="{{ asset('storage/' . $image) }}" class="h-20 w-20 object-cover rounded border border-gray-600">
+                                </div>
+                            @endif
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Role</label>

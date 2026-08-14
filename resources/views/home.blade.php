@@ -394,6 +394,70 @@
         </script>
     @endif
 
+    <!-- Team Owners Slider -->
+    @php
+        $teamsWithOwner = isset($teams) ? $teams->whereNotNull('owner') : collect();
+    @endphp
+    @if($teamsWithOwner->count() > 0)
+        <div class="bg-[#141B2D] py-12 border-t border-white/5">
+            <div class="max-w-[1400px] mx-auto px-4 md:px-8">
+                <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
+                    <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
+                        <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> Team Owners
+                    </h2>
+                </div>
+                
+                <div class="swiper ownersSwiper overflow-hidden" style="padding-bottom: 10px;">
+                    <div class="swiper-wrapper">
+                        @foreach($teamsWithOwner as $team)
+                            <div class="swiper-slide">
+                                <div class="block w-full group relative rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" style="padding-bottom: 75%;" onclick="@if($team->owner->image) openMediaModal('{{ asset('storage/' . $team->owner->image) }}', 'image') @endif">
+                                    <div class="absolute inset-0 bg-[#0B0F19] flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
+                                        @if($team->owner->image)
+                                            <img src="{{ asset('storage/' . $team->owner->image) }}" alt="{{ $team->owner->name }}" class="w-full h-full object-cover object-top">
+                                        @else
+                                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+                                                <span class="text-[#FFC800] font-bold text-6xl uppercase">{{ substr($team->owner->name, 0, 1) }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    
+                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 transition-colors group-hover:bg-[#141B2D]/95 text-center">
+                                        <span class="text-[10px] font-bold px-2 py-1 rounded mb-1 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
+                                            Owner of {{ $team->name }}
+                                        </span>
+                                        <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors uppercase">{{ $team->owner->name }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var ownersSwiper = new Swiper(".ownersSwiper", {
+                    slidesPerView: 1.5,
+                    spaceBetween: 15,
+                    autoplay: {
+                        delay: 2800,
+                        disableOnInteraction: false,
+                    },
+                    loop: {{ $teamsWithOwner->count() > 1 ? 'true' : 'false' }},
+                    breakpoints: {
+                        640: { slidesPerView: 2, spaceBetween: 20 },
+                        768: { slidesPerView: 3, spaceBetween: 20 },
+                        1024: { slidesPerView: 4, spaceBetween: 24 },
+                    },
+                });
+            });
+        </script>
+    @endif
+
     <!-- Players Slider -->
     @if(isset($players) && $players->count() > 0)
         <div class="bg-[#141B2D] py-12 border-y border-white/5">
