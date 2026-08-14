@@ -12,6 +12,20 @@
             <div class="flex-1 text-center md:text-left">
                 <h1 class="text-4xl md:text-6xl font-black text-white tracking-widest uppercase mb-2">{{ $team->name }}</h1>
                 <p class="text-xl font-bold text-gray-400 tracking-widest">{{ $team->short_name }}</p>
+                @if($team->owner)
+                    <div class="mt-4 inline-flex items-center gap-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full py-1.5 px-4 shadow-sm">
+                        @if($team->owner->image)
+                            <img src="{{ asset('storage/' . $team->owner->image) }}" alt="{{ $team->owner->name }}" class="w-8 h-8 rounded-full border border-[var(--team-color)] object-cover">
+                        @else
+                            <div class="w-8 h-8 rounded-full bg-[var(--team-color)] flex items-center justify-center text-white font-bold text-xs">
+                                {{ substr($team->owner->name, 0, 1) }}
+                            </div>
+                        @endif
+                        <span class="text-sm font-semibold text-gray-300 uppercase tracking-wide">
+                            Owner: <span class="text-white">{{ $team->owner->name }}</span>
+                        </span>
+                    </div>
+                @endif
             </div>
 
                 <div class="grid grid-cols-2 gap-4 w-full md:w-auto mt-6 md:mt-0">
