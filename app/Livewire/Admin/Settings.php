@@ -29,6 +29,7 @@ class Settings extends Component
     public $instagram;
     public $twitter;
     public $youtube;
+    public $adsense_code;
 
     public function mount()
     {
@@ -49,6 +50,7 @@ class Settings extends Component
         $this->instagram = setting('instagram', '');
         $this->twitter = setting('twitter', '');
         $this->youtube = setting('youtube', '');
+        $this->adsense_code = setting('adsense_code', '');
     }
 
     public function save()
@@ -71,6 +73,7 @@ class Settings extends Component
             'instagram' => 'nullable|url|max:255',
             'twitter' => 'nullable|url|max:255',
             'youtube' => 'nullable|url|max:255',
+            'adsense_code' => 'nullable|string',
         ]);
 
         \App\Models\Setting::set('app_name', $this->app_name);
@@ -117,6 +120,7 @@ class Settings extends Component
         \App\Models\Setting::set('instagram', $this->instagram);
         \App\Models\Setting::set('twitter', $this->twitter);
         \App\Models\Setting::set('youtube', $this->youtube);
+        \App\Models\Setting::set('adsense_code', $this->adsense_code);
         \App\Models\Setting::set('player_base_price', $this->player_base_price);
 
         session()->flash('success', 'Settings updated successfully.');

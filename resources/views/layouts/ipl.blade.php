@@ -10,6 +10,9 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=bebas-neue:400|roboto:400,500,700,900&display=swap" rel="stylesheet" />
 
+    @yield('seo')
+    {!! setting('adsense_code') !!}
+
     <!-- Scripts & Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -130,6 +133,7 @@
                 <a href="{{ route('home') }}" class="h-full flex items-center px-4 font-bold text-sm tracking-wide uppercase transition-colors border-b-4 {{ request()->routeIs('home') ? 'text-[#FFC800] border-[#FFC800]' : 'text-white border-transparent hover:text-[#FFC800] hover:border-[#FFC800]' }}">Home</a>
                 <a href="{{ route('public.teams') }}" class="h-full flex items-center px-4 font-bold text-sm tracking-wide uppercase transition-colors border-b-4 {{ request()->routeIs('public.teams*') ? 'text-[#FFC800] border-[#FFC800]' : 'text-white border-transparent hover:text-[#FFC800] hover:border-[#FFC800]' }}">Teams</a>
                 <a href="{{ route('public.players') }}" class="h-full flex items-center px-4 font-bold text-sm tracking-wide uppercase transition-colors border-b-4 {{ request()->routeIs('public.players*') ? 'text-[#FFC800] border-[#FFC800]' : 'text-white border-transparent hover:text-[#FFC800] hover:border-[#FFC800]' }}">Players</a>
+                <a href="{{ route('public.blogs') }}" class="h-full flex items-center px-4 font-bold text-sm tracking-wide uppercase transition-colors border-b-4 {{ request()->routeIs('public.blogs*') ? 'text-[#FFC800] border-[#FFC800]' : 'text-white border-transparent hover:text-[#FFC800] hover:border-[#FFC800]' }}">News</a>
                 
                 @if(isset($globalPages) && $globalPages->count() > 0)
                     @foreach($globalPages as $gPage)
@@ -188,6 +192,7 @@
             <a href="{{ route('home') }}" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase {{ request()->routeIs('home') ? 'text-[#FFC800]' : 'text-white' }} border-b border-gray-800">Home</a>
             <a href="{{ route('public.teams') }}" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase {{ request()->routeIs('public.teams*') ? 'text-[#FFC800]' : 'text-white' }} border-b border-gray-800">Teams</a>
             <a href="{{ route('public.players') }}" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase {{ request()->routeIs('public.players*') ? 'text-[#FFC800]' : 'text-white' }} border-b border-gray-800">Players</a>
+            <a href="{{ route('public.blogs') }}" class="block px-6 py-3 font-bold text-sm tracking-wide uppercase {{ request()->routeIs('public.blogs*') ? 'text-[#FFC800]' : 'text-white' }} border-b border-gray-800">News</a>
             
             @if(isset($globalPages) && $globalPages->count() > 0)
                 @foreach($globalPages as $gPage)
@@ -251,6 +256,7 @@
                         <li><a href="#" class="hover:text-white">Home</a></li>
                         <li><a href="{{ route('public.teams') }}" class="hover:text-[#FFC800] transition-colors">Teams</a></li>
                         <li><a href="{{ route('public.players') }}" class="hover:text-[#FFC800] transition-colors">Players</a></li>
+                        <li><a href="{{ route('public.blogs') }}" class="hover:text-[#FFC800] transition-colors">News</a></li>
                     </ul>
                 </div>
                 <div>

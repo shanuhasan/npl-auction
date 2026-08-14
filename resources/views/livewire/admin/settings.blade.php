@@ -147,6 +147,17 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <!-- Google AdSense Code -->
+                            <div class="md:col-span-2">
+                                <label for="adsense_code" class="block text-sm font-medium text-gray-400 mb-1">Google AdSense Global Code</label>
+                                <textarea id="adsense_code" wire:model="adsense_code" rows="4" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:ring-accent-gold focus:border-accent-gold transition font-mono text-sm" placeholder="<script async src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX' crossorigin='anonymous'></script>"></textarea>
+                                <p class="text-xs text-gray-500 mt-1">Paste your Google AdSense code here. It will be added to the &lt;head&gt; of all public pages.</p>
+                                @error('adsense_code') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             
                             <!-- Developer Name -->
                             <div>

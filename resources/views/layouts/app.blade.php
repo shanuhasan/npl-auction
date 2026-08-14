@@ -117,6 +117,8 @@
                             <a href="{{ route('admin.pages.index') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.pages*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Pages</a>
                             @endif
 
+                            <a href="{{ route('admin.blogs.index') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.blogs*') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Manage Blogs</a>
+
                             @if(auth()->user()->hasPermission('view_analytics'))
                             <a href="{{ route('admin.analytics') }}" class="block px-6 py-3 transition {{ request()->routeIs('admin.analytics') ? 'bg-gray-800 border-l-4 border-accent-gold text-white font-semibold' : 'hover:bg-gray-800' }}">Analytics</a>
                             @endif

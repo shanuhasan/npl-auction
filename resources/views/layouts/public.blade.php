@@ -5,8 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ setting('app_name', config('app.name', 'Naugawan Premier League (NPLT20)')) }} | Naugawan Premier League</title>
+        @hasSection('seo')
+            @yield('seo')
+        @else
+            <title>{{ setting('app_name', config('app.name', 'Naugawan Premier League (NPLT20)')) }} | Naugawan Premier League</title>
+        @endif
         <link rel="icon" href="{{ setting('favicon') ? asset('storage/' . setting('favicon')) : asset('favicon.ico') }}">
+
+        @if(setting('adsense_code'))
+            {!! setting('adsense_code') !!}
+        @endif
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -33,6 +41,7 @@
                         <div class="hidden md:flex space-x-6">
                             <a href="{{ route('public.teams') }}" class="text-gray-300 hover:text-white font-semibold uppercase tracking-wider {{ request()->routeIs('public.teams*') ? 'text-[#FFC800]' : '' }}">Teams</a>
                             <a href="{{ route('public.players') }}" class="text-gray-300 hover:text-white font-semibold uppercase tracking-wider {{ request()->routeIs('public.players') ? 'text-[#FFC800]' : '' }}">Players</a>
+                            <a href="{{ route('public.blogs') }}" class="text-gray-300 hover:text-white font-semibold uppercase tracking-wider {{ request()->routeIs('public.blogs*') ? 'text-[#FFC800]' : '' }}">Blogs</a>
                         </div>
                     </div>
                     <div class="flex items-center">
@@ -49,6 +58,7 @@
             <div class="md:hidden flex bg-[#141B2D] border-t border-white/5">
                 <a href="{{ route('public.teams') }}" class="flex-1 text-center py-3 text-sm font-semibold uppercase tracking-wider {{ request()->routeIs('public.teams*') ? 'text-[#FFC800] bg-white/5' : 'text-gray-400' }}">Teams</a>
                 <a href="{{ route('public.players') }}" class="flex-1 text-center py-3 text-sm font-semibold uppercase tracking-wider border-l border-white/5 {{ request()->routeIs('public.players') ? 'text-[#FFC800] bg-white/5' : 'text-gray-400' }}">Players</a>
+                <a href="{{ route('public.blogs') }}" class="flex-1 text-center py-3 text-sm font-semibold uppercase tracking-wider border-l border-white/5 {{ request()->routeIs('public.blogs*') ? 'text-[#FFC800] bg-white/5' : 'text-gray-400' }}">Blogs</a>
             </div>
         </nav>
 

@@ -28,6 +28,8 @@ Route::get('/teams/{team}', \App\Livewire\Public\Teams\Show::class)->name('publi
 Route::get('/players/register', \App\Livewire\Public\Players\Register::class)->name('public.players.register');
 Route::get('/players', \App\Livewire\Public\Players\Index::class)->name('public.players');
 Route::get('/contact', \App\Livewire\Public\Contact::class)->name('public.contact');
+Route::get('/blogs', \App\Livewire\Public\Blogs\Index::class)->name('public.blogs');
+Route::get('/blogs/{slug}', \App\Livewire\Public\Blogs\Show::class)->name('public.blogs.show');
 
 // Payment Callback & Checkout
 Route::get('/payment/checkout/{payment}', function (\App\Models\Payment $payment) {
@@ -60,6 +62,10 @@ Route::middleware(['auth', 'role:admin,sub_admin'])->prefix('admin')->name('admi
     Route::get('/pages', \App\Livewire\Admin\Pages\Index::class)->middleware('permission:manage_pages')->name('pages.index');
     Route::get('/pages/create', \App\Livewire\Admin\Pages\Form::class)->middleware('permission:manage_pages')->name('pages.create');
     Route::get('/pages/{pageId}/edit', \App\Livewire\Admin\Pages\Form::class)->middleware('permission:manage_pages')->name('pages.edit');
+    
+    Route::get('/blogs', \App\Livewire\Admin\Blogs\Index::class)->name('blogs.index');
+    Route::get('/blogs/create', \App\Livewire\Admin\Blogs\Form::class)->name('blogs.create');
+    Route::get('/blogs/{blog}/edit', \App\Livewire\Admin\Blogs\Form::class)->name('blogs.edit');
     Route::get('/gallery', \App\Livewire\Admin\Gallery\Index::class)->middleware('permission:manage_gallery')->name('gallery');
     Route::get('/core-committees', \App\Livewire\Admin\CoreCommittees\Index::class)->middleware('permission:manage_core_committees')->name('core-committees');
     Route::get('/guests', \App\Livewire\Admin\Guests\Index::class)->middleware('permission:manage_guests')->name('guests');
