@@ -64,7 +64,7 @@ class Index extends Component
 
     public function render()
     {
-        $players = $this->getBaseQuery()->paginate(16);
+        $players = $this->getBaseQuery()->paginate(100);
 
         return view('livewire.public.players.index', [
             'players' => $players
