@@ -148,34 +148,25 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
 
-        <div class="bg-[#141B2D] border border-white/10 rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col md:flex-row" @click.away="$wire.closeModal()">
-            <button wire:click="closeModal" class="absolute top-4 right-4 bg-black/50 text-white rounded-full p-2 hover:bg-red-500 transition z-50">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            
-            <div class="w-full md:w-1/2 bg-black/50 flex justify-center items-end p-6 md:p-8 relative min-h-[200px] md:min-h-[300px]">
-                <img src="{{ $selectedPlayer->photo ? Storage::url($selectedPlayer->photo) : 'https://ui-avatars.com/api/?name='.urlencode($selectedPlayer->name).'&background=374151&color=fff&size=512' }}" 
-                     class="max-h-56 md:max-h-80 w-auto object-contain z-10 drop-shadow-2xl">
-                     
-                @if($selectedPlayer->currentTeam)
-                    <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-color: {{ $selectedPlayer->currentTeam->primary_color }}"></div>
-                @endif
-            </div>
-            
-            <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
-                <div class="mb-4">
-                    <h2 class="text-3xl font-black text-white leading-tight">{{ $selectedPlayer->name }}</h2>
-                    <p class="text-[#FFC800] font-bold uppercase tracking-widest text-sm mt-1">{{ $selectedPlayer->role }}</p>
-                </div>
+        <div class="w-full max-w-5xl h-full max-h-[80vh] flex items-center justify-center">
+            <div class="relative w-full h-full max-w-4xl mx-auto bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center overflow-hidden" @click.away="$wire.closeModal()">
                 
-                <div class="space-y-4 mb-8">
-                    @if($selectedPlayer->city)
-                    <div>
-                        <p class="text-gray-500 text-xs uppercase font-bold tracking-wider">Address</p>
-                        <p class="text-white font-medium capitalize">{{ $selectedPlayer->city }}</p>
+                <!-- Close Button -->
+                <button wire:click="closeModal" style="position: absolute; top: 20px; right: 20px; z-index: 10000; width: 50px; height: 50px; background: rgba(255,200,0,0.8); border-radius: 50%; color: black; border: 2px solid #FFC800; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: all 0.2s;" onmouseover="this.style.background='#FFC800'; this.style.transform='scale(1.1)';" onmouseout="this.style.background='rgba(255,200,0,0.8)'; this.style.transform='scale(1)';">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+
+                <!-- Image and Text Content -->
+                <div class="relative w-full h-full flex items-center justify-center p-2 md:p-6">
+                    <img src="{{ $selectedPlayer->photo ? Storage::url($selectedPlayer->photo) : 'https://ui-avatars.com/api/?name='.urlencode($selectedPlayer->name).'&background=374151&color=fff&size=512' }}" 
+                         class="max-w-full max-h-[70vh] object-contain rounded-lg drop-shadow-2xl relative z-10">
+                    
+                    <div class="absolute bottom-0 left-0 w-full p-4 md:p-6 bg-gradient-to-t from-black via-black/80 to-transparent text-center z-50 rounded-b-2xl">
+                        <h3 class="text-xl md:text-3xl text-[#FFC800] font-bold uppercase mb-1 drop-shadow-md">{{ $selectedPlayer->name }}</h3>
+                        <p class="text-gray-200 text-sm md:text-xl font-semibold drop-shadow-md">{{ $selectedPlayer->role }}</p>
                     </div>
-                    @endif
                 </div>
+
             </div>
         </div>
     </div>
