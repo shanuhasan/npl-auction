@@ -395,10 +395,26 @@
     @endif
 
     <!-- Team Owners Slider -->
+    <!-- Team Owners Slider -->
     @php
         $teamsWithOwner = isset($teams) ? $teams->whereNotNull('owner') : collect();
+        $ownerImageIndex = 0;
     @endphp
     @if($teamsWithOwner->count() > 0)
+        <script>
+            window.teamOwnersGallery = [
+                @foreach($teamsWithOwner as $team)
+                    @if($team->owner->image)
+                    {
+                        url: '{{ asset('storage/' . $team->owner->image) }}',
+                        type: 'image',
+                        title: '{!! addslashes($team->owner->name) !!}',
+                        subtitle: 'Owner of {!! addslashes($team->name) !!}'
+                    },
+                    @endif
+                @endforeach
+            ];
+        </script>
         <div class="bg-[#141B2D] py-12 border-t border-white/5">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
                 <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
@@ -411,7 +427,7 @@
                     <div class="swiper-wrapper">
                         @foreach($teamsWithOwner as $team)
                             <div class="swiper-slide">
-                                <div class="block w-full group relative rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" style="padding-bottom: 75%;" onclick="@if($team->owner->image) openMediaModal('{{ asset('storage/' . $team->owner->image) }}', 'image') @endif">
+                                <div class="block w-full group relative rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" style="padding-bottom: 75%;" onclick="@if($team->owner->image) openMediaModal('{{ asset('storage/' . $team->owner->image) }}', 'image', '{!! addslashes($team->owner->name) !!}', 'Owner of {!! addslashes($team->name) !!}', window.teamOwnersGallery, {{ $ownerImageIndex++ }}) @endif">
                                     <div class="absolute inset-0 bg-[#0B0F19] flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
                                         @if($team->owner->image)
                                             <img src="{{ asset('storage/' . $team->owner->image) }}" alt="{{ $team->owner->name }}" class="w-full h-full object-cover object-top">
@@ -626,33 +642,75 @@
         <button onclick="closeMediaModal()" style="position: absolute; top: 20px; right: 20px; z-index: 10000; width: 50px; height: 50px; background: rgba(255,200,0,0.8); border-radius: 50%; color: black; border: 2px solid #FFC800; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: all 0.2s;" onmouseover="this.style.background='#FFC800'; this.style.transform='scale(1.1)';" onmouseout="this.style.background='rgba(255,200,0,0.8)'; this.style.transform='scale(1)';">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
+        
+        <button id="universalMediaPrevBtn" onclick="prevMediaModal(event)" class="hidden absolute top-1/2 -translate-y-1/2 bg-black/60 border border-white/20 hover:border-[#FFC800] hover:bg-[#FFC800] text-white hover:text-black rounded-full items-center justify-center transition-all shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style="z-index: 10000; left: 1rem; width: 3rem; height: 3rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button id="universalMediaNextBtn" onclick="nextMediaModal(event)" class="hidden absolute top-1/2 -translate-y-1/2 bg-black/60 border border-white/20 hover:border-[#FFC800] hover:bg-[#FFC800] text-white hover:text-black rounded-full items-center justify-center transition-all shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style="z-index: 10000; right: 1rem; width: 3rem; height: 3rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+
         <div id="modalMediaContainer" class="w-full max-w-5xl h-full max-h-[80vh] flex items-center justify-center transform scale-95 transition-transform duration-300">
             <!-- Content gets injected here -->
         </div>
     </div>
 
     <script>
-        function openMediaModal(url, type = 'image') {
+        window.currentGalleryItems = [];
+        window.currentGalleryIndex = -1;
+
+        function openMediaModal(url, type = 'image', title = '', subtitle = '', galleryItems = null, index = -1) {
             const modal = document.getElementById('universalMediaModal');
             const container = document.getElementById('modalMediaContainer');
+            
+            if (galleryItems !== null) {
+                window.currentGalleryItems = galleryItems;
+                window.currentGalleryIndex = index;
+            }
             
             // Clear existing content
             container.innerHTML = '';
             
+            const prevBtn = document.getElementById('universalMediaPrevBtn');
+            const nextBtn = document.getElementById('universalMediaNextBtn');
+            
+            if (window.currentGalleryItems && window.currentGalleryItems.length > 1) {
+                prevBtn.classList.remove('hidden');
+                prevBtn.classList.add('flex');
+                nextBtn.classList.remove('hidden');
+                nextBtn.classList.add('flex');
+            } else {
+                prevBtn.classList.add('hidden');
+                prevBtn.classList.remove('flex');
+                nextBtn.classList.add('hidden');
+                nextBtn.classList.remove('flex');
+            }
+            
             if (type === 'image') {
+                let textHtml = '';
+                if (title || subtitle) {
+                    textHtml = `
+                        <div class="absolute bottom-0 left-0 w-full p-4 md:p-6 bg-gradient-to-t from-black via-black/80 to-transparent text-center z-50 rounded-b-2xl">
+                            ${title ? `<h3 class="text-xl md:text-3xl text-[#FFC800] font-bold uppercase mb-1 drop-shadow-md">${title}</h3>` : ''}
+                            ${subtitle ? `<p class="text-gray-200 text-sm md:text-xl font-semibold drop-shadow-md">${subtitle}</p>` : ''}
+                        </div>
+                    `;
+                }
+                
                 container.innerHTML = `
-                <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden">
-                    <img src="${url}" class="max-w-full max-h-full object-contain rounded-lg drop-shadow-2xl">
+                <div class="relative w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden">
+                    <img src="${url}" class="max-w-full max-h-full object-contain rounded-lg drop-shadow-2xl relative z-10">
+                    ${textHtml}
                 </div>`;
             } else if (type === 'youtube') {
                 container.innerHTML = `
-                <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden">
-                    <iframe src="https://www.youtube.com/embed/${url}?autoplay=1" class="w-full h-full rounded-xl" style="aspect-ratio: 16/9; max-width: 100%; max-height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden relative">
+                    <iframe src="https://www.youtube.com/embed/${url}?autoplay=1" class="w-full h-full rounded-xl relative z-10" style="aspect-ratio: 16/9; max-width: 100%; max-height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>`;
             } else if (type === 'video') {
                 container.innerHTML = `
-                <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden">
-                    <video src="${url}" class="max-w-full max-h-full object-contain rounded-xl drop-shadow-2xl" controls autoplay></video>
+                <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden relative">
+                    <video src="${url}" class="max-w-full max-h-full object-contain rounded-xl drop-shadow-2xl relative z-10" controls autoplay></video>
                 </div>`;
             }
 
@@ -673,18 +731,45 @@
         function closeMediaModal() {
             const modal = document.getElementById('universalMediaModal');
             const container = document.getElementById('modalMediaContainer');
+            const prevBtn = document.getElementById('universalMediaPrevBtn');
+            const nextBtn = document.getElementById('universalMediaNextBtn');
             
             modal.classList.add('opacity-0');
             container.classList.remove('scale-100');
             container.classList.add('scale-95');
             
-            // Wait for transition
             setTimeout(() => {
-                modal.classList.add('hidden');
                 modal.classList.remove('flex');
-                container.innerHTML = ''; // Stop video/iframe playback
-                document.body.style.overflow = '';
+                modal.classList.add('hidden');
+                container.innerHTML = '';
+                // Restore scrolling on body
+                document.body.style.overflow = 'auto';
+                window.currentGalleryItems = [];
+                window.currentGalleryIndex = -1;
+                
+                prevBtn.classList.add('hidden');
+                prevBtn.classList.remove('flex');
+                nextBtn.classList.add('hidden');
+                nextBtn.classList.remove('flex');
             }, 300);
+        }
+
+        function nextMediaModal(e) {
+            if(e) e.stopPropagation();
+            if(window.currentGalleryItems && window.currentGalleryItems.length > 0 && window.currentGalleryIndex > -1) {
+                window.currentGalleryIndex = (window.currentGalleryIndex + 1) % window.currentGalleryItems.length;
+                let nextItem = window.currentGalleryItems[window.currentGalleryIndex];
+                openMediaModal(nextItem.url, nextItem.type, nextItem.title, nextItem.subtitle);
+            }
+        }
+
+        function prevMediaModal(e) {
+            if(e) e.stopPropagation();
+            if(window.currentGalleryItems && window.currentGalleryItems.length > 0 && window.currentGalleryIndex > -1) {
+                window.currentGalleryIndex = (window.currentGalleryIndex - 1 + window.currentGalleryItems.length) % window.currentGalleryItems.length;
+                let prevItem = window.currentGalleryItems[window.currentGalleryIndex];
+                openMediaModal(prevItem.url, prevItem.type, prevItem.title, prevItem.subtitle);
+            }
         }
         
         // Close modal on Escape key or outside click
