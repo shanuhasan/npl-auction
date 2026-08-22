@@ -86,7 +86,7 @@
                                             @php
                                                 $bought = $player->auctionPlayers->first();
                                             @endphp
-                                            ₹{{ $bought ? number_format($bought->final_price) : number_format($player->base_price) }}
+                                            ₹{{ $bought ? number_format($bought->final_price) : ($player->status === 'sold' ? '0' : number_format($player->base_price)) }}
                                         </p>
                                     </div>
                                 </div>
