@@ -28,6 +28,7 @@
             <option value="available">Available</option>
             <option value="sold">Sold</option>
             <option value="unsold">Unsold</option>
+            <option value="unavailable">Unavailable</option>
         </x-select2>
         <x-select2 id="filterApproval" wire:model.live="filterApproval" placeholder="All Approvals">
             <option value="1">Approved</option>
@@ -73,7 +74,7 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex flex-col space-y-1">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-max
-                                {{ $player->status === 'sold' ? 'bg-success-green text-white' : ($player->status === 'unsold' ? 'bg-accent-red text-white' : 'bg-gray-600 text-white') }}">
+                                {{ $player->status === 'sold' ? 'bg-success-green text-white' : ($player->status === 'unsold' ? 'bg-accent-red text-white' : ($player->status === 'unavailable' ? 'bg-gray-800 text-gray-300' : 'bg-gray-600 text-white')) }}">
                                 {{ ucfirst($player->status) }}
                             </span>
                             @if(!$player->is_approved)
@@ -160,6 +161,7 @@
                                 <option value="available">Available</option>
                                 <option value="sold">Sold</option>
                                 <option value="unsold">Unsold</option>
+                                <option value="unavailable">Unavailable</option>
                             </x-select2>
                             @error('status') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>

@@ -36,6 +36,7 @@
             <option value="available">Available</option>
             <option value="sold">Sold</option>
             <option value="unsold">Unsold</option>
+            <option value="unavailable">Unavailable</option>
         </x-select2>
     </div>
 
@@ -54,6 +55,12 @@
                     <div class="absolute top-0 right-0 p-2 z-20">
                         <div class="bg-gray-600 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-lg border border-white/20">
                             UNSOLD
+                        </div>
+                    </div>
+                @elseif($player->status === 'unavailable')
+                    <div class="absolute top-0 right-0 p-2 z-20">
+                        <div class="bg-gray-800 text-gray-400 text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-lg border border-white/20">
+                            UNAVAILABLE
                         </div>
                     </div>
                 @endif

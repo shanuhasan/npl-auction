@@ -53,7 +53,7 @@ class Index extends Component
             'bowling_style' => 'nullable|string|max:100',
             'base_price' => 'required|numeric|min:0',
             'category' => 'required|in:marquee,set-a,set-b,set-c',
-            'status' => 'required|in:available,sold,unsold',
+            'status' => 'required|in:available,sold,unsold,unavailable',
             'is_approved' => 'boolean',
             'photo' => 'nullable|image|max:2048',
             'stats.matches' => 'nullable|integer',
