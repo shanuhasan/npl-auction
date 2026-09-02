@@ -778,9 +778,9 @@
                 let textHtml = '';
                 if (title || subtitle) {
                     textHtml = `
-                        <div class="absolute bottom-0 left-0 w-full p-4 md:p-6 bg-gradient-to-t from-black via-black/80 to-transparent text-center z-50 rounded-b-2xl">
-                            ${title ? `<h3 class="text-xl md:text-3xl text-[#FFC800] font-bold uppercase mb-1 drop-shadow-md">${title}</h3>` : ''}
-                            ${subtitle ? `<p class="text-gray-200 text-sm md:text-xl font-semibold drop-shadow-md">${subtitle}</p>` : ''}
+                        <div class="absolute bottom-0 left-0 w-full p-4 md:p-5 bg-[#0B0F19]/90 backdrop-blur-md border-t-2 border-[#FFC800] text-center z-50 rounded-b-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+                            ${title ? `<h3 class="text-2xl md:text-3xl text-white font-extrabold uppercase mb-1 drop-shadow-lg tracking-wide">${title}</h3>` : ''}
+                            ${subtitle ? `<p class="text-[#FFC800] text-sm md:text-lg font-bold uppercase tracking-widest drop-shadow-md">${subtitle}</p>` : ''}
                         </div>
                     `;
                 }
