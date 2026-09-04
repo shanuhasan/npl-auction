@@ -40,7 +40,7 @@ class Register extends Component
         'contact_no' => 'required|digits:10|unique:players,contact_no',
         'batting_style' => 'nullable|string|max:100',
         'bowling_style' => 'nullable|string|max:100',
-        'photo' => 'required|image|max:2048', // 2MB Max
+        'photo' => 'required|image|max:10240', // 10MB Max
         'stats.matches' => 'nullable|integer',
         'stats.runs' => 'nullable|integer',
         'stats.wickets' => 'nullable|integer',
