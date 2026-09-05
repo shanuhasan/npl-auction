@@ -28,7 +28,7 @@
 
     <div class="header">
         <h1>{{ $team->name }}</h1>
-        <p>Official NPLT20 Squad</p>
+        <p>Squad List</p>
     </div>
 
     <table class="stats">
