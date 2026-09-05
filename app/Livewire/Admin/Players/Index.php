@@ -270,14 +270,26 @@ class Index extends Component
         }
 
         if ($auction) {
-            AuctionPlayer::create([
-                'auction_id' => $auction->id,
-                'player_id' => $player->id,
-                'status' => 'sold',
-                'final_price' => $this->assignPrice,
-                'sold_to_team_id' => $team->id,
-                'order_no' => 0, // 0 to indicate pre-auction retention/assignment
-            ]);
+            $auctionPlayer = AuctionPlayer::where('auction_id', $auction->id)
+                ->where('player_id', $player->id)
+                ->first();
+
+            if ($auctionPlayer) {
+                $auctionPlayer->update([
+                    'status' => 'sold',
+                    'final_price' => $this->assignPrice,
+                    'sold_to_team_id' => $team->id,
+                ]);
+            } else {
+                AuctionPlayer::create([
+                    'auction_id' => $auction->id,
+                    'player_id' => $player->id,
+                    'status' => 'sold',
+                    'final_price' => $this->assignPrice,
+                    'sold_to_team_id' => $team->id,
+                    'order_no' => 0, // 0 to indicate pre-auction retention/assignment
+                ]);
+            }
         }
 
         $this->closeAssignModal();
