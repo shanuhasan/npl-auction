@@ -33,7 +33,7 @@
         <thead>
             <tr>
                 <th>S.No</th>
-                <!-- <th>Photo</th> -->
+                <th>Photo</th>
                 <th>Name</th>
                 <th>Role</th>
                 <!-- <th>Base Price</th> -->
@@ -43,7 +43,7 @@
             @foreach($players as $player)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <!-- <td>
+                    <td>
                         @php
                             $imagePath = $player->photo ? public_path('storage/' . $player->photo) : null;
                             $imageData = null;
@@ -66,7 +66,7 @@
                                 {{ substr($player->name, 0, 1) }}
                             </div>
                         @endif
-                    </td> -->
+                    </td>
                     <td>
                         <strong>{{ $player->name }}</strong><br>
                         <span style="font-size: 12px; color: #666;">{{ $player->city ? $player->city . ', ' : '' }}{{ $player->country }}</span>
