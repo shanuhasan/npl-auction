@@ -36,7 +36,7 @@
                 <!-- <th>Photo</th> -->
                 <th>Name</th>
                 <th>Role</th>
-                <th>Base Price</th>
+                <!-- <th>Base Price</th> -->
             </tr>
         </thead>
         <tbody>
@@ -72,7 +72,7 @@
                         <span style="font-size: 12px; color: #666;">{{ $player->city ? $player->city . ', ' : '' }}{{ $player->country }}</span>
                     </td>
                     <td class="capitalize">{{ $player->role }}</td>
-                    <td>Rs. {{ number_format($player->base_price) }}</td>
+                    <!-- <td>Rs. {{ number_format($player->base_price) }}</td> -->
                 </tr>
             @endforeach
         </tbody>
