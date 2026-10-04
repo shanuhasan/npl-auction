@@ -174,6 +174,14 @@
                             @error('is_approved') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div>
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Captain/Owner</label>
+                            <x-select2 id="is_captain" wire:model="is_captain" placeholder="Select Captain/Owner" required>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </x-select2>
+                            @error('is_captain') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
+                        </div>
+                        <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Batting Style</label>
                             <x-select2 id="batting_style" wire:model="batting_style" placeholder="Select Batting Style">
                                 <option value="Right-hand bat">Right-hand bat</option>

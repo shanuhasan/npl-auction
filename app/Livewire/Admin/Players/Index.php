@@ -22,6 +22,7 @@ class Index extends Component
     public $filterApproval = '';
 
     public $player_id, $name, $role, $country, $city, $contact_no, $batting_style, $bowling_style, $base_price, $category, $status, $is_approved;
+    public $is_captain = false;
     public $photo, $existing_photo;
     
     // Stats array for json
@@ -55,6 +56,7 @@ class Index extends Component
             'category' => 'required|in:marquee,set-a,set-b,set-c',
             'status' => 'required|in:available,sold,unsold,unavailable',
             'is_approved' => 'boolean',
+            'is_captain' => 'boolean',
             'photo' => 'nullable|image|max:2048',
             'stats.matches' => 'nullable|integer',
             'stats.runs' => 'nullable|integer',
@@ -125,6 +127,7 @@ class Index extends Component
         $this->category = 'set-a';
         $this->status = 'available';
         $this->is_approved = true;
+        $this->is_captain = false;
         $this->photo = null;
         $this->existing_photo = null;
         $this->stats = [
@@ -168,6 +171,7 @@ class Index extends Component
             'category' => $this->category,
             'status' => $this->status,
             'is_approved' => $this->is_approved,
+            'is_captain' => $this->is_captain,
             'stats' => $this->stats,
         ]);
 
@@ -191,6 +195,7 @@ class Index extends Component
         $this->category = $player->category;
         $this->status = $player->status;
         $this->is_approved = $player->is_approved;
+        $this->is_captain = $player->is_captain;
         $this->existing_photo = $player->photo;
         
         $stats = $player->stats ?? [];
