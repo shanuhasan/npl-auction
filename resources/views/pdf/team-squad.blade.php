@@ -28,7 +28,7 @@
 
     <div class="header">
         <h1>{{ $team->name }}</h1>
-        <p>Squad List</p>
+        <p>{{ setting('app_name', 'NPLT20') }} {{ setting('season', '') }} Squad List</p>
     </div>
 
     <table class="stats">
