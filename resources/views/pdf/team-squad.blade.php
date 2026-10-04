@@ -49,23 +49,27 @@
     </table>
 
     @php $sno = 1; @endphp
-    @foreach(['batsman', 'all-rounder', 'wicketkeeper', 'bowler'] as $role)
-        @if(isset($playersByRole[$role]) && $playersByRole[$role]->count() > 0)
-            <div class="role-section">
-                <div class="role-title">{{ str_replace('-', ' ', $role) }}s ({{ $playersByRole[$role]->count() }})</div>
-                <table class="squad">
-                    <thead>
-                        <tr>
-                            <th width="5%">#</th>
-                            <th>Player Name</th>
-                            <th>Bought For</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+    <div class="role-section">
+        <table class="squad">
+            <thead>
+                <tr>
+                    <th width="5%">#</th>
+                    <th>Player Name</th>
+                    <th>Bought For</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(['batsman', 'all-rounder', 'wicketkeeper', 'bowler'] as $role)
+                    @if(isset($playersByRole[$role]) && $playersByRole[$role]->count() > 0)
                         @foreach($playersByRole[$role] as $player)
                             <tr>
                                 <td>{{ $sno++ }}</td>
-                                <td><strong>{{ $player->name }}</strong></td>
+                                <td>
+                                    <strong>{{ $player->name }}</strong>
+                                    @if($player->is_captain == 1)
+                                        <span style="font-size: 12px; font-weight: bold; color: #555;">(Captain/Owner)</span>
+                                    @endif
+                                </td>
                                 <td>
                                     @php
                                         $bought = $player->auctionPlayers->first();
@@ -74,11 +78,19 @@
                                 </td>
                             </tr>
                         @endforeach
-                    </tbody>
-                </table>
-            </div>
-        @endif
-    @endforeach
+                    @endif
+                @endforeach
+
+                @while($sno <= 13)
+                    <tr>
+                        <td>{{ $sno++ }}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                @endwhile
+            </tbody>
+        </table>
+    </div>
 
     <div class="footer">
         Generated on {{ now()->format('d M Y, H:i A') }} by {{ setting('app_name', 'Naugawan Premier League (NPLT20)') }}.
