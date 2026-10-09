@@ -69,6 +69,9 @@
                                     @if($player->is_captain == 1)
                                         <span style="font-size: 12px; font-weight: bold; color: #555;">(Captain/Owner)</span>
                                     @endif
+                                    @if($player->is_favorite == 1)
+                                        <span style="font-size: 12px; font-weight: bold; color: #555;">(Favorite)</span>
+                                    @endif
                                 </td>
                                 <td>
                                     @php

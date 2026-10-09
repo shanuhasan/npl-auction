@@ -78,7 +78,11 @@
                                 </div>
                             </div>
                             <div class="p-5">
-                                <h4 class="text-lg font-black text-white truncate">{{ $player->name }}</h4>
+                                <h4 class="text-lg font-black text-white truncate">
+                                    {{ $player->name }}
+                                    @if($player->is_captain) <span class="text-[10px] align-middle bg-blue-600 text-white px-1.5 py-0.5 rounded-full ml-1" title="Captain/Owner">(Captain/Owner)</span> @endif
+                                    @if($player->is_favorite) <span class="text-[10px] align-middle bg-pink-600 text-white px-1.5 py-0.5 rounded-full ml-1" title="Favorite">(Favorite)</span> @endif
+                                </h4>
                                 <div class="mt-4 flex justify-between items-end">
                                     <div>
                                         <p class="text-[10px] text-gray-500 uppercase tracking-widest">Bought For</p>

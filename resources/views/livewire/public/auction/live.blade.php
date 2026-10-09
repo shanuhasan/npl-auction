@@ -58,7 +58,11 @@
                     <div class="flex-1 w-full text-center md:text-left space-y-4 md:space-y-6 flex flex-col justify-center">
                         <div>
                             <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 md:gap-4 mb-2">
-                                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">{{ $currentPlayer['player']['name'] }}</h2>
+                                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
+                                    {{ $currentPlayer['player']['name'] }}
+                                    @if($currentPlayer['player']['is_captain'] ?? false) <span class="text-xl align-middle bg-blue-600 text-white px-2 py-1 rounded-full ml-2" title="Captain/Owner">(Captain/Owner)</span> @endif
+                                    @if($currentPlayer['player']['is_favorite'] ?? false) <span class="text-xl align-middle bg-pink-600 text-white px-2 py-1 rounded-full ml-2" title="Favorite">(Favorite)</span> @endif
+                                </h2>
                             </div>
                             <div class="flex items-center justify-center md:justify-start gap-3 text-gray-400 text-lg mb-3">
                                 <span>Base: ₹{{ number_format($currentPlayer['player']['base_price']) }}</span>
@@ -180,7 +184,11 @@
                                         <img src="{{ $ap['player']['photo'] ? Storage::url($ap['player']['photo']) : 'https://ui-avatars.com/api/?name='.urlencode($ap['player']['name']).'&background=random' }}" 
                                              class="w-6 h-6 rounded-full object-cover">
                                         <div>
-                                            <p class="text-xs text-white font-bold leading-tight">{{ $ap['player']['name'] }}</p>
+                                            <p class="text-xs text-white font-bold leading-tight">
+                                                {{ $ap['player']['name'] }}
+                                                @if($ap['player']['is_captain'] ?? false) <span class="text-[9px] align-middle bg-blue-600 text-white px-1 py-0.5 rounded-full ml-0.5" title="Captain/Owner">(Captain/Owner)</span> @endif
+                                                @if($ap['player']['is_favorite'] ?? false) <span class="text-[9px] align-middle bg-pink-600 text-white px-1 py-0.5 rounded-full ml-0.5" title="Favorite">(Favorite)</span> @endif
+                                            </p>
                                             <p class="text-[9px] text-gray-400 uppercase leading-tight">{{ $ap['player']['role'] }}</p>
                                         </div>
                                     </div>

@@ -75,7 +75,11 @@
                 </div>
 
                 <div class="p-5 flex flex-col flex-1">
-                    <h4 class="text-xl font-black text-white mb-1">{{ $player->name }}</h4>
+                    <h4 class="text-xl font-black text-white mb-1">
+                        {{ $player->name }}
+                        @if($player->is_captain) <span class="text-[10px] align-middle bg-blue-600 text-white px-1.5 py-0.5 rounded-full ml-1" title="Captain/Owner">C</span> @endif
+                        @if($player->is_favorite) <span class="text-[10px] align-middle bg-pink-600 text-white px-1.5 py-0.5 rounded-full ml-1" title="Favorite">★</span> @endif
+                    </h4>
                     <p class="text-xs text-gray-400 font-semibold uppercase tracking-widest mb-4">{{ $player->role }}</p>
                     
                     <div class="mt-auto space-y-4">
@@ -169,7 +173,11 @@
                          class="max-w-full max-h-[70vh] object-contain rounded-lg drop-shadow-2xl relative z-10">
                     
                     <div class="absolute bottom-0 left-0 w-full p-4 md:p-5 bg-[#0B0F19]/90 backdrop-blur-md border-t-2 border-[#FFC800] text-center z-50 rounded-b-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
-                        <h3 class="text-2xl md:text-3xl text-white font-extrabold uppercase mb-1 drop-shadow-lg tracking-wide">{{ $selectedPlayer->name }}</h3>
+                        <h3 class="text-2xl md:text-3xl text-white font-extrabold uppercase mb-1 drop-shadow-lg tracking-wide">
+                            {{ $selectedPlayer->name }}
+                            @if($selectedPlayer->is_captain) <span class="text-sm align-middle bg-blue-600 text-white px-2 py-1 rounded-full ml-1" title="Captain/Owner">C</span> @endif
+                            @if($selectedPlayer->is_favorite) <span class="text-sm align-middle bg-pink-600 text-white px-2 py-1 rounded-full ml-1" title="Favorite">★</span> @endif
+                        </h3>
                         <p class="text-[#FFC800] text-sm md:text-lg font-bold uppercase tracking-widest drop-shadow-md">{{ $selectedPlayer->role }}</p>
                     </div>
                 </div>

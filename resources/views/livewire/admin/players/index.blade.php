@@ -61,7 +61,11 @@
                                 @endif
                             </div>
                             <div class="ml-4">
-                                <div class="text-sm font-medium text-white">{{ $player->name }}</div>
+                                <div class="text-sm font-medium text-white">
+                                    {{ $player->name }}
+                                    @if($player->is_captain) <span class="text-xs bg-blue-600 text-white px-1.5 py-0.5 rounded-full ml-1" title="Captain/Owner">C</span> @endif
+                                    @if($player->is_favorite) <span class="text-xs bg-pink-600 text-white px-1.5 py-0.5 rounded-full ml-1" title="Favorite">★</span> @endif
+                                </div>
                                 <div class="text-sm text-gray-400">
                                     {{ $player->city ? $player->city . ', ' : '' }}{{ $player->country }}
                                 </div>
@@ -180,6 +184,14 @@
                                 <option value="1">Yes</option>
                             </x-select2>
                             @error('is_captain') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Favorite Player</label>
+                            <x-select2 id="is_favorite" wire:model="is_favorite" placeholder="Select Favorite" required>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </x-select2>
+                            @error('is_favorite') <span class="text-accent-red text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div>
                             <label class="block text-gray-300 text-sm font-bold mb-2">Batting Style</label>

@@ -23,6 +23,7 @@ class Index extends Component
 
     public $player_id, $name, $role, $country, $city, $contact_no, $batting_style, $bowling_style, $base_price, $category, $status, $is_approved;
     public $is_captain = false;
+    public $is_favorite = false;
     public $photo, $existing_photo;
     
     // Stats array for json
@@ -57,6 +58,7 @@ class Index extends Component
             'status' => 'required|in:available,sold,unsold,unavailable',
             'is_approved' => 'boolean',
             'is_captain' => 'boolean',
+            'is_favorite' => 'boolean',
             'photo' => 'nullable|image|max:2048',
             'stats.matches' => 'nullable|integer',
             'stats.runs' => 'nullable|integer',
@@ -128,6 +130,7 @@ class Index extends Component
         $this->status = 'available';
         $this->is_approved = true;
         $this->is_captain = false;
+        $this->is_favorite = false;
         $this->photo = null;
         $this->existing_photo = null;
         $this->stats = [
@@ -172,6 +175,7 @@ class Index extends Component
             'status' => $this->status,
             'is_approved' => $this->is_approved,
             'is_captain' => $this->is_captain,
+            'is_favorite' => $this->is_favorite,
             'stats' => $this->stats,
         ]);
 
@@ -196,6 +200,7 @@ class Index extends Component
         $this->status = $player->status;
         $this->is_approved = $player->is_approved;
         $this->is_captain = $player->is_captain;
+        $this->is_favorite = $player->is_favorite;
         $this->existing_photo = $player->photo;
         
         $stats = $player->stats ?? [];
