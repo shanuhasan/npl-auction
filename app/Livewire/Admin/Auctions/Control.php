@@ -473,6 +473,7 @@ class Control extends Component
     {
         $players = AuctionPlayer::with(['player', 'soldToTeam'])
             ->where('auction_id', $this->auction->id)
+            ->where('status', '!=', 'sold')
             ->orderBy('order_no', 'asc')
             ->get();
 
@@ -489,7 +490,7 @@ class Control extends Component
             ];
         }
 
-        $fileName = 'auction_' . $this->auction->id . '_results_' . now()->format('Ymd_His') . '.csv';
+        $fileName = 'auction_' . $this->auction->id . '_non_sold_players_' . now()->format('Ymd_His') . '.csv';
 
         return response()->streamDownload(function () use ($csvHeader, $csvData) {
             $file = fopen('php://output', 'w');
