@@ -98,7 +98,7 @@
                                  x-bind:class="{ 'ring-2 ring-[#FFC800] shadow-[0_0_30px_rgba(255,200,0,0.3)] scale-105 z-10': isPulsing }"
                                  style="transition: all 0.3s ease-out;">
                                 <p class="text-gray-400 uppercase tracking-widest text-sm md:text-lg font-semibold mb-2 lg:mb-4 text-center md:text-left">Current Bid</p>
-                                <div class="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-[#FFC800] text-center md:text-left tracking-tight">
+                                <div style="font-size: 40px" class="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-[#FFC800] text-center md:text-left tracking-tight">
                                     ₹{{ number_format($currentHighestBid > 0 ? $currentHighestBid : $currentPlayer['player']['base_price']) }}
                                 </div>
                             </div>
