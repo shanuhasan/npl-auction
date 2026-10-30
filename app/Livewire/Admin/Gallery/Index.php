@@ -16,6 +16,11 @@ class Index extends Component
     public $isModalOpen = false;
     public $existing_file = null;
 
+    // Bulk Upload Properties
+    public $isBulkModalOpen = false;
+    public $bulk_photos = [];
+    public $bulkUploadProgress = 0;
+
     protected $rules = [
         'title' => 'nullable|string|max:255',
         'type' => 'required|in:photo,video',
@@ -131,5 +136,66 @@ class Index extends Component
         $gallery = Gallery::findOrFail($id);
         $gallery->update(['is_active' => !$gallery->is_active]);
         session()->flash('message', 'Status Updated Successfully.');
+    }
+
+    // Bulk Upload Methods
+    public function openBulkModal()
+    {
+        $this->bulk_photos = [];
+        $this->bulkUploadProgress = 0;
+        $this->isBulkModalOpen = true;
+    }
+
+    public function closeBulkModal()
+    {
+        $this->isBulkModalOpen = false;
+        $this->bulk_photos = [];
+        $this->bulkUploadProgress = 0;
+    }
+
+    public function saveBulkPhotos()
+    {
+        $this->validate([
+            'bulk_photos' => 'required|array|min:1',
+            'bulk_photos.*' => 'image|mimes:jpeg,png,jpg,webp|max:10240',
+        ], [
+            'bulk_photos.required' => 'Please select at least one photo.',
+            'bulk_photos.min' => 'Please select at least one photo.',
+            'bulk_photos.*.image' => 'Each file must be an image.',
+            'bulk_photos.*.mimes' => 'Allowed formats: jpeg, png, jpg, webp.',
+            'bulk_photos.*.max' => 'Each photo must not exceed 10MB.',
+        ]);
+
+        $totalFiles = count($this->bulk_photos);
+        $uploaded = 0;
+
+        $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+
+        foreach ($this->bulk_photos as $photo) {
+            try {
+                $filename = pathinfo($photo->hashName(), PATHINFO_FILENAME) . '.webp';
+                $image = $manager->read($photo->getRealPath())
+                    ->scaleDown(800, 800)
+                    ->toWebp(70);
+
+                Storage::disk('public')->put('gallery/' . $filename, (string) $image);
+
+                Gallery::create([
+                    'title' => null,
+                    'type' => 'photo',
+                    'file_path' => 'gallery/' . $filename,
+                    'video_url' => null,
+                    'is_active' => true,
+                ]);
+
+                $uploaded++;
+            } catch (\Exception $e) {
+                // Skip failed uploads silently, continue with remaining
+                continue;
+            }
+        }
+
+        $this->closeBulkModal();
+        session()->flash('message', "{$uploaded} out of {$totalFiles} photos uploaded successfully!");
     }
 }

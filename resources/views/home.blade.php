@@ -640,6 +640,10 @@
                     <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
                         <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> Photos & Videos
                     </h2>
+                    <a href="{{ route('public.gallery') }}" class="inline-flex items-center bg-transparent border-2 border-[#FFC800] text-[#FFC800] hover:bg-[#FFC800] hover:text-black px-5 py-2 font-bold text-sm uppercase rounded-full transition-all duration-300 tracking-wider group whitespace-nowrap">
+                        View All
+                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
                 </div>
                 
                 <div class="swiper gallerySwiper overflow-hidden" style="padding-bottom: 10px;">

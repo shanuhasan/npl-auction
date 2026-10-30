@@ -30,6 +30,7 @@ Route::get('/players', \App\Livewire\Public\Players\Index::class)->name('public.
 Route::get('/contact', \App\Livewire\Public\Contact::class)->name('public.contact');
 Route::get('/blogs', \App\Livewire\Public\Blogs\Index::class)->name('public.blogs');
 Route::get('/blogs/{slug}', \App\Livewire\Public\Blogs\Show::class)->name('public.blogs.show');
+Route::get('/gallery', \App\Livewire\Public\Gallery\Index::class)->name('public.gallery');
 
 // Payment Callback & Checkout
 Route::get('/payment/checkout/{payment}', function (\App\Models\Payment $payment) {
