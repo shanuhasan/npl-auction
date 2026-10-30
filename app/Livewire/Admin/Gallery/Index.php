@@ -19,7 +19,7 @@ class Index extends Component
     // Bulk Upload Properties
     public $isBulkModalOpen = false;
     public $bulk_photos = [];
-    public $bulkUploadProgress = 0;
+    public $uploadIteration = 0;
 
     protected $rules = [
         'title' => 'nullable|string|max:255',
@@ -142,7 +142,7 @@ class Index extends Component
     public function openBulkModal()
     {
         $this->bulk_photos = [];
-        $this->bulkUploadProgress = 0;
+        $this->uploadIteration++;
         $this->isBulkModalOpen = true;
     }
 
@@ -150,7 +150,15 @@ class Index extends Component
     {
         $this->isBulkModalOpen = false;
         $this->bulk_photos = [];
-        $this->bulkUploadProgress = 0;
+        $this->uploadIteration++;
+    }
+
+    public function removeBulkPhoto($index)
+    {
+        if (isset($this->bulk_photos[$index])) {
+            unset($this->bulk_photos[$index]);
+            $this->bulk_photos = array_values($this->bulk_photos);
+        }
     }
 
     public function saveBulkPhotos()
@@ -166,8 +174,12 @@ class Index extends Component
             'bulk_photos.*.max' => 'Each photo must not exceed 10MB.',
         ]);
 
+        @set_time_limit(300);
+        @ini_set('memory_limit', '512M');
+
         $totalFiles = count($this->bulk_photos);
         $uploaded = 0;
+        $failed = 0;
 
         $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
 
@@ -189,13 +201,20 @@ class Index extends Component
                 ]);
 
                 $uploaded++;
-            } catch (\Exception $e) {
-                // Skip failed uploads silently, continue with remaining
-                continue;
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::error("Bulk upload photo error: " . $e->getMessage());
+                $failed++;
             }
         }
 
         $this->closeBulkModal();
-        session()->flash('message', "{$uploaded} out of {$totalFiles} photos uploaded successfully!");
+
+        if ($failed > 0 && $uploaded > 0) {
+            session()->flash('message', "{$uploaded} photos uploaded successfully, {$failed} photos failed.");
+        } elseif ($uploaded > 0) {
+            session()->flash('message', "{$uploaded} photos uploaded successfully!");
+        } else {
+            session()->flash('error', "Failed to upload photos. Please try again with valid images.");
+        }
     }
 }

@@ -11,8 +11,14 @@
     </div>
 
     @if (session()->has('message'))
-        <div class="bg-success-green text-white px-4 py-3 rounded mb-4 shadow">
-            {{ session('message') }}
+        <div class="bg-success-green text-white px-4 py-3 rounded mb-4 shadow flex items-center justify-between">
+            <span>{{ session('message') }}</span>
+        </div>
+    @endif
+
+    @if (session()->has('error'))
+        <div class="bg-accent-red text-white px-4 py-3 rounded mb-4 shadow flex items-center justify-between">
+            <span>{{ session('error') }}</span>
         </div>
     @endif
 
@@ -157,36 +163,79 @@
                                 </svg>
                                 <p class="text-white font-bold text-lg mb-2">Select Multiple Photos</p>
                                 <p class="text-gray-400 text-sm mb-4">Supports JPEG, PNG, JPG, WebP — Max 10MB per photo</p>
-                                <input type="file" wire:model="bulk_photos" multiple accept="image/jpeg,image/png,image/jpg,image/webp"
+                                <input type="file" 
+                                       id="bulk-upload-{{ $uploadIteration }}" 
+                                       wire:key="bulk-upload-{{ $uploadIteration }}"
+                                       wire:model="bulk_photos" 
+                                       multiple 
+                                       accept="image/jpeg,image/png,image/jpg,image/webp"
                                        class="w-full max-w-md bg-primary-bg border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:border-accent-gold file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-accent-gold file:text-primary-bg hover:file:bg-yellow-400">
                             </div>
                         </div>
 
-                        @error('bulk_photos') <span class="text-accent-red text-sm">{{ $message }}</span> @enderror
-                        @error('bulk_photos.*') <span class="text-accent-red text-sm">{{ $message }}</span> @enderror
+                        @error('bulk_photos') <span class="text-accent-red text-sm block">{{ $message }}</span> @enderror
+                        @error('bulk_photos.*') <span class="text-accent-red text-sm block">{{ $message }}</span> @enderror
 
-                        <!-- Upload Progress -->
-                        <div wire:loading wire:target="bulk_photos" class="bg-primary-bg rounded-lg p-4">
-                            <div class="flex items-center gap-3">
-                                <svg class="animate-spin h-5 w-5 text-accent-gold" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                <span class="text-accent-gold font-semibold">Uploading photos... Please wait, do not close this window.</span>
+                        <!-- Livewire Upload Progress Bar -->
+                        <div x-data="{ isUploading: false, progress: 0 }"
+                             x-on:livewire-upload-start="isUploading = true"
+                             x-on:livewire-upload-finish="isUploading = false"
+                             x-on:livewire-upload-error="isUploading = false"
+                             x-on:livewire-upload-progress="progress = $event.detail.progress"
+                             class="space-y-2">
+                            <div x-show="isUploading" class="bg-primary-bg rounded-lg p-4 border border-gray-700">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-accent-gold text-sm font-semibold flex items-center gap-2">
+                                        <svg class="animate-spin h-4 w-4 text-accent-gold" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Uploading to server...
+                                    </span>
+                                    <span class="text-accent-gold text-xs font-bold" x-text="progress + '%'"></span>
+                                </div>
+                                <div class="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden">
+                                    <div class="bg-accent-gold h-2.5 rounded-full transition-all duration-150" :style="'width: ' + progress + '%'"></div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Preview Selected Files -->
                         @if($bulk_photos && count($bulk_photos) > 0)
-                            <div class="bg-primary-bg rounded-lg p-4">
+                            <div class="bg-primary-bg rounded-lg p-4 border border-gray-700">
                                 <div class="flex items-center justify-between mb-3">
                                     <span class="text-white font-bold text-sm">{{ count($bulk_photos) }} photo(s) selected</span>
-                                    <span class="text-gray-400 text-xs">All photos will be converted to WebP format</span>
+                                    <span class="text-gray-400 text-xs">Click X to remove before uploading</span>
                                 </div>
-                                <div class="grid grid-cols-4 sm:grid-cols-6 gap-2 max-h-48 overflow-y-auto">
+                                <div class="grid grid-cols-4 sm:grid-cols-6 gap-2 max-h-48 overflow-y-auto pr-1">
                                     @foreach($bulk_photos as $index => $photo)
-                                        <div class="relative aspect-square rounded-lg overflow-hidden bg-gray-800 border border-gray-700">
-                                            <img src="{{ $photo->temporaryUrl() }}" class="w-full h-full object-cover" alt="Preview {{ $index + 1 }}">
+                                        <div class="relative aspect-square rounded-lg overflow-hidden bg-gray-800 border border-gray-700 group">
+                                            @php
+                                                $previewUrl = null;
+                                                try {
+                                                    if (is_object($photo) && method_exists($photo, 'temporaryUrl')) {
+                                                        $previewUrl = $photo->temporaryUrl();
+                                                    }
+                                                } catch (\Throwable $th) {
+                                                    $previewUrl = null;
+                                                }
+                                            @endphp
+                                            @if($previewUrl)
+                                                <img src="{{ $previewUrl }}" class="w-full h-full object-cover" alt="Preview {{ $index + 1 }}">
+                                            @else
+                                                <div class="w-full h-full flex items-center justify-center bg-gray-800 text-gray-500 text-[10px] text-center p-1">
+                                                    Photo #{{ $index + 1 }}
+                                                </div>
+                                            @endif
+                                            
+                                            <!-- Remove button -->
+                                            <button type="button" 
+                                                    wire:click="removeBulkPhoto({{ $index }})" 
+                                                    class="absolute top-1 right-1 bg-red-600/90 hover:bg-red-600 text-white w-5 h-5 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 transition shadow" 
+                                                    title="Remove">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                            </button>
+                                            
                                             <div class="absolute bottom-0 left-0 right-0 bg-black/70 text-center py-0.5">
                                                 <span class="text-white text-[10px] font-bold">{{ $index + 1 }}</span>
                                             </div>
