@@ -1,4 +1,4 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" style="--team-color: {{ $team->primary_color }};">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 {{ $this instanceof \App\Livewire\TeamOwner\MyTeam ? 'bg-[#0B0F19] rounded-2xl text-white' : '' }}" style="--team-color: {{ $team->primary_color }};">
     
     <!-- Team Header -->
     <div class="bg-[#141B2D] border border-white/10 rounded-3xl p-8 mb-12 shadow-[0_10px_40px_rgba(0,0,0,0.5)] relative overflow-hidden">

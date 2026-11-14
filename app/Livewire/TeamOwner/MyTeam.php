@@ -40,6 +40,16 @@ class MyTeam extends Component
             $totalSpent = $auctionPlayers->sum('final_price');
         }
 
+        $fixtures = $this->selectedAuctionId
+            ? \App\Models\Fixture::with(['teamA', 'teamB', 'winner'])
+                ->where('auction_id', $this->selectedAuctionId)
+                ->forTeam($this->team->id)
+                ->orderByRaw('match_date IS NULL')
+                ->orderBy('match_date')
+                ->orderBy('match_no')
+                ->get()
+            : collect();
+
         $playersByRole = $players->groupBy('role');
         $remainingBudget = $this->team->budget - $totalSpent;
         
@@ -47,7 +57,8 @@ class MyTeam extends Component
             'playersByRole' => $playersByRole,
             'totalSpent' => $totalSpent,
             'remainingBudget' => $remainingBudget,
-            'totalPlayers' => $players->count()
+            'totalPlayers' => $players->count(),
+            'fixtures' => $fixtures,
         ])->layout('layouts.app');
     }
 }

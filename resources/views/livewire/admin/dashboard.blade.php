@@ -1,75 +1,79 @@
-<div>
-    <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
-        <h1 class="text-3xl font-poppins font-bold text-white">Dashboard</h1>
+<div class="space-y-8">
+    <!-- Page header -->
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+            <h1 class="text-2xl font-semibold text-ink">Dashboard</h1>
+            <p class="mt-1 text-sm text-muted">Overview of your league, auctions and website activity.</p>
+        </div>
         @if(!$hasLiveAuctions)
-            <button wire:click="resetSeason" wire:confirm="WARNING: This will reset ALL Teams' remaining budgets back to full, and set ALL players to 'available'. ONLY DO THIS IF YOU ARE STARTING A BRAND NEW AUCTION / NEW SEASON. Are you sure?" class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow uppercase tracking-wider text-sm transition">
+            <button wire:click="resetSeason" wire:confirm="WARNING: This will reset ALL Teams' remaining budgets back to full, and set ALL players to 'available'. ONLY DO THIS IF YOU ARE STARTING A BRAND NEW AUCTION / NEW SEASON. Are you sure?"
+                    class="btn-secondary text-danger hover:text-danger">
+                <x-icon name="refresh" class="w-4 h-4" />
                 Reset Data for New Season
             </button>
+        @else
+            <span class="badge-danger self-start md:self-auto"><span class="h-1.5 w-1.5 rounded-full bg-danger animate-pulse"></span> Auction live</span>
         @endif
     </div>
 
     @if (session()->has('success'))
-        <div class="bg-green-500 text-white p-4 rounded-lg font-bold mb-6">
-            {{ session('success') }}
+        <div class="alert-success">
+            <x-icon name="check-circle" class="w-5 h-5 shrink-0" />
+            <span>{{ session('success') }}</span>
         </div>
     @endif
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        
-        <!-- Total Players -->
-        <div class="bg-card-bg rounded-xl p-6 shadow-lg border border-gray-800 flex items-center gap-4 hover:border-accent-gold transition-colors">
-            <div class="w-12 h-12 bg-blue-500/20 text-blue-500 rounded-lg flex items-center justify-center shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-            </div>
-            <div>
-                <p class="text-xs font-inter text-gray-400 uppercase tracking-wider font-bold mb-1">Players</p>
-                <h3 class="text-2xl font-poppins font-black text-white leading-none">{{ $totalPlayers }}</h3>
-            </div>
-        </div>
+    <!-- Stats -->
+    @php
+        $stats = [
+            ['label' => 'Players', 'value' => $totalPlayers, 'icon' => 'users', 'tone' => 'bg-blue-50 text-blue-600', 'route' => auth()->user()->hasPermission('manage_players') ? route('admin.players') : null],
+            ['label' => 'Teams', 'value' => $totalTeams, 'icon' => 'shield', 'tone' => 'bg-violet-50 text-violet-600', 'route' => auth()->user()->hasPermission('manage_teams') ? route('admin.teams') : null],
+            ['label' => 'Upcoming Auctions', 'value' => $upcomingAuctions, 'icon' => 'clock', 'tone' => 'bg-amber-50 text-amber-600', 'route' => auth()->user()->hasPermission('manage_auctions') ? route('admin.auctions') : null],
+            ['label' => 'Completed Auctions', 'value' => $completedAuctions, 'icon' => 'check-circle', 'tone' => 'bg-green-50 text-green-600', 'route' => auth()->user()->hasPermission('manage_auctions') ? route('admin.auctions') : null],
+            ['label' => 'Website Visitors', 'value' => $totalVisitors, 'icon' => 'eye', 'tone' => 'bg-slate-100 text-slate-600', 'route' => auth()->user()->hasPermission('view_analytics') ? route('admin.analytics') : null],
+        ];
+    @endphp
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        @foreach($stats as $stat)
+            <{{ $stat['route'] ? 'a' : 'div' }} @if($stat['route']) href="{{ $stat['route'] }}" wire:navigate @endif
+                class="card group p-5 transition-colors {{ $stat['route'] ? 'hover:border-line-strong' : '' }}">
+                <div class="flex items-start justify-between">
+                    <p class="text-sm font-medium text-muted">{{ $stat['label'] }}</p>
+                    <span class="flex h-9 w-9 items-center justify-center rounded-lg {{ $stat['tone'] }}">
+                        <x-icon :name="$stat['icon']" class="w-5 h-5" />
+                    </span>
+                </div>
+                <p class="mt-3 text-3xl font-semibold tracking-tight text-ink">{{ number_format($stat['value']) }}</p>
+            </{{ $stat['route'] ? 'a' : 'div' }}>
+        @endforeach
+    </div>
 
-        <!-- Total Teams -->
-        <div class="bg-card-bg rounded-xl p-6 shadow-lg border border-gray-800 flex items-center gap-4 hover:border-accent-gold transition-colors">
-            <div class="w-12 h-12 bg-purple-500/20 text-purple-500 rounded-lg flex items-center justify-center shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-            </div>
-            <div>
-                <p class="text-xs font-inter text-gray-400 uppercase tracking-wider font-bold mb-1">Teams</p>
-                <h3 class="text-2xl font-poppins font-black text-white leading-none">{{ $totalTeams }}</h3>
-            </div>
+    <!-- Quick actions -->
+    @php
+        $actions = array_filter([
+            auth()->user()->hasPermission('manage_auctions') ? ['label' => 'Create auction', 'desc' => 'Set up a new auction and its teams', 'icon' => 'trophy', 'route' => route('admin.auctions.create')] : null,
+            auth()->user()->hasPermission('manage_players') ? ['label' => 'Manage players', 'desc' => 'Approve, edit and export players', 'icon' => 'users', 'route' => route('admin.players')] : null,
+            auth()->user()->hasPermission('manage_teams') ? ['label' => 'Manage teams', 'desc' => 'Owners, budgets and logos', 'icon' => 'shield', 'route' => route('admin.teams')] : null,
+            ['label' => 'Auction reports', 'desc' => 'Squads, spending and results', 'icon' => 'report', 'route' => route('reports.auction')],
+            auth()->user()->hasPermission('manage_settings') ? ['label' => 'Settings', 'desc' => 'Branding, fees and payments', 'icon' => 'cog', 'route' => route('admin.settings')] : null,
+        ]);
+    @endphp
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Quick actions</h2>
         </div>
-
-        <!-- Upcoming Auctions -->
-        <div class="bg-card-bg rounded-xl p-6 shadow-lg border border-gray-800 flex items-center gap-4 hover:border-accent-gold transition-colors">
-            <div class="w-12 h-12 bg-yellow-500/20 text-yellow-500 rounded-lg flex items-center justify-center shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-                <p class="text-xs font-inter text-gray-400 uppercase tracking-wider font-bold mb-1">Upcoming</p>
-                <h3 class="text-2xl font-poppins font-black text-white leading-none">{{ $upcomingAuctions }}</h3>
-            </div>
+        <div class="grid grid-cols-1 divide-y divide-line sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-3 xl:grid-cols-5">
+            @foreach($actions as $action)
+                <a href="{{ $action['route'] }}" wire:navigate class="group flex items-start gap-3 p-5 transition-colors hover:bg-surface-muted">
+                    <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand">
+                        <x-icon :name="$action['icon']" class="w-5 h-5" />
+                    </span>
+                    <span>
+                        <span class="block text-sm font-medium text-ink group-hover:text-brand">{{ $action['label'] }}</span>
+                        <span class="mt-0.5 block text-xs text-muted">{{ $action['desc'] }}</span>
+                    </span>
+                </a>
+            @endforeach
         </div>
-
-        <!-- Completed Auctions -->
-        <div class="bg-card-bg rounded-xl p-6 shadow-lg border border-gray-800 flex items-center gap-4 hover:border-accent-gold transition-colors">
-            <div class="w-12 h-12 bg-green-500/20 text-green-500 rounded-lg flex items-center justify-center shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-                <p class="text-xs font-inter text-gray-400 uppercase tracking-wider font-bold mb-1">Completed</p>
-                <h3 class="text-2xl font-poppins font-black text-white leading-none">{{ $completedAuctions }}</h3>
-            </div>
-        </div>
-
-        <!-- Total Visitors -->
-        <div class="bg-card-bg rounded-xl p-6 shadow-lg border border-gray-800 flex items-center gap-4 hover:border-accent-gold transition-colors">
-            <div class="w-12 h-12 bg-red-500/20 text-red-500 rounded-lg flex items-center justify-center shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-            </div>
-            <div>
-                <p class="text-xs font-inter text-gray-400 uppercase tracking-wider font-bold mb-1">Visitors</p>
-                <h3 class="text-2xl font-poppins font-black text-white leading-none">{{ $totalVisitors }}</h3>
-            </div>
-        </div>
-
     </div>
 </div>

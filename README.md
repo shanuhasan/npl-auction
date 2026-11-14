@@ -19,8 +19,9 @@ Built with **Laravel 12**, **Livewire 3 / Volt**, **Tailwind CSS**, and **Pusher
 9. [Environment Configuration](#environment-configuration)
 10. [Running the Project](#running-the-project)
 11. [Application Settings](#application-settings)
-12. [Testing](#testing)
-13. [Known Issues / TODO](#known-issues--todo)
+12. [Admin Theme (UI)](#admin-theme-ui)
+13. [Testing](#testing)
+14. [Known Issues / TODO](#known-issues--todo)
 
 ---
 
@@ -337,6 +338,20 @@ Managed from **Admin → Settings** and read with the `setting('key', $default)`
 | `active_payment_gateway` | `razorpay`, `mock` or `none` |
 | `adsense_code` | Google AdSense snippet |
 | `developer_name`, `developer_url` | Footer credit |
+
+---
+
+## Admin Theme (UI)
+
+The admin / app area (admin panel, team owner pages, reports, profile, login) uses a light SaaS theme. The public website keeps its own dark IPL design and is not affected.
+
+- **Colours:** CSS variables in `resources/css/app.css` (`:root`), exposed to Tailwind as `brand`, `canvas`, `surface`, `line`, `ink`, `muted`, `faint`, `danger`, `success`, `warning` (see `tailwind.config.js`). Change a colour in one place and it applies everywhere.
+- **Components:** `.card`, `.btn-primary`, `.btn-secondary`, `.btn-danger`, `.btn-ghost`, `.badge-*`, `.alert-*`, `.form-label`, `.nav-item`, `.menu-panel` (same file).
+- **Base styles:** inputs, selects, checkboxes, tables, pagination, Select2 and Quill are styled centrally, inside `.theme-app` (set on `<body>` in `layouts/app` and `layouts/guest`).
+- **Sidebar menu:** defined once in `resources/views/layouts/partials/sidebar-nav.blade.php` (used for desktop and mobile). It can be collapsed, and the choice is remembered in the browser.
+- **Icons:** `<x-icon name="..." />` (`resources/views/components/icon.blade.php`).
+
+After changing styles, run `npm run build` (the built files in `public/build` are committed).
 
 ---
 

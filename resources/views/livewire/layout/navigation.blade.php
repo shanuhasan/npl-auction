@@ -16,202 +16,115 @@ new class extends Component
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-2">
-                        @if(setting('logo'))
-                            <img src="{{ asset('storage/' . setting('logo')) }}" alt="Logo" class="block h-9 w-auto object-contain">
-                        @else
-                            <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+@php
+    $user = auth()->user();
+    $roleLabels = ['admin' => 'Administrator', 'sub_admin' => 'Sub Admin', 'team_owner' => 'Team Owner', 'viewer' => 'Viewer'];
+    $canSeeMessages = $user && $user->hasPermission('manage_contacts');
+    $unreadMessages = $canSeeMessages ? \App\Models\ContactMessage::where('is_read', false)->latest()->take(5)->get() : collect();
+    $unreadCount = $canSeeMessages ? \App\Models\ContactMessage::where('is_read', false)->count() : 0;
+    $initials = collect(explode(' ', trim($user->name ?? '')))->filter()->take(2)->map(fn ($p) => mb_strtoupper(mb_substr($p, 0, 1)))->implode('');
+@endphp
+
+<header class="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-3 border-b border-line bg-surface/95 px-4 backdrop-blur sm:px-6 lg:px-8">
+    <!-- Mobile: open drawer -->
+    <button type="button" class="btn-ghost -ml-2 p-2 lg:hidden" @click="$dispatch('toggle-sidebar')" aria-label="Open menu">
+        <x-icon name="menu" />
+    </button>
+
+    <!-- Desktop: collapse sidebar -->
+    <button type="button" class="btn-ghost -ml-3 hidden p-2 lg:inline-flex" @click="$dispatch('toggle-sidebar-collapse')" title="Toggle sidebar" aria-label="Toggle sidebar">
+        <x-icon name="menu" />
+    </button>
+
+    <div class="hidden min-w-0 sm:block">
+        <p class="truncate text-sm text-muted">
+            Welcome back, <span class="font-medium text-ink">{{ \Illuminate\Support\Str::before($user->name, ' ') ?: $user->name }}</span>
+        </p>
+    </div>
+
+    <div class="ml-auto flex items-center gap-1 sm:gap-2">
+        <a href="{{ route('home') }}" target="_blank" rel="noopener" class="btn-ghost hidden px-3 sm:inline-flex" title="Open public website">
+            <x-icon name="globe" class="w-[18px] h-[18px]" />
+            <span>View site</span>
+        </a>
+
+        @if($canSeeMessages)
+            <!-- Notifications -->
+            <div class="relative" x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false">
+                <button type="button" @click="open = !open" class="btn-ghost relative p-2" aria-label="Notifications" :aria-expanded="open">
+                    <x-icon name="bell" />
+                    @if($unreadCount > 0)
+                        <span class="absolute right-1 top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-danger px-1 text-[10px] font-semibold leading-none text-white ring-2 ring-surface">
+                            {{ $unreadCount > 9 ? '9+' : $unreadCount }}
+                        </span>
+                    @endif
+                </button>
+
+                <div x-show="open" x-cloak x-transition.origin.top.right
+                     class="menu-panel absolute right-0 z-50 mt-2 w-80 max-w-[calc(100vw-2rem)]">
+                    <div class="flex items-center justify-between px-4 py-2.5">
+                        <p class="text-sm font-semibold text-ink">Notifications</p>
+                        @if($unreadCount > 0)
+                            <span class="badge-brand">{{ $unreadCount }} new</span>
                         @endif
-                    </a>
-                </div>
-
-                <!-- Navigation Links -->
-                <!-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div> -->
-            </div>
-
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
+                    </div>
+                    <div class="max-h-80 overflow-y-auto border-y border-line">
+                        @forelse($unreadMessages as $message)
+                            <a href="{{ route('admin.contacts') }}" wire:navigate class="flex gap-3 px-4 py-3 hover:bg-surface-muted">
+                                <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
+                                    <x-icon name="envelope" class="w-4 h-4" />
+                                </span>
+                                <span class="min-w-0">
+                                    <span class="block truncate text-sm font-medium text-ink">{{ $message->name }}</span>
+                                    <span class="block truncate text-xs text-muted">{{ \Illuminate\Support\Str::limit($message->message, 60) }}</span>
+                                    <span class="block text-[11px] text-faint mt-0.5">{{ $message->created_at?->diffForHumans() }}</span>
+                                </span>
+                            </a>
+                        @empty
+                            <div class="px-4 py-8 text-center">
+                                <x-icon name="check-circle" class="mx-auto mb-2 w-6 h-6 text-faint" />
+                                <p class="text-sm text-muted">You're all caught up.</p>
                             </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile')" wire:navigate>
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <button wire:click="logout" class="w-full text-start">
-                            <x-dropdown-link>
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </button>
-                    </x-slot>
-                </x-dropdown>
+                        @endforelse
+                    </div>
+                    <a href="{{ route('admin.contacts') }}" wire:navigate class="block px-4 py-2.5 text-center text-sm font-medium text-brand hover:bg-surface-muted">View all messages</a>
+                </div>
             </div>
+        @endif
 
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            @auth
-                @if(in_array(auth()->user()->role, ['admin', 'sub_admin']))
-                    <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" wire:navigate class="text-accent-red font-bold">
-                        Dashboard
-                    </x-responsive-nav-link>
-                    
-                    @if(auth()->user()->hasPermission('manage_users'))
-                    <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users*')" wire:navigate>
-                        Manage Users
-                    </x-responsive-nav-link>
-                    @endif
-                    
-                    @if(auth()->user()->hasPermission('manage_teams'))
-                    <x-responsive-nav-link :href="route('admin.teams')" :active="request()->routeIs('admin.teams*')" wire:navigate>
-                        Manage Teams
-                    </x-responsive-nav-link>
-                    @endif
-                    
-                    @if(auth()->user()->hasPermission('manage_players'))
-                    <x-responsive-nav-link :href="route('admin.players')" :active="request()->routeIs('admin.players*')" wire:navigate>
-                        Manage Players
-                    </x-responsive-nav-link>
-                    @endif
-                    
-                    @if(auth()->user()->hasPermission('manage_auctions'))
-                    <x-responsive-nav-link :href="route('admin.auctions')" :active="request()->routeIs('admin.auctions*')" wire:navigate>
-                        Manage Auctions
-                    </x-responsive-nav-link>
-                    @endif
-
-                    @if(auth()->user()->hasPermission('manage_banners'))
-                    <x-responsive-nav-link :href="route('admin.banners')" :active="request()->routeIs('admin.banners')" wire:navigate>
-                        Manage Banners
-                    </x-responsive-nav-link>
-                    @endif                   
-                    
-                    @if(auth()->user()->hasPermission('manage_core_committees'))
-                    <x-responsive-nav-link :href="route('admin.core-committees')" :active="request()->routeIs('admin.core-committees')" wire:navigate>
-                        Manage Committees
-                    </x-responsive-nav-link>
-                    @endif
-                    
-                    @if(auth()->user()->hasPermission('manage_guests'))
-                    <x-responsive-nav-link :href="route('admin.guests')" :active="request()->routeIs('admin.guests')" wire:navigate>
-                        Manage Guests
-                    </x-responsive-nav-link>
-                    @endif
-                    
-                    @if(auth()->user()->hasPermission('manage_sponsors'))
-                    <x-responsive-nav-link :href="route('admin.sponsors')" :active="request()->routeIs('admin.sponsors')" wire:navigate>
-                        Manage Sponsors
-                    </x-responsive-nav-link>
-                    @endif
-
-                    @if(auth()->user()->hasPermission('manage_contacts'))
-                    <x-responsive-nav-link :href="route('admin.contacts')" :active="request()->routeIs('admin.contacts')" wire:navigate>
-                        Contact Messages
-                    </x-responsive-nav-link>
-                    @endif
-
-                    @if(auth()->user()->hasPermission('manage_gallery'))
-                    <x-responsive-nav-link :href="route('admin.gallery')" :active="request()->routeIs('admin.gallery')" wire:navigate>
-                        Manage Gallery
-                    </x-responsive-nav-link>
-                    @endif
-                    
-                    @if(auth()->user()->hasPermission('manage_pages'))
-                    <x-responsive-nav-link :href="route('admin.pages.index')" :active="request()->routeIs('admin.pages.index')" wire:navigate>
-                        Manage Pages
-                    </x-responsive-nav-link>
-                    @endif
-
-                    @if(auth()->user()->hasPermission('view_analytics'))
-                    <x-responsive-nav-link :href="route('admin.analytics')" :active="request()->routeIs('admin.analytics')" wire:navigate>
-                        Analytics
-                    </x-responsive-nav-link>
-                    @endif
-                    
-                    @if(auth()->user()->hasPermission('manage_settings'))
-                    <x-responsive-nav-link :href="route('admin.settings')" :active="request()->routeIs('admin.settings')" wire:navigate>
-                        Settings
-                    </x-responsive-nav-link>
-                    @endif
-                @elseif(auth()->user()->role === 'team_owner')
-                    @php
-                        $myTeam = \App\Models\Team::where('owner_id', auth()->id())->first();
-                        $activeAuction = \App\Models\Auction::whereIn('status', ['live', 'upcoming'])->first();
-                    @endphp
-                    @if($myTeam)
-                        <x-responsive-nav-link :href="route('team_owner.my_team')" :active="request()->routeIs('team_owner.my_team')" wire:navigate class="text-success-green font-bold">
-                            My Team
-                        </x-responsive-nav-link>
-                    @endif
-                    @if($activeAuction)
-                        <x-responsive-nav-link :href="route('team.auction.bidding', $activeAuction->guid)" :active="request()->routeIs('team.auction.bidding')" wire:navigate>
-                            Bidding Room
-                        </x-responsive-nav-link>
-                    @endif
+        <!-- Profile menu -->
+        <div class="relative" x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false">
+            <button type="button" @click="open = !open" :aria-expanded="open"
+                    class="flex items-center gap-2.5 rounded-lg py-1.5 pl-1.5 pr-2 transition-colors hover:bg-surface-subtle">
+                @if($user->image)
+                    <img src="{{ asset('storage/' . $user->image) }}" alt="" class="h-8 w-8 rounded-full object-cover ring-1 ring-line">
+                @else
+                    <span class="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-xs font-semibold text-white">{{ $initials ?: 'U' }}</span>
                 @endif
-                <x-responsive-nav-link :href="route('public.players')" :active="request()->routeIs('public.players')" target="_blank">
-                    All Players
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('reports.auction')" :active="request()->routeIs('reports.auction')" wire:navigate class="text-[#00C853] font-bold">
-                    Reports
-                </x-responsive-nav-link>
-            @endauth
-        </div>
+                <span class="hidden text-left md:block">
+                    <span class="block max-w-[10rem] truncate text-sm font-medium leading-tight text-ink"
+                          x-data="{{ json_encode(['name' => $user->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name">{{ $user->name }}</span>
+                    <span class="block text-xs leading-tight text-muted">{{ $roleLabels[$user->role] ?? ucfirst($user->role) }}</span>
+                </span>
+                <x-icon name="chevron-down" class="hidden w-4 h-4 text-faint md:block" />
+            </button>
 
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800 dark:text-gray-200" x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
-                <div class="font-medium text-sm text-gray-500">{{ auth()->user()->email }}</div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile')" wire:navigate>
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <button wire:click="logout" class="w-full text-start">
-                    <x-responsive-nav-link>
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </button>
+            <div x-show="open" x-cloak x-transition.origin.top.right class="menu-panel absolute right-0 z-50 mt-2 w-60">
+                <div class="border-b border-line px-3.5 pb-2.5 pt-1.5">
+                    <p class="truncate text-sm font-medium text-ink">{{ $user->name }}</p>
+                    <p class="truncate text-xs text-muted">{{ $user->email }}</p>
+                </div>
+                <div class="py-1">
+                    <a href="{{ route('profile') }}" wire:navigate class="menu-item"><x-icon name="user" /> Profile</a>
+                    <a href="{{ route('dashboard') }}" wire:navigate class="menu-item"><x-icon name="home" /> Dashboard</a>
+                    <a href="{{ route('home') }}" target="_blank" class="menu-item sm:hidden"><x-icon name="globe" /> View site</a>
+                </div>
+                <div class="border-t border-line pt-1">
+                    <button wire:click="logout" class="menu-item text-danger hover:text-danger">
+                        <x-icon name="logout" class="!text-danger" /> Log out
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</nav>
+</header>

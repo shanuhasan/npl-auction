@@ -1,10 +1,18 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 
+// Theme tokens for the admin / app area are CSS variables defined in
+// resources/css/app.css (:root). Change colours there, not here.
+const token = (name) => `rgb(var(--${name}) / <alpha-value>)`;
+
 /** @type {import('tailwindcss').Config} */
 export default {
+    // Dark mode only when a parent has the "dark" class (the app area is light).
+    darkMode: 'class',
+
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './vendor/livewire/livewire/src/Features/SupportPagination/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
@@ -17,11 +25,42 @@ export default {
                 inter: ['Inter', ...defaultTheme.fontFamily.sans],
             },
             colors: {
+                // Public website (dark IPL theme) – unchanged
                 'primary-bg': '#0B0F19',
                 'card-bg': '#141B2D',
                 'accent-gold': '#FFC800',
                 'accent-red': '#E63946',
                 'success-green': '#00C853',
+
+                // Admin / app theme (light SaaS)
+                brand: {
+                    DEFAULT: token('color-brand'),
+                    hover: token('color-brand-hover'),
+                    soft: token('color-brand-soft'),
+                },
+                canvas: token('color-canvas'),
+                surface: {
+                    DEFAULT: token('color-surface'),
+                    muted: token('color-surface-muted'),
+                    subtle: token('color-surface-subtle'),
+                },
+                line: {
+                    DEFAULT: token('color-line'),
+                    strong: token('color-line-strong'),
+                },
+                ink: {
+                    DEFAULT: token('color-ink'),
+                    soft: token('color-ink-soft'),
+                },
+                muted: token('color-muted'),
+                faint: token('color-faint'),
+                danger: token('color-danger'),
+                success: token('color-success'),
+                warning: token('color-warning'),
+            },
+            boxShadow: {
+                card: '0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.04)',
+                pop: '0 10px 30px -10px rgb(15 23 42 / 0.20), 0 4px 6px -4px rgb(15 23 42 / 0.06)',
             },
         },
     },

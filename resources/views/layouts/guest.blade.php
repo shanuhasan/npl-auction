@@ -8,38 +8,39 @@
         <title>{{ setting('app_name', config('app.name', 'Laravel')) }}</title>
         <link rel="icon" href="{{ setting('favicon') ? asset('storage/' . setting('favicon')) : asset('favicon.ico') }}">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-            
-            <div class="mb-4">
-                <a href="{{ url('/') }}" wire:navigate class="flex flex-col items-center justify-center gap-2 text-gray-400 hover:text-[#FFC800] transition-colors group">
-                    <div class="p-4 bg-gray-800 rounded-full group-hover:scale-110 transition-transform shadow-lg border border-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                        </svg>
-                    </div>
-                    <span class="text-sm font-bold uppercase tracking-widest">Back to Home</span>
+    <body class="theme-app">
+        <div class="flex min-h-screen flex-col">
+            <main class="flex flex-1 flex-col items-center justify-center px-4 py-10 sm:px-6">
+                <a href="{{ url('/') }}" class="mb-8 flex items-center gap-3" title="Back to Home">
+                    @if(setting('logo'))
+                        <img src="{{ asset('storage/' . setting('logo')) }}" alt="Logo" class="h-11 w-11 rounded-xl object-contain">
+                    @else
+                        <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand text-base font-bold text-white">
+                            {{ \Illuminate\Support\Str::of(setting('app_name', 'NPL'))->substr(0, 2)->upper() }}
+                        </span>
+                    @endif
+                    <span class="text-lg font-semibold text-ink">{{ setting('app_name', 'NPLT20') }}</span>
                 </a>
-            </div>
 
-            <div class="w-full sm:max-w-md mt-2 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg mb-8">
-                {{ $slot }}
-            </div>
-            
-            <div class="w-full text-center text-sm text-gray-500 py-4 absolute bottom-0 left-0 bg-gray-100 dark:bg-gray-900">
-                &copy; {{ date('Y') }} {{ setting('app_name', 'NPLT20') }}. All rights reserved. 
+                <div class="card w-full max-w-md px-6 py-8 sm:px-8">
+                    {{ $slot }}
+                </div>
+
+                <a href="{{ url('/') }}" class="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-muted hover:text-brand">
+                    <x-icon name="home" class="w-4 h-4" /> Back to website
+                </a>
+            </main>
+
+            <footer class="py-5 text-center text-xs text-muted">
+                &copy; {{ date('Y') }} {{ setting('app_name', 'NPLT20') }}. All rights reserved.
                 @if(setting('developer_name'))
-                    <span class="mx-1">|</span>
-                    Developed by <a href="{{ setting('developer_url', '#') }}" target="_blank" class="text-[#FFC800] hover:underline">{{ setting('developer_name') }}</a>
+                    <span class="mx-1 text-faint">·</span>
+                    Developed by <a href="{{ setting('developer_url', '#') }}" target="_blank" class="font-medium text-ink-soft hover:text-brand">{{ setting('developer_name') }}</a>
                 @endif
-            </div>
+            </footer>
         </div>
     </body>
 </html>
