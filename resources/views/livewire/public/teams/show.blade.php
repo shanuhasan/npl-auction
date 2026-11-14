@@ -109,4 +109,37 @@
         </div>
     @endforelse
 
+
+    <!-- Team Match Schedule -->
+    <div class="mt-16">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <h2 class="text-3xl font-black text-white uppercase tracking-widest text-center md:text-left">Match Schedule ({{ $fixtures->count() }})</h2>
+            @php $selectedAuction = $auctions->firstWhere('id', $selectedAuctionId); @endphp
+            @if($selectedAuction)
+                <a href="{{ route('public.schedule', ['auction' => $selectedAuction->guid]) }}" class="text-[#FFC800] font-bold uppercase tracking-wider text-sm hover:underline">Full schedule &amp; points table &rarr;</a>
+            @endif
+        </div>
+        @if($fixtures->isNotEmpty())
+            @php
+                $won = $fixtures->where('status', 'completed')->where('winner_team_id', $team->id)->count();
+                $lost = $fixtures->where('status', 'completed')->whereNotNull('winner_team_id')->where('winner_team_id', '!=', $team->id)->count();
+            @endphp
+            <p class="text-gray-400 mb-6 text-center md:text-left">
+                Played {{ $fixtures->whereIn('status', ['completed', 'abandoned'])->count() }}
+                &middot; <span class="text-[#00C853]">Won {{ $won }}</span>
+                &middot; <span class="text-red-400">Lost {{ $lost }}</span>
+                &middot; Upcoming {{ $fixtures->whereIn('status', ['scheduled', 'live'])->count() }}
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($fixtures as $fixture)
+                    <x-fixture-card :fixture="$fixture" :highlight-team="$team->id" />
+                @endforeach
+            </div>
+        @else
+            <div class="text-center py-12 text-gray-500 text-lg font-semibold bg-[#141B2D] rounded-2xl border border-white/5">
+                Match schedule not announced yet.
+            </div>
+        @endif
+    </div>
+
 </div>

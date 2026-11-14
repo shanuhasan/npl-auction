@@ -40,6 +40,7 @@
                         @else
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-600 text-white">{{ ucfirst($auction->status) }}</span>
                         @endif
+                        <a href="{{ route('admin.auctions.schedule', $auction->guid) }}" class="text-success-green hover:text-green-400 font-bold" wire:navigate>Schedule</a>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-3">
                         @if($auction->status === 'upcoming' || $auction->status === 'live' || $auction->status === 'paused')

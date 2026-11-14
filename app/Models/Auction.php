@@ -46,6 +46,11 @@ class Auction extends Model
         return $this->belongsToMany(Team::class);
     }
 
+    public function fixtures()
+    {
+        return $this->hasMany(Fixture::class)->orderBy('match_date')->orderBy('match_no');
+    }
+
     public function getRouteKeyName()
     {
         return 'guid';

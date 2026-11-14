@@ -11,7 +11,20 @@ Route::get('/home', function () {
     $coreCommittees = \App\Models\CoreCommittee::where('is_active', true)->orderBy('order', 'asc')->get();
     $sponsors = \App\Models\Sponsor::where('is_active', true)->orderBy('order', 'asc')->get();
     $guests = \App\Models\Guest::where('is_active', true)->orderBy('order', 'asc')->get();
-    return view('home', compact('banners', 'teams', 'galleries', 'players', 'coreCommittees', 'sponsors', 'guests'));
+    // Match schedule: latest auction/season that has fixtures
+    $scheduleAuction = \App\Models\Auction::whereHas('fixtures')->latest('auction_date')->first();
+    $upcomingFixtures = collect();
+    $recentResults = collect();
+    if ($scheduleAuction) {
+        $fixtureQuery = fn () => \App\Models\Fixture::with(['teamA', 'teamB', 'winner'])->where('auction_id', $scheduleAuction->id);
+        $upcomingFixtures = $fixtureQuery()->whereIn('status', ['live', 'scheduled'])
+            ->orderByRaw("status = 'live' desc")->orderByRaw('match_date IS NULL')->orderBy('match_date')->orderBy('match_no')
+            ->take(6)->get();
+        $recentResults = $fixtureQuery()->whereIn('status', ['completed', 'abandoned'])
+            ->orderByDesc('match_date')->orderByDesc('match_no')->take(3)->get();
+    }
+
+    return view('home', compact('banners', 'teams', 'galleries', 'players', 'coreCommittees', 'sponsors', 'guests', 'scheduleAuction', 'upcomingFixtures', 'recentResults'));
 })->name('home');
 
 Route::view('dashboard', 'dashboard')
@@ -31,6 +44,7 @@ Route::get('/contact', \App\Livewire\Public\Contact::class)->name('public.contac
 Route::get('/blogs', \App\Livewire\Public\Blogs\Index::class)->name('public.blogs');
 Route::get('/blogs/{slug}', \App\Livewire\Public\Blogs\Show::class)->name('public.blogs.show');
 Route::get('/gallery', \App\Livewire\Public\Gallery\Index::class)->name('public.gallery');
+Route::get('/schedule', \App\Livewire\Public\Schedule\Index::class)->name('public.schedule');
 
 // Payment Callback & Checkout
 Route::get('/payment/checkout/{payment}', function (\App\Models\Payment $payment) {
@@ -57,6 +71,7 @@ Route::middleware(['auth', 'role:admin,sub_admin'])->prefix('admin')->name('admi
     Route::get('/auctions', \App\Livewire\Admin\Auctions\Index::class)->middleware('permission:manage_auctions')->name('auctions');
     Route::get('/auctions/create', \App\Livewire\Admin\Auctions\Create::class)->middleware('permission:manage_auctions')->name('auctions.create');
     Route::get('/auctions/{auction}/edit', \App\Livewire\Admin\Auctions\Edit::class)->middleware('permission:manage_auctions')->name('auctions.edit');
+    Route::get('/auctions/{auction}/schedule', \App\Livewire\Admin\Fixtures\Index::class)->middleware('permission:manage_auctions')->name('auctions.schedule');
     Route::get('/auction/control/{auction}', \App\Livewire\Admin\Auctions\Control::class)->middleware('permission:manage_auctions')->name('auction.control');
     Route::get('/settings', \App\Livewire\Admin\Settings::class)->middleware('permission:manage_settings')->name('settings');
     Route::get('/banners', \App\Livewire\Admin\Banners\Index::class)->middleware('permission:manage_banners')->name('banners');

@@ -94,6 +94,44 @@
         </div>
     @endif
 
+    <!-- Match Schedule Section -->
+    @if(isset($scheduleAuction) && ($upcomingFixtures->isNotEmpty() || $recentResults->isNotEmpty()))
+        <div class="bg-[#0B0F19] py-12 border-b border-white/5">
+            <div class="max-w-[1400px] mx-auto px-4 md:px-8">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-end gap-3 mb-8 border-b border-gray-800 pb-4">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
+                            <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> {{ $upcomingFixtures->isNotEmpty() ? 'Upcoming Matches' : 'Latest Results' }}
+                        </h2>
+                        <p class="text-gray-500 text-sm mt-1 ml-5">{{ $scheduleAuction->title }}</p>
+                    </div>
+                    <div class="flex items-center space-x-3 md:space-x-4">
+                        <a href="{{ route('public.schedule', ['auction' => $scheduleAuction->guid, 'tab' => 'points']) }}" class="text-xs md:text-sm font-bold text-gray-400 hover:text-[#FFC800] uppercase transition-colors">Points Table</a>
+                        <a href="{{ route('public.schedule', ['auction' => $scheduleAuction->guid]) }}" class="text-xs md:text-sm font-bold bg-[#FFC800] text-black px-3 py-1.5 md:px-4 md:py-2 rounded hover:bg-yellow-500 uppercase transition-colors shadow-lg">Full Schedule</a>
+                    </div>
+                </div>
+
+                @if($upcomingFixtures->isNotEmpty())
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach($upcomingFixtures as $fixture)
+                            <x-fixture-card :fixture="$fixture" />
+                        @endforeach
+                    </div>
+                @endif
+
+                @if($recentResults->isNotEmpty())
+                    @if($upcomingFixtures->isNotEmpty())
+                        <h3 class="text-sm font-black uppercase tracking-widest text-[#FFC800] mt-10 mb-4">Latest Results</h3>
+                    @endif
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach($recentResults as $fixture)
+                            <x-fixture-card :fixture="$fixture" />
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </div>
+    @endif
 
     <!-- Sponsors & Partners Section -->
     @if(isset($sponsors) && $sponsors->count() > 0)

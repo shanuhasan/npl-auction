@@ -36,6 +36,11 @@ class Team extends Model
         return $this->hasMany(Bid::class);
     }
 
+    public function fixtures()
+    {
+        return Fixture::forTeam($this->id);
+    }
+
     public function auctions()
     {
         return $this->belongsToMany(Auction::class);
