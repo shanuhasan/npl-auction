@@ -23,15 +23,15 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         
         <!-- Article Card -->
-        <div class="bg-[#141B2D] border border-gray-700 rounded-3xl p-6 md:p-12 shadow-2xl">
+        <div class="bg-surface border border-line rounded-2xl p-6 md:p-12 shadow-sm">
             <!-- Blog Title & Meta -->
         <div class="text-center mb-10">
-            <div class="flex items-center justify-center gap-4 text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">
-                <span class="text-[#FFC800]">{{ $blog->published_at ? $blog->published_at->format('F d, Y') : $blog->created_at->format('F d, Y') }}</span>
+            <div class="flex items-center justify-center gap-4 text-sm font-semibold text-muted uppercase tracking-wider mb-6">
+                <span class="text-brand">{{ $blog->published_at ? $blog->published_at->format('F d, Y') : $blog->created_at->format('F d, Y') }}</span>
                 <span>•</span>
                 <span>NPL Media</span>
             </div>
-            <h1 class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight font-poppins">
+            <h1 class="text-3xl md:text-3xl font-semibold text-ink mb-6 leading-tight tracking-tight">
                 {{ $blog->title }}
             </h1>
         </div>
@@ -39,7 +39,7 @@
         <!-- Blog Header Image -->
         @if($blog->image)
         <div class="mb-12 flex justify-center">
-            <div class="p-3 bg-[#1A2235] border-2 border-gray-700 rounded-2xl shadow-2xl inline-block">
+            <div class="p-3 bg-surface-muted border-2 border-line rounded-2xl shadow-sm inline-block">
                 <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}" class="max-w-full h-auto max-h-[300px] object-contain rounded-xl">
             </div>
         </div>
@@ -60,19 +60,19 @@
         </div>
 
         <!-- Blog Content -->
-        <div class="prose prose-invert prose-lg max-w-none text-gray-300 prose-headings:text-white prose-headings:font-poppins prose-headings:font-bold prose-a:text-[#FFC800] hover:prose-a:text-yellow-400 prose-img:rounded-xl prose-img:mx-auto prose-img:max-h-[300px] prose-img:object-contain prose-img:shadow-2xl prose-img:p-2 prose-img:border-2 prose-img:border-gray-700 prose-img:bg-[#1A2235]">
+        <div class="prose prose-lg max-w-none text-ink-soft prose-headings:text-ink prose-headings:font-bold prose-a:text-brand hover:prose-a:text-brand-hover prose-img:rounded-xl prose-img:mx-auto prose-img:max-h-[300px] prose-img:object-contain prose-img:shadow-sm prose-img:p-2 prose-img:border-2 prose-img:border-line prose-img:bg-surface-muted">
             {!! $blog->content !!}
         </div>
         
             <!-- Bottom Ad Slot -->
-            <div class="my-12 flex justify-center border-t border-gray-800 pt-8">
+            <div class="my-12 flex justify-center border-t border-line pt-8">
                 <!-- Add bottom ad slot here if needed -->
             </div>
         </div> <!-- End Article Card -->
 
         <!-- Back Button -->
         <div class="text-center mt-8">
-            <a href="{{ route('public.blogs') }}" class="inline-flex items-center px-6 py-3 bg-[#1A2235] hover:bg-gray-800 border border-gray-700 hover:border-[#FFC800] rounded-full text-white font-semibold transition group">
+            <a href="{{ route('public.blogs') }}" class="inline-flex items-center px-6 py-3 bg-surface-muted hover:bg-surface-muted border border-line hover:border-brand rounded-full text-ink font-semibold transition group">
                 <svg class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path></svg>
                 Back to News
             </a>

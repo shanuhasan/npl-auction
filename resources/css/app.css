@@ -105,6 +105,22 @@
     .theme-app ::-webkit-scrollbar-thumb { background: rgb(var(--color-line-strong)); border-radius: 9999px; border: 2px solid rgb(var(--color-canvas)); }
     .theme-app ::-webkit-scrollbar-track { background: transparent; }
 
+    /* Rich text (blog posts) – the Tailwind typography plugin is not installed */
+    .theme-app .prose { @apply text-ink-soft leading-relaxed; font-size: 1.0625rem; }
+    .theme-app .prose :is(h1, h2, h3, h4) { @apply font-semibold text-ink mt-8 mb-3 tracking-tight; }
+    .theme-app .prose h1 { @apply text-3xl; }
+    .theme-app .prose h2 { @apply text-2xl; }
+    .theme-app .prose h3 { @apply text-xl; }
+    .theme-app .prose p { @apply mb-5; }
+    .theme-app .prose a { @apply font-medium text-brand underline underline-offset-2 hover:text-brand-hover; }
+    .theme-app .prose :is(ul, ol) { @apply mb-5 pl-6; }
+    .theme-app .prose ul { list-style: disc; }
+    .theme-app .prose ol { list-style: decimal; }
+    .theme-app .prose li { @apply mb-1.5; }
+    .theme-app .prose blockquote { @apply my-6 border-l-4 border-line-strong pl-4 italic text-muted; }
+    .theme-app .prose img { @apply my-6 rounded-xl; }
+    .theme-app .prose strong { @apply font-semibold text-ink; }
+
     [x-cloak] { display: none !important; }
 }
 

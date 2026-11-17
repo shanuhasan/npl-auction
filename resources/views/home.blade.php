@@ -4,7 +4,7 @@
         <!-- Include Swiper's CSS -->
         <link rel="stylesheet" href="{{ asset('css/swiper-bundle.min.css') }}" />
         
-        <div class="swiper myHeroSwiper relative w-full h-[500px] md:h-[600px] bg-[#0B0F19] overflow-hidden">
+        <div class="swiper myHeroSwiper relative w-full h-[420px] md:h-[560px] bg-brand overflow-hidden" style="--swiper-theme-color:#ffffff; --swiper-navigation-size:28px;">
             <div class="swiper-wrapper">
                 @foreach($banners as $banner)
                 <div class="swiper-slide relative w-full h-full flex justify-center items-center">
@@ -15,24 +15,24 @@
                     <img src="{{ asset('storage/' . $banner->image_path) }}" alt="Banner" class="relative z-10 w-full h-full object-contain">
                     
                     <!-- Overlay -->
-                    <div class="absolute inset-0 z-20 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent pointer-events-none"></div>
+                    <div class="absolute inset-0 z-20 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent pointer-events-none"></div>
                     
                     <!-- Content -->
                     <div class="absolute inset-0 z-30 flex flex-col justify-end p-6 pb-12 md:p-16 md:pb-16 pointer-events-none">
                         <div class="max-w-[1400px] mx-auto w-full pointer-events-auto">
                             @if($banner->title)
-                                <h1 class="text-2xl md:text-5xl lg:text-6xl text-white heading-font uppercase leading-tight max-w-4xl drop-shadow-lg">
+                                <h1 class="text-2xl md:text-3xl font-semibold text-white leading-tight max-w-3xl tracking-tight">
                                     {{ $banner->title }}
                                 </h1>
                             @endif
                             @if($banner->description)
-                                <p class="text-gray-300 mt-2 md:mt-4 max-w-2xl text-sm md:text-lg hidden md:block drop-shadow-md">
+                                <p class="text-white/80 mt-2 md:mt-3 max-w-2xl text-sm md:text-base hidden md:block">
                                     {{ $banner->description }}
                                 </p>
                             @endif
                             @if($banner->link)
                                 <div class="mt-4 md:mt-8 flex space-x-4 relative" style="z-index: 999; pointer-events: auto;">
-                                    <a href="{{ $banner->link }}" target="_blank" class="animate-pulse bg-black text-white border border-[#FFC800]/50 px-6 py-2 md:px-8 md:py-3 font-bold uppercase hover:border-[#FFC800] hover:bg-gray-900 hover:animate-none transition-colors rounded-sm inline-block cursor-pointer shadow-[0_4px_15px_rgba(0,0,0,0.5)]" style="pointer-events: auto;">{{ $banner->button_name ?: 'Learn More' }}</a>
+                                    <a href="{{ $banner->link }}" target="_blank" class="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-brand shadow-sm transition-colors hover:bg-surface-subtle cursor-pointer" style="pointer-events: auto;">{{ $banner->button_name ?: 'Learn More' }}</a>
                                 </div>
                             @endif
                         </div>
@@ -43,8 +43,8 @@
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
             <!-- Add Navigation -->
-            <div class="swiper-button-next !text-[#FFC800]"></div>
-            <div class="swiper-button-prev !text-[#FFC800]"></div>
+            <div class="swiper-button-next !text-white"></div>
+            <div class="swiper-button-prev !text-white"></div>
         </div>
 
         <!-- Include Swiper's JS -->
@@ -70,24 +70,24 @@
         </script>
     @else
         <!-- Hero Section / Featured (Static Fallback) -->
-        <div class="relative w-full h-[500px] md:h-[600px] bg-gray-900 overflow-hidden">
+        <div class="relative w-full h-[420px] md:h-[520px] bg-brand overflow-hidden">
             <!-- Hero Background Placeholder (Gradient/Pattern) -->
-            <div class="absolute inset-0 bg-gradient-to-r from-[#0B0F19] to-[#141B2D]">
+            <div class="absolute inset-0">
                 <div class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+PHBhdGggZD0iTTAgNDBoNDBWMEgweiIvPjwvZz48L3N2Zz4=')]"></div>
             </div>
             
             <!-- Hero Content (Mock Featured News) -->
-            <div class="absolute bottom-0 left-0 w-full p-8 md:p-16 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/80 to-transparent">
+            <div class="absolute bottom-0 left-0 w-full p-8 md:p-16">
                 <div class="max-w-[1400px] mx-auto">
-                    <span class="inline-block bg-[#FFC800] text-black text-xs font-bold px-3 py-1 uppercase tracking-wider mb-4 rounded-sm">Featured</span>
-                    <h1 class="text-4xl md:text-6xl text-white heading-font uppercase leading-tight max-w-4xl drop-shadow-lg">
+                    <span class="mb-4 inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white ring-1 ring-inset ring-white/20">Featured</span>
+                    <h1 class="text-3xl md:text-4xl font-semibold text-white leading-tight max-w-3xl tracking-tight">
                         The Grand Auction Approaches: Prepare for the Ultimate Showdown
                     </h1>
-                    <p class="text-gray-300 mt-4 max-w-2xl text-lg hidden md:block">
+                    <p class="text-white/80 mt-4 max-w-2xl text-lg hidden md:block">
                         Franchises are gearing up to rebuild their squads. Who will command the highest bid this season?
                     </p>
                     <div class="mt-8 flex space-x-4">
-                        <a href="{{ route('public.players') }}" class="bg-transparent border-2 border-[#FFC800] text-[#FFC800] px-8 py-3 font-bold uppercase hover:bg-[#FFC800] hover:text-black transition-colors rounded-sm">View Players</a>
+                        <a href="{{ route('public.players') }}" class="inline-flex items-center rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-brand hover:bg-surface-subtle transition-colors">View Players</a>
                     </div>
                 </div>
             </div>
@@ -96,18 +96,18 @@
 
     <!-- Match Schedule Section -->
     @if(isset($scheduleAuction) && ($upcomingFixtures->isNotEmpty() || $recentResults->isNotEmpty()))
-        <div class="bg-[#0B0F19] py-12 border-b border-white/5">
+        <div class="bg-canvas py-12 border-b border-line">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
-                <div class="flex flex-col sm:flex-row justify-between sm:items-end gap-3 mb-8 border-b border-gray-800 pb-4">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-end gap-3 mb-8 border-b border-line pb-4">
                     <div>
-                        <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
-                            <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> {{ $upcomingFixtures->isNotEmpty() ? 'Upcoming Matches' : 'Latest Results' }}
+                        <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                            {{ $upcomingFixtures->isNotEmpty() ? 'Upcoming Matches' : 'Latest Results' }}
                         </h2>
-                        <p class="text-gray-500 text-sm mt-1 ml-5">{{ $scheduleAuction->title }}</p>
+                        <p class="text-muted text-sm mt-1 ml-5">{{ $scheduleAuction->title }}</p>
                     </div>
                     <div class="flex items-center space-x-3 md:space-x-4">
-                        <a href="{{ route('public.schedule', ['auction' => $scheduleAuction->guid, 'tab' => 'points']) }}" class="text-xs md:text-sm font-bold text-gray-400 hover:text-[#FFC800] uppercase transition-colors">Points Table</a>
-                        <a href="{{ route('public.schedule', ['auction' => $scheduleAuction->guid]) }}" class="text-xs md:text-sm font-bold bg-[#FFC800] text-black px-3 py-1.5 md:px-4 md:py-2 rounded hover:bg-yellow-500 uppercase transition-colors shadow-lg">Full Schedule</a>
+                        <a href="{{ route('public.schedule', ['auction' => $scheduleAuction->guid, 'tab' => 'points']) }}" class="text-xs md:text-sm font-bold text-muted hover:text-brand uppercase transition-colors">Points Table</a>
+                        <a href="{{ route('public.schedule', ['auction' => $scheduleAuction->guid]) }}" class="text-xs md:text-sm font-bold bg-brand text-white px-3 py-1.5 md:px-4 md:py-2 rounded hover:bg-brand-hover uppercase transition-colors shadow-sm">Full Schedule</a>
                     </div>
                 </div>
 
@@ -121,7 +121,7 @@
 
                 @if($recentResults->isNotEmpty())
                     @if($upcomingFixtures->isNotEmpty())
-                        <h3 class="text-sm font-black uppercase tracking-widest text-[#FFC800] mt-10 mb-4">Latest Results</h3>
+                        <h3 class="text-sm font-semibold text-brand mt-10 mb-4 tracking-tight">Latest Results</h3>
                     @endif
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($recentResults as $fixture)
@@ -135,7 +135,7 @@
 
     <!-- Sponsors & Partners Section -->
     @if(isset($sponsors) && $sponsors->count() > 0)
-        <div class="bg-[#0B0F19] py-12 border-b border-white/5">
+        <div class="bg-canvas py-12 border-b border-line">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8 text-center">
                 
                 @php
@@ -147,14 +147,14 @@
                 <!-- Title Sponsor -->
                 @if($titleSponsors->count() > 0)
                     <div class="mb-12">
-                        <h2 class="text-sm font-bold text-[#FFC800] uppercase tracking-widest mb-6">Title Sponsor</h2>
+                        <h2 class="text-sm font-semibold text-brand mb-6 tracking-tight">Title Sponsor</h2>
                         <div class="flex justify-center items-center flex-wrap gap-8">
                             @foreach($titleSponsors as $sponsor)
-                                <a href="{{ $sponsor->url ?? '#' }}" target="{{ $sponsor->url ? '_blank' : '_self' }}" class="group block bg-white p-4 rounded-xl shadow-lg border border-gray-700 hover:border-[#FFC800] transition-all transform hover:-translate-y-1">
+                                <a href="{{ $sponsor->url ?? '#' }}" target="{{ $sponsor->url ? '_blank' : '_self' }}" class="group block bg-white p-4 rounded-xl shadow-sm border border-line hover:border-brand transition-all transform hover:-translate-y-1">
                                     @if($sponsor->logo_path)
                                         <img src="{{ asset('storage/' . $sponsor->logo_path) }}" alt="{{ $sponsor->name }}" class="h-24 md:h-32 object-contain w-auto max-w-[200px] md:max-w-[250px]">
                                     @else
-                                        <span class="text-2xl font-bold text-gray-800">{{ $sponsor->name }}</span>
+                                        <span class="text-2xl font-bold text-ink">{{ $sponsor->name }}</span>
                                     @endif
                                 </a>
                             @endforeach
@@ -165,14 +165,14 @@
                 <!-- Premier Partners -->
                 @if($premierPartners->count() > 0)
                     <div class="mb-12">
-                        <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Premier Partners</h2>
+                        <h2 class="text-sm font-semibold text-muted mb-6 tracking-tight">Premier Partners</h2>
                         <div class="flex justify-center items-center flex-wrap gap-6">
                             @foreach($premierPartners as $sponsor)
-                                <a href="{{ $sponsor->url ?? '#' }}" target="{{ $sponsor->url ? '_blank' : '_self' }}" class="group block bg-white p-3 rounded-lg shadow-md border border-gray-800 hover:border-blue-400 transition-all transform hover:-translate-y-1">
+                                <a href="{{ $sponsor->url ?? '#' }}" target="{{ $sponsor->url ? '_blank' : '_self' }}" class="group block bg-white p-3 rounded-lg shadow-sm border border-line hover:border-blue-400 transition-all transform hover:-translate-y-1">
                                     @if($sponsor->logo_path)
                                         <img src="{{ asset('storage/' . $sponsor->logo_path) }}" alt="{{ $sponsor->name }}" class="h-16 md:h-20 object-contain w-auto max-w-[150px] md:max-w-[180px]">
                                     @else
-                                        <span class="text-xl font-bold text-gray-800">{{ $sponsor->name }}</span>
+                                        <span class="text-xl font-bold text-ink">{{ $sponsor->name }}</span>
                                     @endif
                                 </a>
                             @endforeach
@@ -183,14 +183,14 @@
                 <!-- General Sponsors -->
                 @if($generalSponsors->count() > 0)
                     <div>
-                        <h2 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Sponsors & Partners</h2>
+                        <h2 class="text-xs font-bold text-muted uppercase tracking-widest mb-4">Sponsors & Partners</h2>
                         <div class="flex justify-center items-center flex-wrap gap-4">
                             @foreach($generalSponsors as $sponsor)
-                                <a href="{{ $sponsor->url ?? '#' }}" target="{{ $sponsor->url ? '_blank' : '_self' }}" class="group block bg-gray-50 p-2 rounded shadow border border-gray-200 hover:border-gray-400 transition-all opacity-80 hover:opacity-100">
+                                <a href="{{ $sponsor->url ?? '#' }}" target="{{ $sponsor->url ? '_blank' : '_self' }}" class="group block bg-gray-50 p-2 rounded shadow-sm border border-line-strong hover:border-line-strong transition-all opacity-80 hover:opacity-100">
                                     @if($sponsor->logo_path)
                                         <img src="{{ asset('storage/' . $sponsor->logo_path) }}" alt="{{ $sponsor->name }}" class="h-10 md:h-12 object-contain w-auto max-w-[100px] md:max-w-[120px]">
                                     @else
-                                        <span class="text-sm font-bold text-gray-600">{{ $sponsor->name }}</span>
+                                        <span class="text-sm font-bold text-faint">{{ $sponsor->name }}</span>
                                     @endif
                                 </a>
                             @endforeach
@@ -220,33 +220,33 @@
                 @endforeach
             ];
         </script>
-        <div class="bg-[#141B2D] py-12 border-b border-white/5">
+        <div class="bg-surface py-12 border-b border-line">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
-                <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
-                    <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
-                        <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> Chief Guests & Guests
+                <div class="flex justify-between items-end mb-8 border-b border-line pb-4">
+                    <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                        Chief Guests & Guests
                     </h2>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                     @foreach($guests as $guest)
-                        <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" onclick="@if($guest->image_path) openMediaModal('{{ asset('storage/' . $guest->image_path) }}', 'image', '{!! addslashes($guest->name) !!}', '{!! addslashes($guest->designation ?? ($guest->type === 'chief_guest' ? 'Chief Guest' : 'Guest')) !!}', window.guestsGallery, {{ $guestsImageIndex++ }}) @endif">
-                            <div class="relative bg-[#0B0F19] overflow-hidden" style="padding-bottom: 100%;">
+                        <div class="group relative block w-full rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm cursor-pointer" onclick="@if($guest->image_path) openMediaModal('{{ asset('storage/' . $guest->image_path) }}', 'image', '{!! addslashes($guest->name) !!}', '{!! addslashes($guest->designation ?? ($guest->type === 'chief_guest' ? 'Chief Guest' : 'Guest')) !!}', window.guestsGallery, {{ $guestsImageIndex++ }}) @endif">
+                            <div class="relative bg-canvas overflow-hidden" style="padding-bottom: 100%;">
                                 @if($guest->image_path)
                                     <img src="{{ asset('storage/' . $guest->image_path) }}" alt="{{ $guest->name }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 @else
-                                    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-                                        <span class="text-4xl font-bold text-gray-600 uppercase">{{ substr($guest->name, 0, 1) }}</span>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-surface-subtle to-surface-muted">
+                                        <span class="text-4xl font-bold text-faint uppercase">{{ substr($guest->name, 0, 1) }}</span>
                                     </div>
                                 @endif
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
-                            <div class="p-4 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 text-center">
-                                <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors uppercase">{{ $guest->name }}</h3>
+                            <div class="p-4 bg-canvas/95 backdrop-blur-sm border-t border-line text-center">
+                                <h3 class="text-ink font-semibold text-base md:text-lg leading-tight line-clamp-1 group-hover:text-brand transition-colors tracking-tight">{{ $guest->name }}</h3>
                                 @if($guest->designation)
-                                    <div class="text-xs text-gray-400 mt-1 line-clamp-2">{{ $guest->designation }}</div>
+                                    <div class="text-xs text-muted mt-1 line-clamp-2">{{ $guest->designation }}</div>
                                 @endif
-                                <span class="text-[10px] font-bold px-2 py-1 rounded mt-2 inline-block {{ $guest->type === 'chief_guest' ? 'bg-[#FFC800] text-black' : 'bg-gray-700 text-white' }} uppercase tracking-wider shadow-md">
+                                <span class="text-[10px] font-bold px-2 py-1 rounded mt-2 inline-block {{ $guest->type === 'chief_guest' ? 'bg-brand text-white' : 'bg-surface-subtle text-ink' }} uppercase tracking-wider shadow-sm">
                                     {{ $guest->type === 'chief_guest' ? 'Chief Guest' : 'Guest' }}
                                 </span>
                             </div>
@@ -276,54 +276,54 @@
                 @endforeach
             ];
         </script>
-        <div class="bg-[#141B2D] py-12 border-b border-white/5">
+        <div class="bg-surface py-12 border-b border-line">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
-                <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
-                    <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
-                        <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> Core Committee
+                <div class="flex justify-between items-end mb-8 border-b border-line pb-4">
+                    <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                        Core Committee
                     </h2>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                     @foreach($coreCommittees as $member)
-                        <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg">
-                            <div class="relative bg-[#0B0F19] overflow-hidden @if($member->image_path) cursor-pointer @endif" @if($member->image_path) onclick="openMediaModal('{{ asset('storage/' . $member->image_path) }}', 'image', '{!! addslashes($member->name) !!}', '{!! addslashes($member->role ?? 'Core Committee') !!}', window.coreCommitteesGallery, {{ $coreCommitteesImageIndex++ }})" @endif style="padding-bottom: 100%;">
+                        <div class="group relative block w-full rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm">
+                            <div class="relative bg-canvas overflow-hidden @if($member->image_path) cursor-pointer @endif" @if($member->image_path) onclick="openMediaModal('{{ asset('storage/' . $member->image_path) }}', 'image', '{!! addslashes($member->name) !!}', '{!! addslashes($member->role ?? 'Core Committee') !!}', window.coreCommitteesGallery, {{ $coreCommitteesImageIndex++ }})" @endif style="padding-bottom: 100%;">
                                 @if($member->image_path)
                                     <img src="{{ asset('storage/' . $member->image_path) }}" alt="{{ $member->name }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 @else
-                                    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-                                        <span class="text-4xl font-bold text-gray-600 uppercase">{{ substr($member->name, 0, 1) }}</span>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-surface-subtle to-surface-muted">
+                                        <span class="text-4xl font-bold text-faint uppercase">{{ substr($member->name, 0, 1) }}</span>
                                     </div>
                                 @endif
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
-                            <div class="p-4 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 text-center">
-                                <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors uppercase">{{ $member->name }}</h3>
+                            <div class="p-4 bg-canvas/95 backdrop-blur-sm border-t border-line text-center">
+                                <h3 class="text-ink font-semibold text-base md:text-lg leading-tight line-clamp-1 group-hover:text-brand transition-colors tracking-tight">{{ $member->name }}</h3>
                                 @if($member->role)
-                                    <span class="text-[10px] font-bold px-2 py-1 rounded mt-2 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
+                                    <span class="badge-brand mt-2">
                                         {{ $member->role }}
                                     </span>
                                 @endif
 
                                 @if($member->facebook || $member->instagram || $member->twitter || $member->linkedin || $member->whatsapp)
-                                    <div class="flex items-center justify-center gap-2 mt-3 pt-3 border-t border-white/10">
+                                    <div class="flex items-center justify-center gap-2 mt-3 pt-3 border-t border-line">
                                         @if($member->facebook)
-                                            <a href="{{ $member->facebook }}" target="_blank" onclick="event.stopPropagation()" title="Facebook" class="rounded-full bg-[#141B2D] border border-white/20 flex items-center justify-center text-gray-300 hover:text-[#FFC800] hover:border-[#FFC800] hover:scale-110 transition-all shadow" style="width: 34px; height: 34px; min-width: 34px; display: inline-flex;">
+                                            <a href="{{ $member->facebook }}" target="_blank" onclick="event.stopPropagation()" title="Facebook" class="rounded-full bg-surface border border-line flex items-center justify-center text-ink-soft hover:text-brand hover:border-brand hover:scale-110 transition-all shadow-sm" style="width: 34px; height: 34px; min-width: 34px; display: inline-flex;">
                                                 <svg style="width: 17px; height: 17px;" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                                             </a>
                                         @endif
                                         @if($member->instagram)
-                                            <a href="{{ $member->instagram }}" target="_blank" onclick="event.stopPropagation()" title="Instagram" class="rounded-full bg-[#141B2D] border border-white/20 flex items-center justify-center text-gray-300 hover:text-[#FFC800] hover:border-[#FFC800] hover:scale-110 transition-all shadow" style="width: 34px; height: 34px; min-width: 34px; display: inline-flex;">
+                                            <a href="{{ $member->instagram }}" target="_blank" onclick="event.stopPropagation()" title="Instagram" class="rounded-full bg-surface border border-line flex items-center justify-center text-ink-soft hover:text-brand hover:border-brand hover:scale-110 transition-all shadow-sm" style="width: 34px; height: 34px; min-width: 34px; display: inline-flex;">
                                                 <svg style="width: 17px; height: 17px;" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                                             </a>
                                         @endif
                                         @if($member->twitter)
-                                            <a href="{{ $member->twitter }}" target="_blank" onclick="event.stopPropagation()" title="Twitter / X" class="rounded-full bg-[#141B2D] border border-white/20 flex items-center justify-center text-gray-300 hover:text-[#FFC800] hover:border-[#FFC800] hover:scale-110 transition-all shadow" style="width: 34px; height: 34px; min-width: 34px; display: inline-flex;">
+                                            <a href="{{ $member->twitter }}" target="_blank" onclick="event.stopPropagation()" title="Twitter / X" class="rounded-full bg-surface border border-line flex items-center justify-center text-ink-soft hover:text-brand hover:border-brand hover:scale-110 transition-all shadow-sm" style="width: 34px; height: 34px; min-width: 34px; display: inline-flex;">
                                                 <svg style="width: 17px; height: 17px;" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                                             </a>
                                         @endif
                                         @if($member->linkedin)
-                                            <a href="{{ $member->linkedin }}" target="_blank" onclick="event.stopPropagation()" title="LinkedIn" class="rounded-full bg-[#141B2D] border border-white/20 flex items-center justify-center text-gray-300 hover:text-[#FFC800] hover:border-[#FFC800] hover:scale-110 transition-all shadow" style="width: 34px; height: 34px; min-width: 34px; display: inline-flex;">
+                                            <a href="{{ $member->linkedin }}" target="_blank" onclick="event.stopPropagation()" title="LinkedIn" class="rounded-full bg-surface border border-line flex items-center justify-center text-ink-soft hover:text-brand hover:border-brand hover:scale-110 transition-all shadow-sm" style="width: 34px; height: 34px; min-width: 34px; display: inline-flex;">
                                                 <svg style="width: 17px; height: 17px;" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                                             </a>
                                         @endif
@@ -331,7 +331,7 @@
                                             @php
                                                 $waUrl = \Illuminate\Support\Str::startsWith($member->whatsapp, ['http://', 'https://']) ? $member->whatsapp : 'https://wa.me/' . preg_replace('/[^0-9]/', '', $member->whatsapp);
                                             @endphp
-                                            <a href="{{ $waUrl }}" target="_blank" onclick="event.stopPropagation()" title="WhatsApp" class="rounded-full bg-[#141B2D] border border-white/20 flex items-center justify-center text-gray-300 hover:text-[#FFC800] hover:border-[#FFC800] hover:scale-110 transition-all shadow" style="width: 34px; height: 34px; min-width: 34px; display: inline-flex;">
+                                            <a href="{{ $waUrl }}" target="_blank" onclick="event.stopPropagation()" title="WhatsApp" class="rounded-full bg-surface border border-line flex items-center justify-center text-ink-soft hover:text-brand hover:border-brand hover:scale-110 transition-all shadow-sm" style="width: 34px; height: 34px; min-width: 34px; display: inline-flex;">
                                                 <svg style="width: 17px; height: 17px;" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                                             </a>
                                         @endif
@@ -351,28 +351,28 @@
         $vision = setting('our_vision');
     @endphp
     @if($mission || $vision)
-        <div class="bg-[#141B2D] py-16 border-b border-white/5 relative overflow-hidden">
+        <div class="bg-surface py-16 border-b border-line relative overflow-hidden">
             <!-- Background Elements -->
-            <div class="absolute top-0 right-0 w-64 h-64 bg-[#FFC800]/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-            <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+            <div class="absolute top-0 right-0 w-64 h-64 bg-brand/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-50 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
             
             <div class="max-w-[1400px] mx-auto px-4 md:px-8 relative z-10">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
                     <!-- Mission -->
                     @if($mission)
-                        <div class="group bg-[#0B0F19] rounded-2xl p-8 md:p-10 border border-white/5 hover:border-[#FFC800]/30 transition-all duration-300 shadow-xl hover:shadow-[0_0_30px_rgba(255,200,0,0.1)] relative">
-                            <div class="absolute -top-6 -left-6 w-20 h-20 bg-[#FFC800]/10 rounded-full blur-2xl group-hover:bg-[#FFC800]/20 transition-all"></div>
+                        <div class="group bg-canvas rounded-2xl p-8 md:p-10 border border-line hover:border-brand/30 transition-all duration-300 shadow-sm hover:shadow-[0_0_30px_rgba(255,200,0,0.1)] relative">
+                            <div class="absolute -top-6 -left-6 w-20 h-20 bg-brand/10 rounded-full blur-2xl group-hover:bg-brand/20 transition-all"></div>
                             
                             <div class="flex items-center mb-6 relative">
-                                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#FFC800] to-[#D4A000] flex items-center justify-center mr-5 shadow-[0_0_15px_rgba(255,200,0,0.3)]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-brand to-brand-hover flex items-center justify-center mr-5 shadow-[0_0_15px_rgba(255,200,0,0.3)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                                     </svg>
                                 </div>
-                                <h2 class="text-3xl heading-font uppercase text-white tracking-wide">Our Mission</h2>
+                                <h2 class="text-2xl text-ink tracking-tight font-semibold">Our Mission</h2>
                             </div>
                             
-                            <div class="text-gray-300 text-lg leading-relaxed relative z-10">
+                            <div class="text-ink-soft text-lg leading-relaxed relative z-10">
                                 {!! nl2br(e($mission)) !!}
                             </div>
                         </div>
@@ -380,20 +380,20 @@
                     
                     <!-- Vision -->
                     @if($vision)
-                        <div class="group bg-[#0B0F19] rounded-2xl p-8 md:p-10 border border-white/5 hover:border-blue-400/30 transition-all duration-300 shadow-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] relative mt-8 md:mt-12 lg:mt-0">
-                            <div class="absolute -top-6 -right-6 w-20 h-20 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all"></div>
+                        <div class="group bg-canvas rounded-2xl p-8 md:p-10 border border-line hover:border-blue-200 transition-all duration-300 shadow-sm hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] relative mt-8 md:mt-12 lg:mt-0">
+                            <div class="absolute -top-6 -right-6 w-20 h-20 bg-blue-50 rounded-full blur-2xl group-hover:bg-blue-100 transition-all"></div>
                             
                             <div class="flex items-center mb-6 relative">
                                 <div class="w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mr-5 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                     </svg>
                                 </div>
-                                <h2 class="text-3xl heading-font uppercase text-white tracking-wide">Our Vision</h2>
+                                <h2 class="text-2xl text-ink tracking-tight font-semibold">Our Vision</h2>
                             </div>
                             
-                            <div class="text-gray-300 text-lg leading-relaxed relative z-10">
+                            <div class="text-ink-soft text-lg leading-relaxed relative z-10">
                                 {!! nl2br(e($vision)) !!}
                             </div>
                         </div>
@@ -405,15 +405,15 @@
 
     <!-- Teams Grid -->
     @if(isset($teams) && $teams->count() > 0)
-        <div class="bg-[#0B0F19] py-12">
+        <div class="bg-canvas py-12">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
-                <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
-                    <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
-                        <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> All Teams
+                <div class="flex justify-between items-end mb-8 border-b border-line pb-4">
+                    <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                        All Teams
                     </h2>
                     <div class="flex items-center space-x-3 md:space-x-4">
-                        <a href="{{ route('public.teams') }}" class="text-xs md:text-sm font-bold text-gray-400 hover:text-[#FFC800] uppercase transition-colors">View All</a>
-                        <a href="{{ route('public.teams.register') }}" class="text-xs md:text-sm font-bold bg-[#FFC800] text-black px-3 py-1.5 md:px-4 md:py-2 rounded hover:bg-yellow-500 uppercase transition-colors shadow-lg">Register Team</a>
+                        <a href="{{ route('public.teams') }}" class="text-xs md:text-sm font-medium text-muted hover:text-brand transition-colors">View All</a>
+                        <a href="{{ route('public.teams.register') }}" class="text-xs md:text-sm font-medium bg-brand text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg hover:bg-brand-hover transition-colors shadow-sm">Register Team</a>
                     </div>
                 </div>
                 
@@ -421,22 +421,22 @@
                     <div class="swiper-wrapper">
                         @foreach($teams as $team)
                             <div class="swiper-slide">
-                                <a href="{{ route('public.teams.show', $team->id) }}" class="block w-full group cursor-pointer relative rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg" style="padding-bottom: 75%;">
-                                    <div class="absolute inset-0 bg-[#0B0F19] flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
+                                <a href="{{ route('public.teams.show', $team->id) }}" class="block w-full group cursor-pointer relative rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm" style="padding-bottom: 75%;">
+                                    <div class="absolute inset-0 bg-canvas flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
                                         @if($team->logo)
                                             <img src="{{ asset('storage/' . $team->logo) }}" alt="{{ $team->name }}" class="w-full h-full object-cover object-top">
                                         @else
-                                            <span class="text-[#FFC800] font-bold text-6xl uppercase">{{ substr($team->name, 0, 2) }}</span>
+                                            <span class="text-brand font-bold text-5xl uppercase">{{ substr($team->name, 0, 2) }}</span>
                                         @endif
                                     </div>
 
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     
-                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 transition-colors group-hover:bg-[#141B2D]/95">
-                                        <span class="text-[10px] font-bold px-2 py-1 rounded mb-1 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
+                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-surface border-t border-line transition-colors">
+                                        <span class="badge-brand mb-1">
                                             Team
                                         </span>
-                                        <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors">{{ $team->name }}</h3>
+                                        <h3 class="text-ink font-semibold text-base md:text-lg leading-tight line-clamp-1 group-hover:text-brand transition-colors tracking-tight">{{ $team->name }}</h3>
                                     </div>
                                 </a>
                             </div>
@@ -487,11 +487,11 @@
                 @endforeach
             ];
         </script>
-        <div class="bg-[#141B2D] py-12 border-t border-white/5">
+        <div class="bg-surface py-12 border-t border-line">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
-                <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
-                    <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
-                        <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> Team Owners
+                <div class="flex justify-between items-end mb-8 border-b border-line pb-4">
+                    <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                        Team Owners
                     </h2>
                 </div>
                 
@@ -499,24 +499,24 @@
                     <div class="swiper-wrapper">
                         @foreach($teamsWithOwner as $team)
                             <div class="swiper-slide">
-                                <div class="block w-full group relative rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" style="padding-bottom: 75%;" onclick="@if($team->owner->image) openMediaModal('{{ asset('storage/' . $team->owner->image) }}', 'image', '{!! addslashes($team->owner->name) !!}', 'Owner of {!! addslashes($team->name) !!}', window.teamOwnersGallery, {{ $ownerImageIndex++ }}) @endif">
-                                    <div class="absolute inset-0 bg-[#0B0F19] flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
+                                <div class="block w-full group relative rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm cursor-pointer" style="padding-bottom: 75%;" onclick="@if($team->owner->image) openMediaModal('{{ asset('storage/' . $team->owner->image) }}', 'image', '{!! addslashes($team->owner->name) !!}', 'Owner of {!! addslashes($team->name) !!}', window.teamOwnersGallery, {{ $ownerImageIndex++ }}) @endif">
+                                    <div class="absolute inset-0 bg-canvas flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
                                         @if($team->owner->image)
                                             <img src="{{ asset('storage/' . $team->owner->image) }}" alt="{{ $team->owner->name }}" class="w-full h-full object-cover object-top">
                                         @else
-                                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-                                                <span class="text-[#FFC800] font-bold text-6xl uppercase">{{ substr($team->owner->name, 0, 1) }}</span>
+                                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-surface-subtle to-surface-muted">
+                                                <span class="text-brand font-bold text-5xl uppercase">{{ substr($team->owner->name, 0, 1) }}</span>
                                             </div>
                                         @endif
                                     </div>
 
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     
-                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 transition-colors group-hover:bg-[#141B2D]/95 text-center">
-                                        <span class="text-[10px] font-bold px-2 py-1 rounded mb-1 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
+                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-surface border-t border-line transition-colors text-center">
+                                        <span class="badge-brand mb-1">
                                             Owner of {{ $team->name }}
                                         </span>
-                                        <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors uppercase">{{ $team->owner->name }}</h3>
+                                        <h3 class="text-ink font-semibold text-base md:text-lg leading-tight line-clamp-1 group-hover:text-brand transition-colors tracking-tight">{{ $team->owner->name }}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -565,15 +565,15 @@
                 @endforeach
             ];
         </script>
-        <div class="bg-[#141B2D] py-12 border-y border-white/5">
+        <div class="bg-surface py-12 border-y border-line">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
-                <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
-                    <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
-                        <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> Featured Players
+                <div class="flex justify-between items-end mb-8 border-b border-line pb-4">
+                    <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                        Featured Players
                     </h2>
                     <div class="flex items-center space-x-3 md:space-x-4">
-                        <a href="{{ route('public.players') }}" class="text-xs md:text-sm font-bold text-gray-400 hover:text-[#FFC800] uppercase transition-colors">View All</a>
-                        <a href="{{ route('public.players.register') }}" class="text-xs md:text-sm font-bold bg-[#FFC800] text-black px-3 py-1.5 md:px-4 md:py-2 rounded hover:bg-yellow-500 uppercase transition-colors shadow-lg">Register Player</a>
+                        <a href="{{ route('public.players') }}" class="text-xs md:text-sm font-medium text-muted hover:text-brand transition-colors">View All</a>
+                        <a href="{{ route('public.players.register') }}" class="text-xs md:text-sm font-medium bg-brand text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg hover:bg-brand-hover transition-colors shadow-sm">Register Player</a>
                     </div>
                 </div>
                 
@@ -586,13 +586,13 @@
                     <div class="swiper-wrapper">
                         @foreach($players as $player)
                             <div class="swiper-slide">
-                                <div class="group relative block w-full rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg cursor-pointer" style="padding-bottom: 75%;" onclick="@if($player->photo) openMediaModal('{{ asset('storage/' . $player->photo) }}', 'image', '{!! addslashes($player->name) !!}', '{!! addslashes($player->role ?? 'Player') !!}', window.playersGallery, {{ $playerImageIndex++ }}) @endif">
-                                    <div class="absolute inset-0 bg-[#0B0F19] flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
+                                <div class="group relative block w-full rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm cursor-pointer" style="padding-bottom: 75%;" onclick="@if($player->photo) openMediaModal('{{ asset('storage/' . $player->photo) }}', 'image', '{!! addslashes($player->name) !!}', '{!! addslashes($player->role ?? 'Player') !!}', window.playersGallery, {{ $playerImageIndex++ }}) @endif">
+                                    <div class="absolute inset-0 bg-canvas flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
                                         @if($player->photo)
                                             <img src="{{ asset('storage/' . $player->photo) }}" alt="{{ $player->name }}" class="w-full h-full object-contain">
                                         @else
-                                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-surface-subtle to-surface-muted">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-faint" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                                 </svg>
                                             </div>
@@ -601,11 +601,11 @@
 
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     
-                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 transition-colors group-hover:bg-[#141B2D]/95">
-                                        <span class="text-[10px] font-bold px-2 py-1 rounded mb-1 inline-block bg-[#FFC800] text-black uppercase tracking-wider shadow-md">
+                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-surface border-t border-line transition-colors">
+                                        <span class="badge-brand mb-1">
                                             {{ $player->role ?? 'Player' }}
                                         </span>
-                                        <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors uppercase">{{ $player->name }}</h3>
+                                        <h3 class="text-ink font-semibold text-base md:text-lg leading-tight line-clamp-1 group-hover:text-brand transition-colors tracking-tight">{{ $player->name }}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -672,13 +672,13 @@
                 @endforeach
             ];
         </script>
-        <div class="bg-[#0B0F19] py-12">
+        <div class="bg-canvas py-12">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
-                <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
-                    <h2 class="text-3xl md:text-4xl heading-font uppercase text-white flex items-center">
-                        <span class="w-2 h-8 bg-[#FFC800] mr-3 block"></span> Photos & Videos
+                <div class="flex justify-between items-end mb-8 border-b border-line pb-4">
+                    <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                        Photos & Videos
                     </h2>
-                    <a href="{{ route('public.gallery') }}" class="inline-flex items-center bg-transparent border-2 border-[#FFC800] text-[#FFC800] hover:bg-[#FFC800] hover:text-black px-5 py-2 font-bold text-sm uppercase rounded-full transition-all duration-300 tracking-wider group whitespace-nowrap">
+                    <a href="{{ route('public.gallery') }}" class="inline-flex items-center bg-transparent border-2 border-brand text-brand hover:bg-brand hover:text-white px-5 py-2 font-medium text-sm rounded-full transition-all duration-300 group whitespace-nowrap">
                         View All
                         <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                     </a>
@@ -688,7 +688,7 @@
                     <div class="swiper-wrapper">
                         @foreach($galleries as $media)
                             <div class="swiper-slide">
-                                <div class="group block w-full cursor-pointer relative rounded-lg overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-colors shadow-lg" style="padding-bottom: 75%;">
+                                <div class="group block w-full cursor-pointer relative rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm" style="padding-bottom: 75%;">
                                     @if($media->type == 'photo' && $media->file_path)
                                         <img src="{{ asset('storage/' . $media->file_path) }}" alt="{{ $media->title }}" class="absolute inset-0 w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
                                         <a href="javascript:void(0)" onclick="openMediaModal('{{ asset('storage/' . $media->file_path) }}', 'image', '{!! addslashes($media->title) !!}', 'Photo', window.mediaGalleryItems, {{ $mediaGalleryIndex++ }})" class="absolute inset-0 z-30"></a>
@@ -703,14 +703,14 @@
                                             @if($videoId)
                                                 <img src="https://img.youtube.com/vi/{{ $videoId }}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/{{ $videoId }}/hqdefault.jpg'" alt="{{ $media->title }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
                                             @else
-                                                <div class="absolute inset-0 w-full h-full bg-gray-800 flex items-center justify-center opacity-80">
-                                                    <span class="text-gray-500 font-bold uppercase">Video</span>
+                                                <div class="absolute inset-0 w-full h-full bg-surface-subtle flex items-center justify-center opacity-80">
+                                                    <span class="text-muted font-bold uppercase">Video</span>
                                                 </div>
                                             @endif
                                             
                                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                                                <div class="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center shadow-lg border-2 border-white/20 group-hover:bg-red-500 transition-colors group-hover:scale-110 duration-300">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                                <div class="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center shadow-sm border-2 border-line group-hover:bg-red-500 transition-colors group-hover:scale-110 duration-300">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ink ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                                 </div>
                                             </div>
                                             @if($videoId)
@@ -721,8 +721,8 @@
                                                 <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
                                             </video>
                                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                                                <div class="w-14 h-14 rounded-full bg-black/60 backdrop-blur flex items-center justify-center shadow-lg border-2 border-white/20 group-hover:bg-[#FFC800] transition-colors group-hover:scale-110 duration-300">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:text-black transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                                <div class="w-14 h-14 rounded-full bg-black/60 backdrop-blur flex items-center justify-center shadow-sm border-2 border-line group-hover:bg-brand transition-colors group-hover:scale-110 duration-300">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ink group-hover:text-ink transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                                 </div>
                                             </div>
                                             <a href="javascript:void(0)" onclick="openMediaModal('{{ asset('storage/' . $media->file_path) }}', 'video', '{!! addslashes($media->title) !!}', 'Video', window.mediaGalleryItems, {{ $mediaGalleryIndex++ }})" class="absolute inset-0 z-30"></a>
@@ -732,11 +732,11 @@
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20"></div>
 
                                     @if($media->title)
-                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-[#0B0F19]/95 backdrop-blur-sm border-t border-white/10 transition-colors group-hover:bg-[#141B2D]/95 pointer-events-none">
-                                        <span class="text-[10px] font-bold px-2 py-1 rounded mb-1 inline-block {{ $media->type == 'video' ? 'bg-red-600 text-white' : 'bg-[#FFC800] text-black' }} uppercase tracking-wider shadow-md">
+                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-surface border-t border-line transition-colors pointer-events-none">
+                                        <span class="mb-1.5 {{ $media->type == 'video' ? 'badge-danger' : 'badge-brand' }}">
                                             {{ ucfirst($media->type) }}
                                         </span>
-                                        <h3 class="text-white font-bold text-base md:text-lg leading-tight line-clamp-1 drop-shadow-md group-hover:text-[#FFC800] transition-colors">{{ $media->title }}</h3>
+                                        <h3 class="text-ink font-semibold text-base md:text-lg leading-tight line-clamp-1 group-hover:text-brand transition-colors tracking-tight">{{ $media->title }}</h3>
                                     </div>
                                     @endif
                                 </div>
@@ -768,15 +768,15 @@
     @endif
    
     <!-- Universal Media Modal -->
-    <div id="universalMediaModal" class="fixed inset-0 hidden items-center justify-center bg-black/95 p-4 md:p-8 backdrop-blur-md transition-opacity opacity-0" style="transition: opacity 0.3s ease; z-index: 9999;">
-        <button onclick="closeMediaModal()" style="position: absolute; top: 20px; right: 20px; z-index: 10000; width: 50px; height: 50px; background: rgba(255,200,0,0.8); border-radius: 50%; color: black; border: 2px solid #FFC800; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: all 0.2s;" onmouseover="this.style.background='#FFC800'; this.style.transform='scale(1.1)';" onmouseout="this.style.background='rgba(255,200,0,0.8)'; this.style.transform='scale(1)';">
+    <div id="universalMediaModal" class="fixed inset-0 hidden items-center justify-center bg-slate-900/40 p-4 md:p-8 backdrop-blur-md transition-opacity opacity-0" style="transition: opacity 0.3s ease; z-index: 9999;">
+        <button onclick="closeMediaModal()" style="position: absolute; top: 20px; right: 20px; z-index: 10000; width: 50px; height: 50px; background: #ffffff; border-radius: 50%; color: #172554; border: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 30px -10px rgba(15,23,42,0.25); transition: all 0.2s;" onmouseover="this.style.background='#F1F5F9';" onmouseout="this.style.background='#ffffff';">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
         
-        <button id="universalMediaPrevBtn" onclick="prevMediaModal(event)" class="hidden absolute top-1/2 -translate-y-1/2 bg-black/60 border border-white/20 hover:border-[#FFC800] hover:bg-[#FFC800] text-white hover:text-black rounded-full items-center justify-center transition-all shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style="z-index: 10000; left: 1rem; width: 3rem; height: 3rem;">
+        <button id="universalMediaPrevBtn" onclick="prevMediaModal(event)" class="hidden absolute top-1/2 -translate-y-1/2 bg-black/60 border border-line hover:border-brand hover:bg-brand text-white hover:text-white rounded-full items-center justify-center transition-all shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style="z-index: 10000; left: 1rem; width: 3rem; height: 3rem;">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <button id="universalMediaNextBtn" onclick="nextMediaModal(event)" class="hidden absolute top-1/2 -translate-y-1/2 bg-black/60 border border-white/20 hover:border-[#FFC800] hover:bg-[#FFC800] text-white hover:text-black rounded-full items-center justify-center transition-all shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style="z-index: 10000; right: 1rem; width: 3rem; height: 3rem;">
+        <button id="universalMediaNextBtn" onclick="nextMediaModal(event)" class="hidden absolute top-1/2 -translate-y-1/2 bg-black/60 border border-line hover:border-brand hover:bg-brand text-white hover:text-white rounded-full items-center justify-center transition-all shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style="z-index: 10000; right: 1rem; width: 3rem; height: 3rem;">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
 
@@ -820,27 +820,27 @@
                 let textHtml = '';
                 if (title || subtitle) {
                     textHtml = `
-                        <div class="absolute bottom-0 left-0 w-full p-4 md:p-5 bg-[#0B0F19]/90 backdrop-blur-md border-t-2 border-[#FFC800] text-center z-50 rounded-b-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
-                            ${title ? `<h3 class="text-2xl md:text-3xl text-white font-extrabold uppercase mb-1 drop-shadow-lg tracking-wide">${title}</h3>` : ''}
-                            ${subtitle ? `<p class="text-[#FFC800] text-sm md:text-lg font-bold uppercase tracking-widest drop-shadow-md">${subtitle}</p>` : ''}
+                        <div class="absolute bottom-0 left-0 w-full p-4 md:p-5 bg-surface border-t-2 border-brand text-center z-50 rounded-b-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+                            ${title ? `<h3 class="text-2xl md:text-3xl text-ink font-semibold mb-1 tracking-tight">${title}</h3>` : ''}
+                            ${subtitle ? `<p class="text-brand text-sm md:text-lg font-bold uppercase tracking-widest">${subtitle}</p>` : ''}
                         </div>
                     `;
                 }
                 
                 container.innerHTML = `
-                <div class="relative w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden">
-                    <img src="${url}" class="max-w-full max-h-full object-contain rounded-lg drop-shadow-2xl relative z-10">
+                <div class="relative w-full h-full bg-canvas/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-brand/30 flex items-center justify-center p-2 md:p-6 overflow-hidden">
+                    <img src="${url}" class="max-w-full max-h-full object-contain rounded-lg relative z-10">
                     ${textHtml}
                 </div>`;
             } else if (type === 'youtube') {
                 container.innerHTML = `
-                <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden relative">
+                <div class="w-full h-full bg-canvas/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-brand/30 flex items-center justify-center p-2 md:p-6 overflow-hidden relative">
                     <iframe src="https://www.youtube.com/embed/${url}?autoplay=1" class="w-full h-full rounded-xl relative z-10" style="aspect-ratio: 16/9; max-width: 100%; max-height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>`;
             } else if (type === 'video') {
                 container.innerHTML = `
-                <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden relative">
-                    <video src="${url}" class="max-w-full max-h-full object-contain rounded-xl drop-shadow-2xl relative z-10" controls autoplay></video>
+                <div class="w-full h-full bg-canvas/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-brand/30 flex items-center justify-center p-2 md:p-6 overflow-hidden relative">
+                    <video src="${url}" class="max-w-full max-h-full object-contain rounded-xl relative z-10" controls autoplay></video>
                 </div>`;
             }
 

@@ -2,14 +2,14 @@
     <x-slot name="title">Processing Payment...</x-slot>
 
     <div class="container mx-auto px-4 py-12 flex justify-center">
-        <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center border-t-4 border-[#FFC800]">
-            <div class="mb-4 text-[#FFC800]">
+        <div class="max-w-md w-full bg-white rounded-xl shadow-pop p-8 text-center border-t-4 border-brand">
+            <div class="mb-4 text-brand">
                 <svg class="w-16 h-16 mx-auto animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                 </svg>
             </div>
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">Redirecting to Secure Payment</h2>
-            <p class="text-gray-600 mb-6">Please do not refresh or close this window.</p>
+            <h2 class="text-2xl font-semibold text-ink mb-2 tracking-tight">Redirecting to Secure Payment</h2>
+            <p class="text-muted mb-6">Please do not refresh or close this window.</p>
             
             <form action="{{ route('payment.callback') }}" method="POST" id="razorpay-form" class="hidden">
                 @csrf

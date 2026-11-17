@@ -39,19 +39,19 @@
         ];
     </script>
 
-    <div class="min-h-screen bg-[#0B0F19]">
+    <div class="min-h-screen bg-canvas">
         {{-- Hero Banner --}}
-        <div class="relative bg-gradient-to-b from-[#141B2D] to-[#0B0F19] py-16 md:py-20">
+        <div class="relative bg-gradient-to-b from-surface to-surface py-16 md:py-20">
             <div class="absolute inset-0 overflow-hidden">
                 <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.02%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')] opacity-50"></div>
             </div>
             <div class="max-w-[1400px] mx-auto px-4 md:px-8 relative z-10">
                 <div class="text-center">
-                    <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-widest mb-4 heading-font">
+                    <h1 class="text-4xl md:text-4xl font-semibold text-ink mb-4 tracking-tight">
                         Photos & Videos
                     </h1>
-                    <div class="w-24 h-1 bg-[#FFC800] mx-auto mb-4"></div>
-                    <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    <div class="w-24 h-1 bg-brand mx-auto mb-4"></div>
+                    <p class="text-muted text-lg max-w-2xl mx-auto">
                         Relive the best moments — match highlights, event photos, and exclusive behind-the-scenes content.
                     </p>
                 </div>
@@ -62,17 +62,17 @@
         <div class="max-w-[1400px] mx-auto px-4 md:px-8">
             <div class="flex items-center justify-center gap-3 mb-10 -mt-4">
                 <button wire:click="setFilter('all')" 
-                    class="px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 border-2 {{ $filter === 'all' ? 'bg-[#FFC800] text-black border-[#FFC800] shadow-lg shadow-[#FFC800]/20' : 'bg-transparent text-gray-400 border-gray-700 hover:border-[#FFC800]/50 hover:text-white' }}">
+                    class="px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border-2 {{ $filter === 'all' ? 'bg-brand text-white border-brand shadow-sm' : 'bg-transparent text-muted border-line hover:border-brand/30 hover:text-ink' }}">
                     <svg class="w-4 h-4 inline mr-1.5 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                     All
                 </button>
                 <button wire:click="setFilter('photo')" 
-                    class="px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 border-2 {{ $filter === 'photo' ? 'bg-[#FFC800] text-black border-[#FFC800] shadow-lg shadow-[#FFC800]/20' : 'bg-transparent text-gray-400 border-gray-700 hover:border-[#FFC800]/50 hover:text-white' }}">
+                    class="px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border-2 {{ $filter === 'photo' ? 'bg-brand text-white border-brand shadow-sm' : 'bg-transparent text-muted border-line hover:border-brand/30 hover:text-ink' }}">
                     <svg class="w-4 h-4 inline mr-1.5 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     Photos
                 </button>
                 <button wire:click="setFilter('video')" 
-                    class="px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 border-2 {{ $filter === 'video' ? 'bg-[#FFC800] text-black border-[#FFC800] shadow-lg shadow-[#FFC800]/20' : 'bg-transparent text-gray-400 border-gray-700 hover:border-[#FFC800]/50 hover:text-white' }}">
+                    class="px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border-2 {{ $filter === 'video' ? 'bg-brand text-white border-brand shadow-sm' : 'bg-transparent text-muted border-line hover:border-brand/30 hover:text-ink' }}">
                     <svg class="w-4 h-4 inline mr-1.5 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                     Videos
                 </button>
@@ -105,7 +105,7 @@
                         });
                     @endphp
 
-                    <div class="group relative rounded-xl overflow-hidden bg-gray-900 border border-white/5 hover:border-[#FFC800]/50 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl hover:shadow-[#FFC800]/10 hover:-translate-y-1" style="padding-bottom: 100%;">
+                    <div class="group relative rounded-xl overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-sm hover:-translate-y-1" style="padding-bottom: 100%;">
                         @if($media->type == 'photo' && $media->file_path)
                             <img src="{{ asset('storage/' . $media->file_path) }}" alt="{{ $media->title }}" 
                                  class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
@@ -120,8 +120,8 @@
                                      class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80">
                                 {{-- Play button --}}
                                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                                    <div class="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-xl border-2 border-white/20 group-hover:bg-red-500 transition-all group-hover:scale-110 duration-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    <div class="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-sm border-2 border-line group-hover:bg-red-500 transition-all group-hover:scale-110 duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-ink ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                     </div>
                                 </div>
                                 <a href="javascript:void(0)" 
@@ -133,8 +133,8 @@
                                     <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
                                 </video>
                                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                                    <div class="w-16 h-16 rounded-full bg-black/60 backdrop-blur flex items-center justify-center shadow-xl border-2 border-white/20 group-hover:bg-[#FFC800] transition-all group-hover:scale-110 duration-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white group-hover:text-black transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    <div class="w-16 h-16 rounded-full bg-black/60 backdrop-blur flex items-center justify-center shadow-sm border-2 border-line group-hover:bg-brand transition-all group-hover:scale-110 duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-ink group-hover:text-ink transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                     </div>
                                 </div>
                                 <a href="javascript:void(0)" 
@@ -148,7 +148,7 @@
 
                         {{-- Type badge --}}
                         <div class="absolute top-3 right-3 z-20">
-                            <span class="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md {{ $media->type == 'video' ? 'bg-red-600 text-white' : 'bg-[#FFC800] text-black' }}">
+                            <span class="{{ $media->type == 'video' ? 'badge-danger' : 'badge-brand' }}">
                                 {{ ucfirst($media->type) }}
                             </span>
                         </div>
@@ -156,7 +156,7 @@
                         {{-- Title overlay --}}
                         @if($media->title)
                         <div class="absolute bottom-0 left-0 w-full p-3 md:p-4 z-20 bg-gradient-to-t from-black/90 to-transparent pointer-events-none">
-                            <h3 class="text-white font-bold text-sm md:text-base leading-tight line-clamp-2 drop-shadow-lg group-hover:text-[#FFC800] transition-colors">
+                            <h3 class="text-ink font-semibold text-sm md:text-base leading-tight line-clamp-2 group-hover:text-brand transition-colors tracking-tight">
                                 {{ $media->title }}
                             </h3>
                         </div>
@@ -164,13 +164,13 @@
                     </div>
                 @empty
                     <div class="col-span-full text-center py-20">
-                        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-800/50 mb-6 text-gray-500">
+                        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-surface-subtle mb-6 text-muted">
                             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-2 heading-font uppercase">No Media Found</h3>
-                        <p class="text-gray-400 text-lg">
+                        <h3 class="text-2xl font-semibold text-ink mb-2 tracking-tight">No Media Found</h3>
+                        <p class="text-muted text-lg">
                             @if($filter !== 'all')
                                 No {{ $filter }}s available. Try viewing all media.
                             @else
@@ -191,15 +191,15 @@
     </div>
 
     {{-- Universal Media Modal --}}
-    <div id="universalMediaModal" class="fixed inset-0 hidden items-center justify-center bg-black/95 p-4 md:p-8 backdrop-blur-md transition-opacity opacity-0" style="transition: opacity 0.3s ease; z-index: 9999;">
-        <button onclick="closeMediaModal()" style="position: absolute; top: 20px; right: 20px; z-index: 10000; width: 50px; height: 50px; background: rgba(255,200,0,0.8); border-radius: 50%; color: black; border: 2px solid #FFC800; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: all 0.2s;" onmouseover="this.style.background='#FFC800'; this.style.transform='scale(1.1)';" onmouseout="this.style.background='rgba(255,200,0,0.8)'; this.style.transform='scale(1)';">
+    <div id="universalMediaModal" class="fixed inset-0 hidden items-center justify-center bg-slate-900/40 p-4 md:p-8 backdrop-blur-md transition-opacity opacity-0" style="transition: opacity 0.3s ease; z-index: 9999;">
+        <button onclick="closeMediaModal()" style="position: absolute; top: 20px; right: 20px; z-index: 10000; width: 50px; height: 50px; background: #ffffff; border-radius: 50%; color: #172554; border: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 30px -10px rgba(15,23,42,0.25); transition: all 0.2s;" onmouseover="this.style.background='#F1F5F9';" onmouseout="this.style.background='#ffffff';">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
         
-        <button id="universalMediaPrevBtn" onclick="prevMediaModal(event)" class="hidden absolute top-1/2 -translate-y-1/2 bg-black/60 border border-white/20 hover:border-[#FFC800] hover:bg-[#FFC800] text-white hover:text-black rounded-full items-center justify-center transition-all shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style="z-index: 10000; left: 1rem; width: 3rem; height: 3rem;">
+        <button id="universalMediaPrevBtn" onclick="prevMediaModal(event)" class="hidden absolute top-1/2 -translate-y-1/2 bg-black/60 border border-line hover:border-brand hover:bg-brand text-white hover:text-white rounded-full items-center justify-center transition-all shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style="z-index: 10000; left: 1rem; width: 3rem; height: 3rem;">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <button id="universalMediaNextBtn" onclick="nextMediaModal(event)" class="hidden absolute top-1/2 -translate-y-1/2 bg-black/60 border border-white/20 hover:border-[#FFC800] hover:bg-[#FFC800] text-white hover:text-black rounded-full items-center justify-center transition-all shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style="z-index: 10000; right: 1rem; width: 3rem; height: 3rem;">
+        <button id="universalMediaNextBtn" onclick="nextMediaModal(event)" class="hidden absolute top-1/2 -translate-y-1/2 bg-black/60 border border-line hover:border-brand hover:bg-brand text-white hover:text-white rounded-full items-center justify-center transition-all shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style="z-index: 10000; right: 1rem; width: 3rem; height: 3rem;">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
 
@@ -242,27 +242,27 @@
                 let textHtml = '';
                 if (title || subtitle) {
                     textHtml = `
-                        <div class="absolute bottom-0 left-0 w-full p-4 md:p-5 bg-[#0B0F19]/90 backdrop-blur-md border-t-2 border-[#FFC800] text-center z-50 rounded-b-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
-                            ${title ? `<h3 class="text-2xl md:text-3xl text-white font-extrabold uppercase mb-1 drop-shadow-lg tracking-wide">${title}</h3>` : ''}
-                            ${subtitle ? `<p class="text-[#FFC800] text-sm md:text-lg font-bold uppercase tracking-widest drop-shadow-md">${subtitle}</p>` : ''}
+                        <div class="absolute bottom-0 left-0 w-full p-4 md:p-5 bg-surface border-t-2 border-brand text-center z-50 rounded-b-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+                            ${title ? `<h3 class="text-2xl md:text-3xl text-ink font-semibold mb-1 tracking-tight">${title}</h3>` : ''}
+                            ${subtitle ? `<p class="text-brand text-sm md:text-lg font-bold uppercase tracking-widest">${subtitle}</p>` : ''}
                         </div>
                     `;
                 }
                 
                 container.innerHTML = `
-                <div class="relative w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden">
-                    <img src="${url}" class="max-w-full max-h-full object-contain rounded-lg drop-shadow-2xl relative z-10">
+                <div class="relative w-full h-full bg-canvas/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-brand/30 flex items-center justify-center p-2 md:p-6 overflow-hidden">
+                    <img src="${url}" class="max-w-full max-h-full object-contain rounded-lg relative z-10">
                     ${textHtml}
                 </div>`;
             } else if (type === 'youtube') {
                 container.innerHTML = `
-                <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden relative">
+                <div class="w-full h-full bg-canvas/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-brand/30 flex items-center justify-center p-2 md:p-6 overflow-hidden relative">
                     <iframe src="https://www.youtube.com/embed/${url}?autoplay=1" class="w-full h-full rounded-xl relative z-10" style="aspect-ratio: 16/9; max-width: 100%; max-height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>`;
             } else if (type === 'video') {
                 container.innerHTML = `
-                <div class="w-full h-full bg-[#0B0F19]/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-[#FFC800]/20 flex items-center justify-center p-2 md:p-6 overflow-hidden relative">
-                    <video src="${url}" class="max-w-full max-h-full object-contain rounded-xl drop-shadow-2xl relative z-10" controls autoplay></video>
+                <div class="w-full h-full bg-canvas/90 backdrop-blur-md rounded-2xl shadow-[0_0_40px_rgba(255,200,0,0.2)] border border-brand/30 flex items-center justify-center p-2 md:p-6 overflow-hidden relative">
+                    <video src="${url}" class="max-w-full max-h-full object-contain rounded-xl relative z-10" controls autoplay></video>
                 </div>`;
             }
 

@@ -343,12 +343,13 @@ Managed from **Admin → Settings** and read with the `setting('key', $default)`
 
 ## Admin Theme (UI)
 
-The admin / app area (admin panel, team owner pages, reports, profile, login) uses a light SaaS theme. The public website keeps its own dark IPL design and is not affected.
+The whole application uses one light SaaS theme (deep navy `#172554` on light gray): the public website (`layouts/ipl`), the live auction and bidding screens (`layouts/auction-live`), the admin / team owner area (`layouts/app`) and the auth pages (`layouts/guest`).
 
 - **Colours:** CSS variables in `resources/css/app.css` (`:root`), exposed to Tailwind as `brand`, `canvas`, `surface`, `line`, `ink`, `muted`, `faint`, `danger`, `success`, `warning` (see `tailwind.config.js`). Change a colour in one place and it applies everywhere.
 - **Components:** `.card`, `.btn-primary`, `.btn-secondary`, `.btn-danger`, `.btn-ghost`, `.badge-*`, `.alert-*`, `.form-label`, `.nav-item`, `.menu-panel` (same file).
-- **Base styles:** inputs, selects, checkboxes, tables, pagination, Select2 and Quill are styled centrally, inside `.theme-app` (set on `<body>` in `layouts/app` and `layouts/guest`).
+- **Base styles:** inputs, selects, checkboxes, tables, pagination, Select2 and Quill are styled centrally, inside `.theme-app` (set on `<body>` in every layout).
 - **Sidebar menu:** defined once in `resources/views/layouts/partials/sidebar-nav.blade.php` (used for desktop and mobile). It can be collapsed, and the choice is remembered in the browser.
+- **Public header & footer:** `resources/views/layouts/ipl.blade.php` (menu items are built once and reused for desktop and mobile).
 - **Icons:** `<x-icon name="..." />` (`resources/views/components/icon.blade.php`).
 
 After changing styles, run `npm run build` (the built files in `public/build` are committed).
