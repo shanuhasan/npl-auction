@@ -123,7 +123,7 @@
                         <div class="h-2 w-full bg-surface-subtle rounded-full overflow-hidden relative mb-4 lg:mb-6 shadow-inner">
                             <div class="absolute top-0 left-0 h-full transition-all duration-100 ease-linear rounded-full"
                                  x-bind:style="'width: ' + timerProgress + '%'"
-                                 x-bind:class="timerProgress < 20 ? 'bg-red-500' 'bg-[var(--team-color)]'">
+                                 x-bind:class="timerProgress < 20 ? 'bg-red-500' : 'bg-[var(--team-color)]'">
                             </div>
                         </div>
 

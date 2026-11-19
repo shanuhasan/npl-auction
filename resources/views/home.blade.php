@@ -416,10 +416,11 @@
                     <div class="swiper-wrapper">
                         @foreach($teams as $team)
                             <div class="swiper-slide">
-                                <a href="{{ route('public.teams.show', $team->id) }}" class="block w-full group cursor-pointer relative rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm" style="padding-bottom: 75%;">
+                                <a href="{{ route('public.teams.show', $team->id) }}" class="block w-full group cursor-pointer relative flex flex-col rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm">
+                                    <div class="relative aspect-[4/3] overflow-hidden bg-canvas">
                                     <div class="absolute inset-0 bg-canvas flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
                                         @if($team->logo)
-                                            <img src="{{ asset('storage/' . $team->logo) }}" alt="{{ $team->name }}" class="w-full h-full object-cover object-top">
+                                            <img src="{{ asset('storage/' . $team->logo) }}" alt="{{ $team->name }}" class="w-full h-full object-contain">
                                         @else
                                             <span class="text-brand font-bold text-5xl uppercase">{{ substr($team->name, 0, 2) }}</span>
                                         @endif
@@ -427,7 +428,8 @@
 
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     
-                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-surface border-t border-line transition-colors">
+                                    </div>
+                                    <div class="relative w-full p-4 bg-surface border-t border-line transition-colors">
                                         <span class="badge-brand mb-1">
                                             Team
                                         </span>
@@ -494,7 +496,8 @@
                     <div class="swiper-wrapper">
                         @foreach($teamsWithOwner as $team)
                             <div class="swiper-slide">
-                                <div class="block w-full group relative rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm cursor-pointer" style="padding-bottom: 75%;" onclick="@if($team->owner->image) openMediaModal('{{ asset('storage/' . $team->owner->image) }}', 'image', '{!! addslashes($team->owner->name) !!}', 'Owner of {!! addslashes($team->name) !!}', window.teamOwnersGallery, {{ $ownerImageIndex++ }}) @endif">
+                                <div class="block w-full group relative flex flex-col rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm cursor-pointer" onclick="@if($team->owner->image) openMediaModal('{{ asset('storage/' . $team->owner->image) }}', 'image', '{!! addslashes($team->owner->name) !!}', 'Owner of {!! addslashes($team->name) !!}', window.teamOwnersGallery, {{ $ownerImageIndex++ }}) @endif">
+                                    <div class="relative aspect-[4/3] overflow-hidden bg-canvas">
                                     <div class="absolute inset-0 bg-canvas flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
                                         @if($team->owner->image)
                                             <img src="{{ asset('storage/' . $team->owner->image) }}" alt="{{ $team->owner->name }}" class="w-full h-full object-cover object-top">
@@ -507,7 +510,8 @@
 
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     
-                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-surface border-t border-line transition-colors text-center">
+                                    </div>
+                                    <div class="relative w-full p-4 bg-surface border-t border-line transition-colors text-center">
                                         <span class="badge-brand mb-1">
                                             Owner of {{ $team->name }}
                                         </span>
@@ -581,7 +585,8 @@
                     <div class="swiper-wrapper">
                         @foreach($players as $player)
                             <div class="swiper-slide">
-                                <div class="group relative block w-full rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm cursor-pointer" style="padding-bottom: 75%;" onclick="@if($player->photo) openMediaModal('{{ asset('storage/' . $player->photo) }}', 'image', '{!! addslashes($player->name) !!}', '{!! addslashes($player->role ?? 'Player') !!}', window.playersGallery, {{ $playerImageIndex++ }}) @endif">
+                                <div class="group relative block w-full flex flex-col rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm cursor-pointer" onclick="@if($player->photo) openMediaModal('{{ asset('storage/' . $player->photo) }}', 'image', '{!! addslashes($player->name) !!}', '{!! addslashes($player->role ?? 'Player') !!}', window.playersGallery, {{ $playerImageIndex++ }}) @endif">
+                                    <div class="relative aspect-[4/3] overflow-hidden bg-canvas">
                                     <div class="absolute inset-0 bg-canvas flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
                                         @if($player->photo)
                                             <img src="{{ asset('storage/' . $player->photo) }}" alt="{{ $player->name }}" class="w-full h-full object-contain">
@@ -596,7 +601,8 @@
 
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     
-                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-surface border-t border-line transition-colors">
+                                    </div>
+                                    <div class="relative w-full p-4 bg-surface border-t border-line transition-colors">
                                         <span class="badge-brand mb-1">
                                             {{ $player->role ?? 'Player' }}
                                         </span>
@@ -683,7 +689,8 @@
                     <div class="swiper-wrapper">
                         @foreach($galleries as $media)
                             <div class="swiper-slide">
-                                <div class="group block w-full cursor-pointer relative rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm" style="padding-bottom: 75%;">
+                                <div class="group block w-full cursor-pointer relative flex flex-col rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm">
+                                    <div class="relative aspect-[4/3] overflow-hidden bg-canvas">
                                     @if($media->type == 'photo' && $media->file_path)
                                         <img src="{{ asset('storage/' . $media->file_path) }}" alt="{{ $media->title }}" class="absolute inset-0 w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
                                         <a href="javascript:void(0)" onclick="openMediaModal('{{ asset('storage/' . $media->file_path) }}', 'image', '{!! addslashes($media->title) !!}', 'Photo', window.mediaGalleryItems, {{ $mediaGalleryIndex++ }})" class="absolute inset-0 z-30"></a>
@@ -727,7 +734,8 @@
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20"></div>
 
                                     @if($media->title)
-                                    <div class="absolute bottom-0 left-0 w-full p-4 z-40 bg-surface border-t border-line transition-colors pointer-events-none">
+                                    </div>
+                                    <div class="relative w-full p-4 bg-surface border-t border-line transition-colors pointer-events-none">
                                         <span class="mb-1.5 {{ $media->type == 'video' ? 'badge-danger' : 'badge-brand' }}">
                                             {{ ucfirst($media->type) }}
                                         </span>

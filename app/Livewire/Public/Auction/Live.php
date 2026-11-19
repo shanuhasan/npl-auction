@@ -39,11 +39,8 @@ class Live extends Component
         $this->state = AuctionState::where('auction_id', $this->auction->id)->first();
         $participatingTeams = $this->auction->teams;
         
-        $teamQuery = Team::with(['auctionPlayers' => function($q) {
-            $q->where('auction_id', $this->auction->id)
-              ->where('status', 'sold')
-              ->with('player');
-        }]);
+        // Only team details are needed (to show the leading team); squads are not shown on this screen.
+        $teamQuery = Team::query();
 
         if ($participatingTeams->isNotEmpty()) {
             $teamQuery->whereIn('id', $participatingTeams->pluck('id'));
