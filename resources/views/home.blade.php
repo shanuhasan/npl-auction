@@ -1,9 +1,10 @@
 <x-ipl-layout>
+    <!-- Swiper (used by the banner, teams, owners, players and gallery sliders) - always loaded once -->
+    <link rel="stylesheet" href="{{ asset('css/swiper-bundle.min.css') }}" />
+    <script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
+
     <!-- Hero Section / Featured (Dynamic Swiper Slider) -->
     @if(isset($banners) && $banners->count() > 0)
-        <!-- Include Swiper's CSS -->
-        <link rel="stylesheet" href="{{ asset('css/swiper-bundle.min.css') }}" />
-        
         <div class="swiper myHeroSwiper relative w-full h-[420px] md:h-[560px] bg-brand overflow-hidden" style="--swiper-theme-color:#ffffff; --swiper-navigation-size:28px;">
             <div class="swiper-wrapper">
                 @foreach($banners as $banner)
@@ -47,8 +48,6 @@
             <div class="swiper-button-prev !text-white"></div>
         </div>
 
-        <!-- Include Swiper's JS -->
-        <script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var swiper = new Swiper(".myHeroSwiper", {
@@ -576,10 +575,6 @@
                     </div>
                 </div>
                 
-                @if(!isset($banners) || $banners->count() == 0)
-                    <link rel="stylesheet" href="{{ asset('css/swiper-bundle.min.css') }}" />
-                    <script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
-                @endif
 
                 <div class="swiper playersSwiper overflow-hidden" style="padding-bottom: 10px;">
                     <div class="swiper-wrapper">
@@ -733,15 +728,15 @@
                                     
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20"></div>
 
-                                    @if($media->title)
                                     </div>
                                     <div class="relative w-full p-4 bg-surface border-t border-line transition-colors pointer-events-none">
                                         <span class="mb-1.5 {{ $media->type == 'video' ? 'badge-danger' : 'badge-brand' }}">
                                             {{ ucfirst($media->type) }}
                                         </span>
+                                        @if($media->title)
                                         <h3 class="text-ink font-semibold text-base md:text-lg leading-tight line-clamp-1 group-hover:text-brand transition-colors tracking-tight">{{ $media->title }}</h3>
+                                        @endif
                                     </div>
-                                    @endif
                                 </div>
                             </div>
                         @endforeach
