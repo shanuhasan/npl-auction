@@ -12,7 +12,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         @foreach($teams as $team)
-            <a href="{{ route('public.teams.show', $team->id) }}" class="block group">
+            <a href="{{ route('public.teams.show', $team->guid) }}" class="block group">
                 <div class="bg-surface border border-line rounded-2xl overflow-hidden shadow-sm transition-all duration-300 transform group-hover:-translate-y-2 group-hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-hover:border-[var(--team-color)]" style="--team-color: {{ $team->primary_color }};">
                     
                     <!-- Team Header -->

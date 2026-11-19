@@ -20,7 +20,7 @@
             @if($i === 1)
                 <div class="text-muted font-bold text-sm">VS</div>
             @endif
-            <a href="{{ route('public.teams.show', $team->id) }}" class="flex-1 flex flex-col items-center text-center group {{ $highlightTeam && $highlightTeam != $team->id ? 'opacity-80' : '' }}">
+            <a href="{{ route('public.teams.show', $team->guid) }}" class="flex-1 flex flex-col items-center text-center group {{ $highlightTeam && $highlightTeam != $team->id ? 'opacity-80' : '' }}">
                 <img src="{{ $logo($team) }}" alt="{{ $team->name }}" class="w-14 h-14 rounded-full object-cover bg-white border-2 mb-2" style="border-color: {{ $team->primary_color ?? '#fff' }}">
                 <span class="font-bold text-ink group-hover:text-brand leading-tight {{ $f->winner_team_id == $team->id ? 'text-success' : '' }}">{{ $team->short_name ?: $team->name }}</span>
                 <span class="text-xs text-muted hidden sm:block truncate max-w-full">{{ $team->name }}</span>

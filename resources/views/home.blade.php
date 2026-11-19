@@ -416,7 +416,7 @@
                     <div class="swiper-wrapper">
                         @foreach($teams as $team)
                             <div class="swiper-slide">
-                                <a href="{{ route('public.teams.show', $team->id) }}" class="block w-full group cursor-pointer relative flex flex-col rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm">
+                                <a href="{{ route('public.teams.show', $team->guid) }}" class="block w-full group cursor-pointer relative flex flex-col rounded-lg overflow-hidden bg-surface-muted border border-line hover:border-brand/30 transition-colors shadow-sm">
                                     <div class="relative aspect-[4/3] overflow-hidden bg-canvas">
                                     <div class="absolute inset-0 bg-canvas flex items-center justify-center p-0 group-hover:scale-105 transition-transform duration-500">
                                         @if($team->logo)

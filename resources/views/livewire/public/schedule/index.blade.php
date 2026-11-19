@@ -46,7 +46,7 @@
                         <tr class="hover:bg-surface-subtle">
                             <td class="px-4 py-3 text-muted font-bold">{{ $i + 1 }}</td>
                             <td class="px-4 py-3">
-                                <a href="{{ route('public.teams.show', $row['team']->id) }}" class="flex items-center gap-3 font-bold text-ink hover:text-brand">
+                                <a href="{{ route('public.teams.show', $row['team']->guid) }}" class="flex items-center gap-3 font-bold text-ink hover:text-brand">
                                     <span class="w-3 h-3 rounded-full" style="background: {{ $row['team']->primary_color ?? '#888' }}"></span>
                                     {{ $row['team']->name }}
                                 </a>

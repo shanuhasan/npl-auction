@@ -43,7 +43,7 @@ class Bidding extends Component
         $participatingTeams = $this->auction->teams;
         if ($participatingTeams->isNotEmpty() && !$participatingTeams->contains('id', $this->myTeam->id)) {
             session()->flash('error', 'Your team is not participating in this auction.');
-            return $this->redirect(route('public.teams.show', $this->myTeam->id), navigate: true);
+            return $this->redirect(route('public.teams.show', $this->myTeam->guid), navigate: true);
         }
 
         $this->loadState();

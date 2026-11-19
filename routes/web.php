@@ -39,7 +39,7 @@ Route::view('profile', 'profile')
 
 Route::get('/teams', \App\Livewire\Public\Teams\Index::class)->name('public.teams');
 Route::get('/teams/register', \App\Livewire\Public\Teams\Register::class)->name('public.teams.register');
-Route::get('/teams/{team}', \App\Livewire\Public\Teams\Show::class)->name('public.teams.show');
+Route::get('/teams/{team:guid}', \App\Livewire\Public\Teams\Show::class)->name('public.teams.show');
 Route::get('/players/register', \App\Livewire\Public\Players\Register::class)->name('public.players.register');
 Route::get('/players', \App\Livewire\Public\Players\Index::class)->name('public.players');
 Route::get('/contact', \App\Livewire\Public\Contact::class)->name('public.contact');
@@ -114,7 +114,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/reports/auction', \App\Livewire\Reports\AuctionReport::class)->name('reports.auction');
-    Route::get('/teams/{team}/pdf', [\App\Http\Controllers\Admin\PdfController::class, 'teamSquad'])->name('teams.pdf');
+    Route::get('/teams/{team:guid}/pdf', [\App\Http\Controllers\Admin\PdfController::class, 'teamSquad'])->name('teams.pdf');
 });
 
 Route::middleware(['auth', 'role:team_owner'])->group(function () {

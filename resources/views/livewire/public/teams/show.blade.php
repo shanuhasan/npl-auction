@@ -54,7 +54,7 @@
                 </x-select2>
             </div>
             
-            <a href="{{ route('teams.pdf', ['team' => $team->id, 'auction_id' => $selectedAuctionId]) }}" target="_blank" class="w-full sm:w-auto text-center bg-[var(--team-color)] text-white px-4 py-2 rounded-lg font-bold uppercase tracking-wider text-sm whitespace-nowrap hover:opacity-80 transition shadow-sm border border-line" title="Download Squad PDF">
+            <a href="{{ route('teams.pdf', ['team' => $team->guid, 'auction_id' => $selectedAuctionId]) }}" target="_blank" class="w-full sm:w-auto text-center bg-[var(--team-color)] text-white px-4 py-2 rounded-lg font-bold uppercase tracking-wider text-sm whitespace-nowrap hover:opacity-80 transition shadow-sm border border-line" title="Download Squad PDF">
                 Download PDF
             </a>
         </div>
