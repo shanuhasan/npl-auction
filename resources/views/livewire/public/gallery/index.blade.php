@@ -41,17 +41,17 @@
 
     <div class="min-h-screen bg-canvas">
         {{-- Hero Banner --}}
-        <div class="relative bg-gradient-to-b from-surface to-surface py-16 md:py-20">
+        <div class="relative bg-brand py-16 md:py-20" style="background: radial-gradient(900px 260px at 85% 0%, rgb(var(--color-accent) / .16), transparent 70%), linear-gradient(180deg, rgb(var(--color-brand)), rgb(var(--color-brand-deep)));">
             <div class="absolute inset-0 overflow-hidden">
                 <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.02%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')] opacity-50"></div>
             </div>
             <div class="max-w-[1400px] mx-auto px-4 md:px-8 relative z-10">
                 <div class="text-center">
-                    <h1 class="text-4xl md:text-4xl font-semibold text-ink mb-4 tracking-tight">
+                    <h1 class="text-4xl md:text-4xl font-semibold text-white mb-4 tracking-tight">
                         Photos & Videos
                     </h1>
-                    <div class="w-24 h-1 bg-brand mx-auto mb-4"></div>
-                    <p class="text-muted text-lg max-w-2xl mx-auto">
+                    <div class="w-16 h-1 rounded-full bg-accent mx-auto mb-4"></div>
+                    <p class="text-white/70 text-lg max-w-2xl mx-auto">
                         Relive the best moments — match highlights, event photos, and exclusive behind-the-scenes content.
                     </p>
                 </div>
@@ -60,22 +60,24 @@
 
         {{-- Filter Tabs --}}
         <div class="max-w-[1400px] mx-auto px-4 md:px-8">
-            <div class="flex items-center justify-center gap-3 mb-10 -mt-4">
+            <div class="relative z-20 -mt-7 mb-10 flex justify-center">
+                <div class="inline-flex items-center gap-1 rounded-full border border-line bg-surface p-1.5 shadow-pop">
                 <button wire:click="setFilter('all')" 
-                    class="px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border-2 {{ $filter === 'all' ? 'bg-brand text-white border-brand shadow-sm' : 'bg-transparent text-muted border-line hover:border-brand/30 hover:text-ink' }}">
+                    class="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors sm:px-5 {{ $filter === 'all' ? 'bg-brand text-white shadow-sm' : 'text-muted hover:bg-surface-subtle hover:text-ink' }}">
                     <svg class="w-4 h-4 inline mr-1.5 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                     All
                 </button>
                 <button wire:click="setFilter('photo')" 
-                    class="px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border-2 {{ $filter === 'photo' ? 'bg-brand text-white border-brand shadow-sm' : 'bg-transparent text-muted border-line hover:border-brand/30 hover:text-ink' }}">
+                    class="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors sm:px-5 {{ $filter === 'photo' ? 'bg-brand text-white shadow-sm' : 'text-muted hover:bg-surface-subtle hover:text-ink' }}">
                     <svg class="w-4 h-4 inline mr-1.5 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     Photos
                 </button>
                 <button wire:click="setFilter('video')" 
-                    class="px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border-2 {{ $filter === 'video' ? 'bg-brand text-white border-brand shadow-sm' : 'bg-transparent text-muted border-line hover:border-brand/30 hover:text-ink' }}">
+                    class="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors sm:px-5 {{ $filter === 'video' ? 'bg-brand text-white shadow-sm' : 'text-muted hover:bg-surface-subtle hover:text-ink' }}">
                     <svg class="w-4 h-4 inline mr-1.5 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                     Videos
                 </button>
+                </div>
             </div>
 
             {{-- Gallery Grid --}}
@@ -156,7 +158,7 @@
                         {{-- Title overlay --}}
                         @if($media->title)
                         <div class="absolute bottom-0 left-0 w-full p-3 md:p-4 z-20 bg-gradient-to-t from-black/90 to-transparent pointer-events-none">
-                            <h3 class="text-ink font-semibold text-sm md:text-base leading-tight line-clamp-2 group-hover:text-brand transition-colors tracking-tight">
+                            <h3 class="text-white font-semibold text-sm md:text-base leading-tight line-clamp-2 group-hover:text-accent transition-colors tracking-tight">
                                 {{ $media->title }}
                             </h3>
                         </div>

@@ -37,6 +37,12 @@ export default {
                     DEFAULT: token('color-brand'),
                     hover: token('color-brand-hover'),
                     soft: token('color-brand-soft'),
+                    deep: token('color-brand-deep'),
+                },
+                accent: {
+                    DEFAULT: token('color-accent'),
+                    hover: token('color-accent-hover'),
+                    soft: token('color-accent-soft'),
                 },
                 canvas: token('color-canvas'),
                 surface: {

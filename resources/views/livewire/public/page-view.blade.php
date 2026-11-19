@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
         <!-- Page Header -->
-        <div class="mb-10 text-center md:text-left">
+        <div class="page-intro mb-10 text-center md:text-left">
             <h1 class="text-4xl md:text-3xl font-semibold text-ink mb-4 tracking-tight">
                 {{ $page->title }}
             </h1>

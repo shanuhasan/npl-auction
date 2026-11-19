@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
-Route::get('/home', function () {
+Route::get('/', function () {
     $banners = \App\Models\Banner::where('is_active', true)->orderBy('order', 'asc')->get();
     $teams = \App\Models\Team::with('owner')->where('is_approved', true)->get();
     $galleries = \App\Models\Gallery::where('is_active', true)->orderBy('created_at', 'desc')->take(8)->get();
@@ -26,6 +25,9 @@ Route::get('/home', function () {
 
     return view('home', compact('banners', 'teams', 'galleries', 'players', 'coreCommittees', 'sponsors', 'guests', 'scheduleAuction', 'upcomingFixtures', 'recentResults'));
 })->name('home');
+
+// Old URL: keep links and bookmarks to /home working
+Route::redirect('/home', '/');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

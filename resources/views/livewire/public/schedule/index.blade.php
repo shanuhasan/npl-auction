@@ -1,5 +1,5 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 text-center md:text-left">
+    <div class="page-intro mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6 text-center md:text-left">
         <div>
             <h1 class="text-4xl md:text-3xl font-semibold text-ink mb-2 tracking-tight">Match Schedule</h1>
             <p class="text-muted text-lg">{{ $auction?->title ?? 'Fixtures, results and points table' }}</p>

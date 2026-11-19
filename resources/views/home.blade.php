@@ -100,10 +100,10 @@
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
                 <div class="flex flex-col sm:flex-row justify-between sm:items-end gap-3 mb-8 border-b border-line pb-4">
                     <div>
-                        <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                        <h2 class="section-title text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
                             {{ $upcomingFixtures->isNotEmpty() ? 'Upcoming Matches' : 'Latest Results' }}
                         </h2>
-                        <p class="text-muted text-sm mt-1 ml-5">{{ $scheduleAuction->title }}</p>
+                        <p class="text-muted text-sm mt-1 ml-4">{{ $scheduleAuction->title }}</p>
                     </div>
                     <div class="flex items-center space-x-3 md:space-x-4">
                         <a href="{{ route('public.schedule', ['auction' => $scheduleAuction->guid, 'tab' => 'points']) }}" class="text-xs md:text-sm font-bold text-muted hover:text-brand uppercase transition-colors">Points Table</a>
@@ -135,7 +135,7 @@
 
     <!-- Sponsors & Partners Section -->
     @if(isset($sponsors) && $sponsors->count() > 0)
-        <div class="bg-canvas py-12 border-b border-line">
+        <div class="bg-surface py-12 border-b border-line">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8 text-center">
                 
                 @php
@@ -223,7 +223,7 @@
         <div class="bg-surface py-12 border-b border-line">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
                 <div class="flex justify-between items-end mb-8 border-b border-line pb-4">
-                    <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                    <h2 class="section-title text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
                         Chief Guests & Guests
                     </h2>
                 </div>
@@ -279,7 +279,7 @@
         <div class="bg-surface py-12 border-b border-line">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
                 <div class="flex justify-between items-end mb-8 border-b border-line pb-4">
-                    <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                    <h2 class="section-title text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
                         Core Committee
                     </h2>
                 </div>
@@ -351,28 +351,24 @@
         $vision = setting('our_vision');
     @endphp
     @if($mission || $vision)
-        <div class="bg-surface py-16 border-b border-line relative overflow-hidden">
-            <!-- Background Elements -->
-            <div class="absolute top-0 right-0 w-64 h-64 bg-brand/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-            <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-50 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+        <div class="py-16 md:py-20 relative overflow-hidden" style="background: radial-gradient(900px 300px at 85% 0%, rgb(var(--color-accent) / .14), transparent 70%), linear-gradient(180deg, rgb(var(--color-brand)), rgb(var(--color-brand-deep)));">
             
             <div class="max-w-[1400px] mx-auto px-4 md:px-8 relative z-10">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
                     <!-- Mission -->
                     @if($mission)
-                        <div class="group bg-canvas rounded-2xl p-8 md:p-10 border border-line hover:border-brand/30 transition-all duration-300 shadow-sm hover:shadow-[0_0_30px_rgba(255,200,0,0.1)] relative">
-                            <div class="absolute -top-6 -left-6 w-20 h-20 bg-brand/10 rounded-full blur-2xl group-hover:bg-brand/20 transition-all"></div>
+                        <div class="group rounded-2xl p-8 md:p-10 border border-white/10 bg-white/[0.04] hover:border-accent/40 transition-colors relative">
                             
                             <div class="flex items-center mb-6 relative">
-                                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-brand to-brand-hover flex items-center justify-center mr-5 shadow-[0_0_15px_rgba(255,200,0,0.3)]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <div class="w-12 h-12 rounded-xl bg-accent flex items-center justify-center mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-deep" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                                     </svg>
                                 </div>
-                                <h2 class="text-2xl text-ink tracking-tight font-semibold">Our Mission</h2>
+                                <h2 class="text-2xl text-white tracking-tight font-semibold">Our Mission</h2>
                             </div>
                             
-                            <div class="text-ink-soft text-lg leading-relaxed relative z-10">
+                            <div class="text-white/75 text-lg leading-relaxed relative z-10">
                                 {!! nl2br(e($mission)) !!}
                             </div>
                         </div>
@@ -380,20 +376,19 @@
                     
                     <!-- Vision -->
                     @if($vision)
-                        <div class="group bg-canvas rounded-2xl p-8 md:p-10 border border-line hover:border-blue-200 transition-all duration-300 shadow-sm hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] relative mt-8 md:mt-12 lg:mt-0">
-                            <div class="absolute -top-6 -right-6 w-20 h-20 bg-blue-50 rounded-full blur-2xl group-hover:bg-blue-100 transition-all"></div>
+                        <div class="group rounded-2xl p-8 md:p-10 border border-white/10 bg-white/[0.04] hover:border-accent/40 transition-colors relative">
                             
                             <div class="flex items-center mb-6 relative">
-                                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mr-5 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-deep" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                     </svg>
                                 </div>
-                                <h2 class="text-2xl text-ink tracking-tight font-semibold">Our Vision</h2>
+                                <h2 class="text-2xl text-white tracking-tight font-semibold">Our Vision</h2>
                             </div>
                             
-                            <div class="text-ink-soft text-lg leading-relaxed relative z-10">
+                            <div class="text-white/75 text-lg leading-relaxed relative z-10">
                                 {!! nl2br(e($vision)) !!}
                             </div>
                         </div>
@@ -408,7 +403,7 @@
         <div class="bg-canvas py-12">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
                 <div class="flex justify-between items-end mb-8 border-b border-line pb-4">
-                    <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                    <h2 class="section-title text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
                         All Teams
                     </h2>
                     <div class="flex items-center space-x-3 md:space-x-4">
@@ -487,10 +482,10 @@
                 @endforeach
             ];
         </script>
-        <div class="bg-surface py-12 border-t border-line">
+        <div class="bg-brand-soft py-12 border-t border-line">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
                 <div class="flex justify-between items-end mb-8 border-b border-line pb-4">
-                    <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                    <h2 class="section-title text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
                         Team Owners
                     </h2>
                 </div>
@@ -568,7 +563,7 @@
         <div class="bg-surface py-12 border-y border-line">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
                 <div class="flex justify-between items-end mb-8 border-b border-line pb-4">
-                    <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                    <h2 class="section-title text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
                         Featured Players
                     </h2>
                     <div class="flex items-center space-x-3 md:space-x-4">
@@ -675,7 +670,7 @@
         <div class="bg-canvas py-12">
             <div class="max-w-[1400px] mx-auto px-4 md:px-8">
                 <div class="flex justify-between items-end mb-8 border-b border-line pb-4">
-                    <h2 class="text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
+                    <h2 class="section-title text-2xl md:text-3xl text-ink flex items-center tracking-tight font-semibold">
                         Photos & Videos
                     </h2>
                     <a href="{{ route('public.gallery') }}" class="inline-flex items-center bg-transparent border-2 border-brand text-brand hover:bg-brand hover:text-white px-5 py-2 font-medium text-sm rounded-full transition-all duration-300 group whitespace-nowrap">

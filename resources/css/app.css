@@ -13,6 +13,11 @@
     --color-brand: 23 37 84;          /* #172554 deep navy */
     --color-brand-hover: 30 58 138;   /* #1E3A8A */
     --color-brand-soft: 238 242 250;  /* #EEF2FA navy tint */
+    --color-brand-deep: 11 20 50;     /* #0B1432 footer / dark sections */
+
+    --color-accent: 201 162 39;       /* #C9A227 premium gold */
+    --color-accent-hover: 176 140 28; /* #B08C1C */
+    --color-accent-soft: 251 246 229; /* #FBF6E5 gold tint */
 
     --color-canvas: 248 250 252;      /* #F8FAFC page background */
     --color-surface: 255 255 255;     /* #FFFFFF cards */
@@ -143,6 +148,7 @@
     .btn-sm { @apply px-3 py-1.5 text-xs; }
     .btn-primary { @apply btn bg-brand text-white hover:bg-brand-hover focus-visible:ring-brand; }
     .btn-secondary { @apply btn bg-surface text-ink border border-line-strong shadow-sm hover:bg-surface-subtle focus-visible:ring-brand; }
+    .btn-accent { @apply btn bg-accent text-brand-deep font-semibold hover:bg-accent-hover hover:text-white focus-visible:ring-accent; }
     .btn-danger { @apply btn bg-danger text-white hover:bg-red-700 focus-visible:ring-danger; }
     .btn-ghost { @apply btn text-muted hover:text-ink hover:bg-surface-subtle; }
 
@@ -161,6 +167,36 @@
     .alert-success { @apply alert border-green-200 bg-green-50 text-green-800; }
     .alert-danger { @apply alert border-red-200 bg-red-50 text-red-800; }
     .alert-info { @apply alert border-blue-200 bg-blue-50 text-blue-800; }
+
+    /* Section heading with a gold marker (public site) */
+    .section-title { @apply relative pl-4; }
+    .section-title::before {
+        content: ""; position: absolute; left: 0; top: .2em; bottom: .2em; width: 4px;
+        border-radius: 9999px; background: rgb(var(--color-accent));
+    }
+    .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.14em] text-accent; }
+
+    /* Navy page header band: add .page-intro to a page's title block */
+    .page-intro {
+        position: relative; isolation: isolate;
+        margin-top: -3rem; padding-top: 2.75rem; padding-bottom: 3rem;
+    }
+    .page-intro::before, .page-band::before {
+        content: ""; position: absolute; z-index: -1; top: 0; left: 50%; width: 100vw; transform: translateX(-50%);
+        background:
+            radial-gradient(900px 260px at 85% 0%, rgb(var(--color-accent) / .16), transparent 70%),
+            linear-gradient(180deg, rgb(var(--color-brand)) 0%, rgb(var(--color-brand-deep)) 100%);
+    }
+    .page-intro::before { bottom: 0; }
+    .page-intro :is(h1, h2) { color: #fff; }
+    .page-intro p { color: rgb(255 255 255 / .72); }
+    .page-intro :is(a, button).bg-brand { background: rgb(var(--color-accent)); color: rgb(var(--color-brand-deep)); }
+    .page-intro :is(a, button).bg-brand:hover { background: rgb(var(--color-accent-hover)); color: #fff; }
+    .page-intro :is(a, button)[class*="border-"]:not(.bg-brand) { color: #fff; border-color: rgb(255 255 255 / .3); background: transparent; }
+
+    /* Navy band behind the top of a page that starts with a card: add .page-band to the page wrapper */
+    .page-band { position: relative; isolation: isolate; }
+    .page-band::before { height: 14rem; }
 
     /* Sidebar navigation */
     .nav-section { @apply px-3 pt-5 pb-1.5 text-[11px] font-semibold uppercase tracking-wider text-faint; }

@@ -1,4 +1,4 @@
-<div class="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+<div class="page-band max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
     <div class="bg-surface shadow-sm rounded-lg p-8 border border-line">
         <h1 class="text-3xl font-semibold text-brand mb-6 border-b border-line pb-4 tracking-tight">Team Registration</h1>
         

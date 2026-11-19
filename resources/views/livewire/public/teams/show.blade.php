@@ -1,4 +1,4 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 {{ $this instanceof \App\Livewire\TeamOwner\MyTeam ? 'bg-canvas rounded-2xl text-ink' : '' }}" style="--team-color: {{ $team->primary_color }};">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 {{ $this instanceof \App\Livewire\TeamOwner\MyTeam ? '' : 'page-band' }}" style="--team-color: {{ $team->primary_color }};">
     
     <!-- Team Header -->
     <div class="bg-surface border border-line rounded-2xl p-8 mb-12 shadow-[0_10px_40px_rgba(0,0,0,0.5)] relative overflow-hidden">

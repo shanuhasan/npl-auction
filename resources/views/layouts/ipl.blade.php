@@ -46,69 +46,69 @@
 @endphp
 
     <!-- Main Navigation -->
-    <nav class="sticky top-0 z-50 border-b border-line bg-surface/95 backdrop-blur">
+    <nav class="sticky top-0 z-50 border-b border-white/10 bg-brand shadow-sm">
         <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 md:px-8">
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex min-w-0 items-center gap-3">
                 @if(setting('logo'))
                     <img src="{{ asset('storage/' . setting('logo')) }}" alt="{{ setting('app_name', 'NPL') }}" class="h-10 w-auto max-w-[110px] object-contain">
                 @else
-                    <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-brand text-sm font-bold text-white">NPL</span>
+                    <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-accent text-sm font-bold text-brand-deep">NPL</span>
                 @endif
-                <span class="truncate text-base font-semibold text-ink">{{ setting('app_name', 'Naugawan Premier League') }}</span>
+                <span class="truncate text-base font-semibold text-white">{{ setting('app_name', 'Naugawan Premier League') }}</span>
             </a>
 
             <!-- Desktop Menu -->
             <div class="hidden h-full items-center gap-1 lg:flex">
                 @foreach($navLinks as $link)
                     <a href="{{ $link['href'] }}"
-                       class="relative flex h-full items-center px-3 text-sm font-medium transition-colors {{ $link['active'] ? 'text-brand after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:rounded-full after:bg-brand' : 'text-muted hover:text-ink' }}">{{ $link['label'] }}</a>
+                       class="relative flex h-full items-center px-3 text-sm font-medium transition-colors {{ $link['active'] ? 'text-white after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:rounded-full after:bg-accent' : 'text-white/70 hover:text-white' }}">{{ $link['label'] }}</a>
                 @endforeach
             </div>
 
             <!-- Right Actions -->
             <div class="flex shrink-0 items-center gap-2">
                 @if($auction)
-                    <a href="{{ route('auction.live', $auction->guid) }}" class="inline-flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 transition-colors hover:bg-red-100 md:text-sm">
-                        <span class="h-2 w-2 rounded-full bg-danger animate-pulse"></span>
+                    <a href="{{ route('auction.live', $auction->guid) }}" class="inline-flex items-center gap-2 rounded-lg border border-red-400/40 bg-red-500/15 px-3 py-1.5 text-xs font-semibold text-red-100 transition-colors hover:bg-red-500/25 md:text-sm">
+                        <span class="h-2 w-2 rounded-full bg-red-400 animate-pulse"></span>
                         Live Auction
                     </a>
                 @endif
 
                 @auth
-                    <a href="{{ $dashboardUrl }}" class="btn-secondary hidden lg:inline-flex">Dashboard</a>
+                    <a href="{{ $dashboardUrl }}" class="btn-accent hidden lg:inline-flex">Dashboard</a>
                     <form method="POST" action="{{ route('logout') }}" class="m-0 hidden p-0 lg:flex">
                         @csrf
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="btn-ghost">Log out</a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="btn text-white/70 hover:bg-white/10 hover:text-white">Log out</a>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="btn-primary hidden lg:inline-flex">Log in</a>
+                    <a href="{{ route('login') }}" class="btn-accent hidden lg:inline-flex">Log in</a>
                 @endauth
-                <button id="mobile-menu-button" class="btn-ghost p-2 lg:hidden" aria-label="Open menu">
+                <button id="mobile-menu-button" class="btn p-2 text-white/80 hover:bg-white/10 hover:text-white lg:hidden" aria-label="Open menu">
                     <x-icon name="menu" />
                 </button>
             </div>
         </div>
 
         <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden border-t border-line bg-surface pb-3 lg:hidden">
+        <div id="mobile-menu" class="hidden border-t border-white/10 bg-brand pb-3 lg:hidden">
             <div class="space-y-0.5 px-2 pt-2">
                 @foreach($navLinks as $link)
-                    <a href="{{ $link['href'] }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ $link['active'] ? 'bg-brand-soft text-brand' : 'text-ink-soft hover:bg-surface-subtle' }}">{{ $link['label'] }}</a>
+                    <a href="{{ $link['href'] }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ $link['active'] ? 'bg-white/10 text-white' : 'text-white/75 hover:bg-white/5 hover:text-white' }}">{{ $link['label'] }}</a>
                 @endforeach
                 @if($auction)
-                    <a href="{{ route('auction.live', $auction->guid) }}" class="block rounded-lg px-3 py-2.5 text-sm font-semibold text-red-700 hover:bg-red-50">Live Auction</a>
+                    <a href="{{ route('auction.live', $auction->guid) }}" class="block rounded-lg px-3 py-2.5 text-sm font-semibold text-red-200 hover:bg-white/5">Live Auction</a>
                 @endif
             </div>
-            <div class="mt-2 flex gap-2 border-t border-line px-4 pt-3">
+            <div class="mt-2 flex gap-2 border-t border-white/10 px-4 pt-3">
                 @auth
-                    <a href="{{ $dashboardUrl }}" class="btn-secondary flex-1">{{ auth()->user()->role === 'team_owner' ? 'My Team' : 'Dashboard' }}</a>
+                    <a href="{{ $dashboardUrl }}" class="btn-accent flex-1">{{ auth()->user()->role === 'team_owner' ? 'My Team' : 'Dashboard' }}</a>
                     <form method="POST" action="{{ route('logout') }}" class="m-0 flex-1 p-0">
                         @csrf
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="btn-ghost w-full">Log out</a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="btn w-full text-white/75 hover:bg-white/10 hover:text-white">Log out</a>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="btn-primary flex-1">Log in</a>
+                    <a href="{{ route('login') }}" class="btn-accent flex-1">Log in</a>
                 @endauth
             </div>
         </div>
@@ -131,7 +131,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-line bg-surface">
+    <footer class="border-t-2 border-accent bg-brand-deep text-white/65">
         <div class="mx-auto max-w-7xl px-4 py-14 md:px-8">
             <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
                 <div>
@@ -139,40 +139,40 @@
                         @if(setting('logo'))
                             <img src="{{ asset('storage/' . setting('logo')) }}" alt="{{ setting('app_name', 'NPLT20') }}" class="h-12 w-auto max-w-[120px] object-contain">
                         @endif
-                        <span class="text-base font-semibold text-ink">{{ setting('app_name', 'Naugawan Premier League') }}</span>
+                        <span class="text-base font-semibold text-white">{{ setting('app_name', 'Naugawan Premier League') }}</span>
                     </div>
-                    <p class="mt-4 text-sm leading-relaxed text-muted">The official home of the premier league. Get live scores, news, and exclusive videos directly from the field.</p>
+                    <p class="mt-4 text-sm leading-relaxed text-white/60">The official home of the premier league. Get live scores, news, and exclusive videos directly from the field.</p>
                 </div>
                 <div>
-                    <h4 class="text-sm font-semibold text-ink">Quick Links</h4>
-                    <ul class="mt-4 space-y-2.5 text-sm text-muted">
-                        <li><a href="{{ route('home') }}" class="hover:text-brand">Home</a></li>
-                        <li><a href="{{ route('public.teams') }}" class="hover:text-brand">Teams</a></li>
-                        <li><a href="{{ route('public.players') }}" class="hover:text-brand">Players</a></li>
-                        <li><a href="{{ route('public.schedule') }}" class="hover:text-brand">Schedule</a></li>
-                        <li><a href="{{ route('public.gallery') }}" class="hover:text-brand">Gallery</a></li>
-                        <li><a href="{{ route('public.blogs') }}" class="hover:text-brand">News</a></li>
+                    <h4 class="text-sm font-semibold text-white">Quick Links</h4>
+                    <ul class="mt-4 space-y-2.5 text-sm text-white/60">
+                        <li><a href="{{ route('home') }}" class="hover:text-accent">Home</a></li>
+                        <li><a href="{{ route('public.teams') }}" class="hover:text-accent">Teams</a></li>
+                        <li><a href="{{ route('public.players') }}" class="hover:text-accent">Players</a></li>
+                        <li><a href="{{ route('public.schedule') }}" class="hover:text-accent">Schedule</a></li>
+                        <li><a href="{{ route('public.gallery') }}" class="hover:text-accent">Gallery</a></li>
+                        <li><a href="{{ route('public.blogs') }}" class="hover:text-accent">News</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-sm font-semibold text-ink">Guidelines &amp; Pages</h4>
-                    <ul class="mt-4 space-y-2.5 text-sm text-muted">
+                    <h4 class="text-sm font-semibold text-white">Guidelines &amp; Pages</h4>
+                    <ul class="mt-4 space-y-2.5 text-sm text-white/60">
                         @if(isset($globalPages) && $globalPages->count() > 0)
                             @foreach($globalPages as $gPage)
-                                <li><a href="{{ route('public.page', $gPage->slug) }}" class="hover:text-brand">{{ $gPage->title }}</a></li>
+                                <li><a href="{{ route('public.page', $gPage->slug) }}" class="hover:text-accent">{{ $gPage->title }}</a></li>
                             @endforeach
                         @endif
-                        <li><a href="{{ route('public.contact') }}" class="hover:text-brand">Contact Us</a></li>
+                        <li><a href="{{ route('public.contact') }}" class="hover:text-accent">Contact Us</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-sm font-semibold text-ink">Connect</h4>
-                    <p class="mt-4 text-sm text-muted">Follow us on social media for the latest updates.</p>
+                    <h4 class="text-sm font-semibold text-white">Connect</h4>
+                    <p class="mt-4 text-sm text-white/60">Follow us on social media for the latest updates.</p>
                     @if(count($socials))
                         <div class="mt-4 flex gap-2">
                             @foreach($socials as $net => $url)
                                 <a href="{{ $url }}" target="_blank" rel="noopener" aria-label="{{ ucfirst($net) }}"
-                                   class="flex h-9 w-9 items-center justify-center rounded-lg border border-line text-muted transition-colors hover:border-brand hover:bg-brand hover:text-white">
+                                   class="flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 text-white/70 transition-colors hover:border-accent hover:bg-accent hover:text-brand-deep">
                                     @switch($net)
                                         @case('facebook')<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"/></svg>@break
                                         @case('instagram')<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/></svg>@break
@@ -186,10 +186,10 @@
                 </div>
             </div>
 
-            <div class="mt-12 flex flex-col items-center justify-between gap-2 border-t border-line pt-6 text-xs text-muted md:flex-row">
+            <div class="mt-12 flex flex-col items-center justify-between gap-2 border-t border-white/10 pt-6 text-xs text-white/50 md:flex-row">
                 <p>&copy; {{ date('Y') }} {{ setting('app_name', 'Naugawan Premier League') }}. All rights reserved.</p>
                 @if(setting('developer_name'))
-                    <p>Developed by <a href="{{ setting('developer_url', '#') }}" target="_blank" class="font-medium text-ink-soft hover:text-brand">{{ setting('developer_name') }}</a></p>
+                    <p>Developed by <a href="{{ setting('developer_url', '#') }}" target="_blank" class="font-medium text-white/80 hover:text-accent">{{ setting('developer_name') }}</a></p>
                 @endif
             </div>
         </div>

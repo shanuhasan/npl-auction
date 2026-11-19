@@ -6,7 +6,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     
     <!-- Page Header -->
-    <div class="mb-10 flex flex-col md:flex-row justify-between items-center">
+    <div class="page-intro mb-10 flex flex-col md:flex-row justify-between items-center">
         <div class="text-center md:text-left mb-6 md:mb-0">
             <h1 class="text-4xl md:text-3xl font-semibold text-ink mb-4 tracking-tight">News & Blogs</h1>
             <p class="text-muted text-lg">Stay updated with the latest news, updates, and stories.</p>

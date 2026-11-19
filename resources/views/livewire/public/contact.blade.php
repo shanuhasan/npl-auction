@@ -1,5 +1,5 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="mb-10 text-center md:text-left">
+    <div class="page-intro mb-10 text-center md:text-left">
         <h1 class="text-4xl md:text-3xl font-semibold text-ink mb-4 tracking-tight">Contact Us</h1>
         <p class="text-muted text-lg">Have any questions or inquiries? Feel free to reach out to us and we'll get back to you as soon as possible.</p>
     </div>

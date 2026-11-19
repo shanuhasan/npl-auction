@@ -199,7 +199,7 @@ Main tables:
 ### Public
 | URL | Description |
 |---|---|
-| `/home` | Home page |
+| `/` | Home page (`/home` redirects here) |
 | `/teams`, `/teams/{team}`, `/teams/register` | Teams |
 | `/players`, `/players/register` | Players |
 | `/auction/live/{auction}` | Live auction viewer |
@@ -343,9 +343,10 @@ Managed from **Admin → Settings** and read with the `setting('key', $default)`
 
 ## Admin Theme (UI)
 
-The whole application uses one light SaaS theme (deep navy `#172554` on light gray): the public website (`layouts/ipl`), the live auction and bidding screens (`layouts/auction-live`), the admin / team owner area (`layouts/app`) and the auth pages (`layouts/guest`).
+The whole application uses one theme: deep navy `#172554` with a gold accent `#C9A227` on light gray: the public website (`layouts/ipl`), the live auction and bidding screens (`layouts/auction-live`), the admin / team owner area (`layouts/app`) and the auth pages (`layouts/guest`).
 
-- **Colours:** CSS variables in `resources/css/app.css` (`:root`), exposed to Tailwind as `brand`, `canvas`, `surface`, `line`, `ink`, `muted`, `faint`, `danger`, `success`, `warning` (see `tailwind.config.js`). Change a colour in one place and it applies everywhere.
+- **Colours:** CSS variables in `resources/css/app.css` (`:root`), exposed to Tailwind as `brand` (+ `brand-deep`), `accent` (gold), `canvas`, `surface`, `line`, `ink`, `muted`, `faint`, `danger`, `success`, `warning` (see `tailwind.config.js`). Change a colour in one place and it applies everywhere.
+- **Public site accents:** `.page-intro` (navy title band on a page's title block), `.page-band` (navy band behind a page that starts with a card), `.section-title` (heading with a gold marker), `.btn-accent` (gold button).
 - **Components:** `.card`, `.btn-primary`, `.btn-secondary`, `.btn-danger`, `.btn-ghost`, `.badge-*`, `.alert-*`, `.form-label`, `.nav-item`, `.menu-panel` (same file).
 - **Base styles:** inputs, selects, checkboxes, tables, pagination, Select2 and Quill are styled centrally, inside `.theme-app` (set on `<body>` in every layout).
 - **Sidebar menu:** defined once in `resources/views/layouts/partials/sidebar-nav.blade.php` (used for desktop and mobile). It can be collapsed, and the choice is remembered in the browser.
