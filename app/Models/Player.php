@@ -11,6 +11,12 @@ class Player extends Model
         'base_price', 'category', 'stats', 'status', 'current_team_id', 'is_approved', 'contact_no', 'payment_status', 'is_captain', 'is_favorite'
     ];
 
+    /**
+     * Never sent in JSON (public API, broadcasts): the mobile number is private
+     * and is promised as such in the Privacy Policy page.
+     */
+    protected $hidden = ['contact_no'];
+
     protected $casts = [
         'base_price' => 'decimal:2',
         'stats' => 'array',

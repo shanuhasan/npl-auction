@@ -48,7 +48,7 @@ class TeamController extends Controller
         }
 
         // Load the owner and the current players
-        $team->load(['owner', 'players']);
+        $team->load(['owner:id,name', 'players']); // owner email/permissions stay private
 
         return response()->json([
             'success' => true,
