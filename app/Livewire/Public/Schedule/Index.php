@@ -53,7 +53,7 @@ class Index extends Component
                 ->orderBy('match_no')
                 ->get();
 
-            $teams = $allFixtures->flatMap(fn ($f) => [$f->teamA, $f->teamB])->unique('id')->sortBy('name')->values();
+            $teams = $allFixtures->flatMap(fn ($f) => [$f->teamA, $f->teamB])->filter()->unique('id')->sortBy('name')->values();
             $fixtures = $this->teamId
                 ? $allFixtures->filter(fn ($f) => $f->team_a_id == $this->teamId || $f->team_b_id == $this->teamId)
                 : $allFixtures;

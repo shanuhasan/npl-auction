@@ -16,16 +16,27 @@
     </div>
 
     <div class="flex items-center justify-between gap-3">
-        @foreach([[$f->teamA, $f->team_a_score], [$f->teamB, $f->team_b_score]] as $i => [$team, $score])
+        @foreach([[$f->teamA, $f->team_a_score, 'a'], [$f->teamB, $f->team_b_score, 'b']] as $i => [$team, $score, $side])
             @if($i === 1)
                 <div class="text-muted font-bold text-sm">VS</div>
             @endif
-            <a href="{{ route('public.teams.show', $team->guid) }}" class="flex-1 flex flex-col items-center text-center group {{ $highlightTeam && $highlightTeam != $team->id ? 'opacity-80' : '' }}">
-                <img src="{{ $logo($team) }}" alt="{{ $team->name }}" class="w-14 h-14 rounded-full object-cover bg-white border-2 mb-2" style="border-color: {{ $team->primary_color ?? '#fff' }}">
-                <span class="font-bold text-ink group-hover:text-brand leading-tight {{ $f->winner_team_id == $team->id ? 'text-success' : '' }}">{{ $team->short_name ?: $team->name }}</span>
-                <span class="text-xs text-muted hidden sm:block truncate max-w-full">{{ $team->name }}</span>
-                @if($score)<span class="text-sm font-bold text-ink mt-1">{{ $score }}</span>@endif
-            </a>
+            @if($team)
+                <a href="{{ route('public.teams.show', $team->guid) }}" class="flex-1 flex flex-col items-center text-center group {{ $highlightTeam && $highlightTeam != $team->id ? 'opacity-80' : '' }}">
+                    <img src="{{ $logo($team) }}" alt="{{ $team->name }}" class="w-14 h-14 rounded-full object-cover bg-white border-2 mb-2" style="border-color: {{ $team->primary_color ?? '#fff' }}">
+                    <span class="font-bold text-ink group-hover:text-brand leading-tight {{ $f->winner_team_id == $team->id ? 'text-success' : '' }}">{{ $team->short_name ?: $team->name }}</span>
+                    <span class="text-xs text-muted hidden sm:block truncate max-w-full">{{ $team->name }}</span>
+                    @if($score)<span class="text-sm font-bold text-ink mt-1">{{ $score }}</span>@endif
+                </a>
+            @else
+                {{-- Team not decided yet (playoffs) --}}
+                <div class="flex-1 flex flex-col items-center text-center">
+                    <div class="w-14 h-14 rounded-full bg-surface-muted border-2 border-dashed border-line mb-2 flex items-center justify-center text-muted font-bold text-sm">?</div>
+                    <span class="font-bold text-ink leading-tight">TBC</span>
+                    @if($f->{"team_{$side}_label"})
+                        <span class="text-xs text-muted truncate max-w-full">{{ $f->placeholder($side) }}</span>
+                    @endif
+                </div>
+            @endif
         @endforeach
     </div>
 

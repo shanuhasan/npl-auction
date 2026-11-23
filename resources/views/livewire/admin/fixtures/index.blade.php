@@ -100,6 +100,34 @@
         </form>
     </div>
 
+    <!-- Playoffs -->
+    <div class="bg-surface rounded-lg shadow-sm border border-line p-6 mb-8">
+        <h2 class="text-xl font-semibold text-ink">Playoffs: Semi Finals &amp; Final</h2>
+        <p class="text-sm text-muted mt-1">
+            Semi Final 1: 1st v 4th &middot; Semi Final 2: 2nd v 3rd &middot; Final: winners of both semis.
+            Teams show as <strong>TBC</strong> until decided. When all league matches are finished, the semis are filled from the points table, and a semi final winner moves into the Final automatically.
+        </p>
+        <form wire:submit="generatePlayoffs" class="mt-4 flex flex-col md:flex-row md:items-end gap-4">
+            <div>
+                <label class="block text-sm font-medium text-ink-soft mb-1">Semi Finals date</label>
+                <input type="date" wire:model="playoffDate" class="w-full bg-surface-muted border-line rounded text-ink">
+                @error('playoffDate') <span class="text-danger text-sm">{{ $message }}</span> @enderror
+            </div>
+            <p class="text-xs text-muted md:flex-1">Uses the match times, days between match days and venue from the generator above. With 2 time slots both semis are on the same day; the Final is on the next match day.</p>
+            <div class="flex gap-3">
+                @if($hasPlayoffs)
+                    <button type="button" wire:click="fillSemiFinals" wire:confirm="Put the current top 4 of the points table into the Semi Finals?" class="bg-surface-subtle text-ink px-4 py-2 rounded font-semibold hover:bg-slate-200 transition whitespace-nowrap">Fill from points table</button>
+                @endif
+                <button type="submit"
+                        @if($hasPlayoffs) wire:confirm="This replaces the existing Semi Finals and Final (including their results). Continue?" @endif
+                        class="bg-brand text-white px-6 py-2 rounded font-bold hover:bg-brand-hover transition whitespace-nowrap">
+                    <span wire:loading.remove wire:target="generatePlayoffs">{{ $hasPlayoffs ? 'Recreate Playoffs' : 'Add Semi Finals & Final' }}</span>
+                    <span wire:loading wire:target="generatePlayoffs">Saving...</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
     <!-- Schedule list -->
     <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-4">
         <h2 class="text-lg font-semibold text-ink">Matches ({{ $totalFixtures }})</h2>
@@ -132,10 +160,18 @@
                                 </td>
                                 <td class="px-4 py-3 whitespace-nowrap text-sm text-ink-soft w-24">{{ $f->match_date?->format('h:i A') ?? '—' }}</td>
                                 <td class="px-4 py-3 whitespace-nowrap text-sm">
-                                    <span class="font-semibold {{ $f->winner_team_id == $f->team_a_id ? 'text-success' : 'text-ink' }}">{{ $f->teamA->name }}</span>
+                                    @if($f->teamA)
+                                        <span class="font-semibold {{ $f->winner_team_id && $f->winner_team_id == $f->team_a_id ? 'text-success' : 'text-ink' }}">{{ $f->teamA->name }}</span>
+                                    @else
+                                        <span class="font-semibold text-muted italic">{{ $f->placeholder('a') }}</span>
+                                    @endif
                                     @if($f->team_a_score)<span class="text-muted text-xs ml-1">{{ $f->team_a_score }}</span>@endif
                                     <span class="text-muted mx-2">vs</span>
-                                    <span class="font-semibold {{ $f->winner_team_id == $f->team_b_id ? 'text-success' : 'text-ink' }}">{{ $f->teamB->name }}</span>
+                                    @if($f->teamB)
+                                        <span class="font-semibold {{ $f->winner_team_id && $f->winner_team_id == $f->team_b_id ? 'text-success' : 'text-ink' }}">{{ $f->teamB->name }}</span>
+                                    @else
+                                        <span class="font-semibold text-muted italic">{{ $f->placeholder('b') }}</span>
+                                    @endif
                                     @if($f->team_b_score)<span class="text-muted text-xs ml-1">{{ $f->team_b_score }}</span>@endif
                                     @if($f->result)<div class="text-xs text-muted mt-1">{{ $f->result }}</div>@endif
                                 </td>
@@ -181,7 +217,7 @@
                             <label class="block text-sm text-ink-soft mb-1">Stage</label>
                             <input type="text" wire:model="stage" list="stage-options" class="w-full bg-surface-muted border-line rounded text-ink">
                             <datalist id="stage-options">
-                                <option value="League"><option value="Qualifier 1"><option value="Eliminator"><option value="Qualifier 2"><option value="Semi Final"><option value="Final">
+                                <option value="League"><option value="Qualifier 1"><option value="Eliminator"><option value="Qualifier 2"><option value="Semi Final 1"><option value="Semi Final 2"><option value="Final">
                             </datalist>
                             @error('stage') <span class="text-danger text-xs">{{ $message }}</span> @enderror
                         </div>
@@ -200,18 +236,24 @@
                         <div>
                             <label class="block text-sm text-ink-soft mb-1">Team A</label>
                             <select wire:model.live="team_a_id" class="w-full bg-surface-muted border-line rounded text-ink">
-                                <option value="">Select team</option>
+                                <option value="">TBC (not decided yet)</option>
                                 @foreach($allTeams as $team)<option value="{{ $team->id }}">{{ $team->name }}</option>@endforeach
                             </select>
                             @error('team_a_id') <span class="text-danger text-xs">{{ $message }}</span> @enderror
+                            @if(!$team_a_id)
+                                <input type="text" wire:model="team_a_label" placeholder="Label, e.g. Winner SF 1 (blank = TBC)" class="mt-2 w-full bg-surface-muted border-line rounded text-ink text-sm">
+                            @endif
                         </div>
                         <div>
                             <label class="block text-sm text-ink-soft mb-1">Team B</label>
                             <select wire:model.live="team_b_id" class="w-full bg-surface-muted border-line rounded text-ink">
-                                <option value="">Select team</option>
+                                <option value="">TBC (not decided yet)</option>
                                 @foreach($allTeams as $team)<option value="{{ $team->id }}">{{ $team->name }}</option>@endforeach
                             </select>
                             @error('team_b_id') <span class="text-danger text-xs">{{ $message }}</span> @enderror
+                            @if(!$team_b_id)
+                                <input type="text" wire:model="team_b_label" placeholder="Label, e.g. Winner SF 1 (blank = TBC)" class="mt-2 w-full bg-surface-muted border-line rounded text-ink text-sm">
+                            @endif
                         </div>
                         <div>
                             <label class="block text-sm text-ink-soft mb-1">Date &amp; Time</label>

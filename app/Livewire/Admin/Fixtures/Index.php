@@ -20,6 +20,9 @@ class Index extends Component
     public string $venue = '';
     public bool $replace = true;
 
+    // Playoffs (Semi Finals & Final)
+    public string $playoffDate = '';
+
     // Filter
     public $filterTeam = '';
 
@@ -30,6 +33,8 @@ class Index extends Component
     public $stage = 'League';
     public $team_a_id = '';
     public $team_b_id = '';
+    public $team_a_label = '';
+    public $team_b_label = '';
     public $match_date = '';
     public $match_venue = '';
     public $status = 'scheduled';
@@ -43,6 +48,42 @@ class Index extends Component
         $this->auction = $auction;
         $this->selectedTeams = $scheduler->teamsFor($auction)->pluck('id')->map(fn ($id) => (string) $id)->all();
         $this->startDate = now()->addDay()->toDateString();
+
+        $lastLeague = Fixture::where('auction_id', $auction->id)->where('stage', 'League')->max('match_date');
+        $this->playoffDate = $lastLeague
+            ? \Carbon\Carbon::parse($lastLeague)->addDays(max(1, $this->dayGap))->toDateString()
+            : now()->addDay()->toDateString();
+    }
+
+    public function generatePlayoffs(FixtureScheduler $scheduler)
+    {
+        $this->validate([
+            'playoffDate' => 'required|date',
+            'matchTimes' => ['required', 'regex:/^\s*\d{1,2}:\d{2}\s*(,\s*\d{1,2}:\d{2}\s*)*$/'],
+            'dayGap' => 'required|integer|min:1|max:30',
+            'venue' => 'nullable|string|max:255',
+        ], [
+            'matchTimes.regex' => 'Enter times like 10:00, 14:00',
+        ]);
+
+        $scheduler->generatePlayoffs($this->auction, [
+            'start_date' => $this->playoffDate,
+            'match_times' => array_map('trim', explode(',', $this->matchTimes)),
+            'day_gap' => $this->dayGap,
+            'venue' => $this->venue ?: null,
+        ]);
+
+        session()->flash('message', 'Semi Finals and Final added. Teams show as TBC until they are decided.');
+    }
+
+    public function fillSemiFinals(FixtureScheduler $scheduler)
+    {
+        if ($scheduler->fillSemiFinals($this->auction)) {
+            $scheduler->advancePlayoffs($this->auction);
+            session()->flash('message', 'Semi Final teams filled from the points table (1st v 4th, 2nd v 3rd).');
+        } else {
+            session()->flash('message', 'At least 4 teams with league matches are needed to fill the Semi Finals.');
+        }
     }
 
     public function generate(FixtureScheduler $scheduler)
@@ -94,6 +135,8 @@ class Index extends Component
         $this->stage = $f->stage;
         $this->team_a_id = (string) $f->team_a_id;
         $this->team_b_id = (string) $f->team_b_id;
+        $this->team_a_label = $f->team_a_label ?? '';
+        $this->team_b_label = $f->team_b_label ?? '';
         $this->match_date = $f->match_date?->format('Y-m-d\TH:i') ?? '';
         $this->match_venue = $f->venue ?? '';
         $this->status = $f->status;
@@ -104,13 +147,18 @@ class Index extends Component
         $this->showModal = true;
     }
 
-    public function save()
+    public function save(FixtureScheduler $scheduler)
     {
+        // Teams may be left empty ("TBC") only while a match is still scheduled
+        $teamRule = $this->status === 'scheduled' ? 'nullable' : 'required';
+
         $this->validate([
             'match_no' => 'required|integer|min:1',
             'stage' => 'required|string|max:50',
-            'team_a_id' => 'required|exists:teams,id',
-            'team_b_id' => 'required|exists:teams,id|different:team_a_id',
+            'team_a_id' => $teamRule . '|exists:teams,id',
+            'team_b_id' => array_filter([$teamRule, 'exists:teams,id', $this->team_a_id ? 'different:team_a_id' : null]),
+            'team_a_label' => 'nullable|string|max:50',
+            'team_b_label' => 'nullable|string|max:50',
             'match_date' => 'nullable|date',
             'match_venue' => 'nullable|string|max:255',
             'status' => 'required|in:scheduled,live,completed,abandoned',
@@ -120,6 +168,8 @@ class Index extends Component
             'result' => 'nullable|string|max:255',
         ], [
             'team_b_id.different' => 'A team cannot play against itself.',
+            'team_a_id.required' => 'Select Team A before the match goes live or gets a result.',
+            'team_b_id.required' => 'Select Team B before the match goes live or gets a result.',
             'winner_team_id.in' => 'Winner must be one of the two teams.',
         ]);
 
@@ -127,8 +177,10 @@ class Index extends Component
             'auction_id' => $this->auction->id,
             'match_no' => $this->match_no,
             'stage' => $this->stage,
-            'team_a_id' => $this->team_a_id,
-            'team_b_id' => $this->team_b_id,
+            'team_a_id' => $this->team_a_id ?: null,
+            'team_a_label' => $this->team_a_label ?: null,
+            'team_b_id' => $this->team_b_id ?: null,
+            'team_b_label' => $this->team_b_label ?: null,
             'match_date' => $this->match_date ?: null,
             'venue' => $this->match_venue ?: null,
             'status' => $this->status,
@@ -145,6 +197,9 @@ class Index extends Component
             Fixture::create($data);
             session()->flash('message', 'Match added.');
         }
+
+        // A finished league or semi final may decide the next playoff teams
+        $scheduler->advancePlayoffs($this->auction);
 
         $this->showModal = false;
         $this->resetForm();
@@ -164,7 +219,7 @@ class Index extends Component
 
     protected function resetForm()
     {
-        $this->reset(['editId', 'match_no', 'stage', 'team_a_id', 'team_b_id', 'match_date', 'match_venue',
+        $this->reset(['editId', 'match_no', 'stage', 'team_a_id', 'team_b_id', 'team_a_label', 'team_b_label', 'match_date', 'match_venue',
             'status', 'team_a_score', 'team_b_score', 'winner_team_id', 'result']);
         $this->resetValidation();
     }
@@ -182,7 +237,12 @@ class Index extends Component
             ->orderBy('match_no')
             ->get();
 
+        $hasPlayoffs = Fixture::where('auction_id', $this->auction->id)
+            ->whereIn('stage', [FixtureScheduler::SEMI_FINAL_1, FixtureScheduler::SEMI_FINAL_2, FixtureScheduler::FINAL])
+            ->exists();
+
         return view('livewire.admin.fixtures.index', [
+            'hasPlayoffs' => $hasPlayoffs,
             'teams' => $teams,
             'allTeams' => $allTeams,
             'fixturesByDay' => $fixtures->groupBy(fn ($f) => $f->match_date?->toDateString() ?? 'tbd'),

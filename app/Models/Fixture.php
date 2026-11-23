@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Fixture extends Model
 {
     protected $fillable = [
-        'auction_id', 'match_no', 'stage', 'team_a_id', 'team_b_id', 'match_date', 'venue',
+        'auction_id', 'match_no', 'stage', 'team_a_id', 'team_a_label', 'team_b_id', 'team_b_label', 'match_date', 'venue',
         'status', 'team_a_score', 'team_b_score', 'winner_team_id', 'result',
     ];
 
@@ -42,6 +42,19 @@ class Fixture extends Model
     public function scopeForTeam($query, $teamId)
     {
         return $query->where(fn ($q) => $q->where('team_a_id', $teamId)->orWhere('team_b_id', $teamId));
+    }
+
+    /**
+     * Text shown for a side whose team is not decided yet ('a' or 'b').
+     */
+    public function placeholder(string $side): string
+    {
+        return $this->{"team_{$side}_label"} ?: 'TBC';
+    }
+
+    public function isPlayoff(): bool
+    {
+        return $this->stage !== 'League';
     }
 
     public function opponentOf($teamId): ?Team

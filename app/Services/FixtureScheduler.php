@@ -163,6 +163,142 @@ class FixtureScheduler
         });
     }
 
+    public const SEMI_FINAL_1 = 'Semi Final 1';
+    public const SEMI_FINAL_2 = 'Semi Final 2';
+    public const FINAL = 'Final';
+
+    /**
+     * Create Semi Final 1 (1st v 4th), Semi Final 2 (2nd v 3rd) and the Final
+     * (winner SF 1 v winner SF 2) with teams "TBC". Replaces existing matches of these stages.
+     * Teams are filled in later by advancePlayoffs().
+     *
+     * @param array $options ['start_date' => 'Y-m-d', 'match_times' => [...], 'day_gap' => 1, 'venue' => null]
+     * @return int number of fixtures created
+     */
+    public function generatePlayoffs(Auction $auction, array $options): int
+    {
+        $times = array_values(array_filter($options['match_times'] ?? []));
+        if (empty($times)) {
+            $times = ['10:00'];
+        }
+        sort($times);
+        $dayGap = max(1, (int) ($options['day_gap'] ?? 1));
+
+        $at = function (Carbon $day, string $time) {
+            [$hour, $minute] = array_pad(explode(':', $time), 2, 0);
+            return $day->copy()->setTime((int) $hour, (int) $minute);
+        };
+
+        $day = Carbon::parse($options['start_date'])->startOfDay();
+        $sf1Date = $at($day, $times[0]);
+        // Both semis on the same day if there are 2 time slots, otherwise on consecutive match days
+        $sf2Date = isset($times[1]) ? $at($day, $times[1]) : $at($day->copy()->addDays($dayGap), $times[0]);
+        $finalDate = $at($sf2Date->copy()->startOfDay()->addDays($dayGap), $times[0]);
+
+        $matches = [
+            [self::SEMI_FINAL_1, '1st in League', '4th in League', $sf1Date],
+            [self::SEMI_FINAL_2, '2nd in League', '3rd in League', $sf2Date],
+            [self::FINAL, 'Winner SF 1', 'Winner SF 2', $finalDate],
+        ];
+
+        DB::transaction(function () use ($auction, $matches, $options) {
+            Fixture::where('auction_id', $auction->id)
+                ->whereIn('stage', [self::SEMI_FINAL_1, self::SEMI_FINAL_2, self::FINAL])
+                ->delete();
+
+            $matchNo = (int) Fixture::where('auction_id', $auction->id)->max('match_no');
+
+            foreach ($matches as [$stage, $labelA, $labelB, $date]) {
+                Fixture::create([
+                    'auction_id' => $auction->id,
+                    'match_no' => ++$matchNo,
+                    'stage' => $stage,
+                    'team_a_label' => $labelA,
+                    'team_b_label' => $labelB,
+                    'match_date' => $date,
+                    'venue' => $options['venue'] ?? null,
+                    'status' => 'scheduled',
+                ]);
+            }
+        });
+
+        $this->advancePlayoffs($auction);
+
+        return count($matches);
+    }
+
+    /**
+     * Fill playoff teams that are now known:
+     * - once every league match is finished, empty semi-final slots get the top 4 of the points table
+     * - a semi-final winner moves into the Final (SF 1 → Team A, SF 2 → Team B)
+     * Matches that are live or finished are never changed.
+     */
+    public function advancePlayoffs(Auction $auction): void
+    {
+        $league = Fixture::where('auction_id', $auction->id)->where('stage', 'League')->get();
+        $leagueDone = $league->isNotEmpty() && $league->every(fn ($f) => in_array($f->status, ['completed', 'abandoned']));
+
+        if ($leagueDone) {
+            $this->fillSemiFinals($auction, overwrite: false);
+        }
+
+        $final = Fixture::where('auction_id', $auction->id)->where('stage', self::FINAL)->first();
+        if (!$final || $final->status !== 'scheduled') {
+            return;
+        }
+
+        foreach ([self::SEMI_FINAL_1 => 'team_a_id', self::SEMI_FINAL_2 => 'team_b_id'] as $stage => $column) {
+            $semi = Fixture::where('auction_id', $auction->id)->where('stage', $stage)->first();
+            if ($semi && $semi->status === 'completed' && $semi->winner_team_id) {
+                $final->{$column} = $semi->winner_team_id;
+            }
+        }
+
+        if ($final->team_a_id && $final->team_a_id == $final->team_b_id) {
+            return; // inconsistent data entered by hand; leave it for the admin
+        }
+        $final->save();
+    }
+
+    /**
+     * Put the top 4 of the points table into the semi finals (1st v 4th, 2nd v 3rd).
+     * With $overwrite = false only empty slots are filled.
+     *
+     * @return bool false when fewer than 4 teams are in the points table
+     */
+    public function fillSemiFinals(Auction $auction, bool $overwrite = true): bool
+    {
+        $teamIds = Fixture::where('auction_id', $auction->id)->where('stage', 'League')
+            ->get(['team_a_id', 'team_b_id'])
+            ->flatMap(fn ($f) => [$f->team_a_id, $f->team_b_id])
+            ->filter()->unique();
+
+        $top = $this->pointsTable($auction, Team::whereIn('id', $teamIds)->get())
+            ->take(4)->pluck('team.id')->values();
+
+        if ($top->count() < 4) {
+            return false;
+        }
+
+        foreach ([self::SEMI_FINAL_1 => [$top[0], $top[3]], self::SEMI_FINAL_2 => [$top[1], $top[2]]] as $stage => [$a, $b]) {
+            $semi = Fixture::where('auction_id', $auction->id)->where('stage', $stage)->first();
+            if (!$semi || $semi->status !== 'scheduled') {
+                continue;
+            }
+            if ($overwrite || !$semi->team_a_id) {
+                $semi->team_a_id = $a;
+            }
+            if ($overwrite || !$semi->team_b_id) {
+                $semi->team_b_id = $b;
+            }
+            if ($semi->team_a_id != $semi->team_b_id) {
+                $semi->save();
+            }
+        }
+
+        return true;
+    }
+
     /**
      * League points table from completed league matches.
      * Win = 2 points, abandoned/no result/tie = 1 point each.
