@@ -12,47 +12,26 @@
     </div>
 
     @if($selectedAuctionId && !empty($stats))
-        <!-- Statistics Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div class="bg-surface rounded-xl shadow-sm border border-line p-6 flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-muted font-bold uppercase tracking-wider">Total Spent</p>
-                    <p class="text-3xl font-semibold text-brand mt-1">₹{{ number_format($stats['total_spent']) }}</p>
-                </div>
-                <div class="p-3 bg-brand/10 rounded-lg">
-                    <svg class="w-8 h-8 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
+        <!-- Statistics: same headline cards as the dashboard -->
+        <div class="stat-strip mb-8">
+            <div>
+                <p class="stat-label">Total spent</p>
+                <p class="stat-value">₹{{ number_format($stats['total_spent']) }}</p>
             </div>
-            
-            <div class="bg-surface rounded-xl shadow-sm border border-line p-6 flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-muted font-bold uppercase tracking-wider">Players Sold</p>
-                    <p class="text-3xl font-semibold text-green-600 mt-1">{{ $stats['total_sold'] }} <span class="text-sm text-muted">/ {{ $stats['total_players'] }}</span></p>
-                </div>
-                <div class="p-3 bg-green-50 rounded-lg">
-                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                </div>
+            <div>
+                <p class="stat-label">Players sold</p>
+                <p class="stat-value">{{ $stats['total_sold'] }}<span class="stat-of">/ {{ $stats['total_players'] }}</span></p>
             </div>
-
-            <div class="bg-surface rounded-xl shadow-sm border border-line p-6 flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-muted font-bold uppercase tracking-wider">Unsold Players</p>
-                    <p class="text-3xl font-semibold text-red-600 mt-1">{{ $stats['total_unsold'] }}</p>
-                </div>
-                <div class="p-3 bg-red-50 rounded-lg">
-                    <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7a4 4 0 11-8 0 4 4 0 018 0zM9 14a6 6 0 00-6 6v1h12v-1a6 6 0 00-6-6zM21 12h-6"></path></svg>
-                </div>
+            <div>
+                <p class="stat-label">Unsold players</p>
+                <p class="stat-value {{ $stats['total_unsold'] > 0 ? 'text-danger' : '' }}">{{ $stats['total_unsold'] }}</p>
             </div>
-
-            <div class="bg-surface rounded-xl shadow-sm border border-line p-6 flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-muted font-bold uppercase tracking-wider">Highest Bid</p>
-                    <p class="text-2xl font-semibold text-brand mt-1">₹{{ number_format($stats['highest_bid']) }}</p>
-                    <p class="text-xs text-muted mt-1 truncate">{{ $stats['highest_bid_player'] }} ({{ $stats['highest_bid_team'] }})</p>
-                </div>
-                <div class="p-3 bg-amber-50 rounded-lg">
-                    <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                </div>
+            <div>
+                <p class="stat-label">Highest bid</p>
+                <p class="stat-value">₹{{ number_format($stats['highest_bid']) }}</p>
+                @if($stats['highest_bid'] > 0)
+                    <p class="stat-note">{{ $stats['highest_bid_player'] }} · {{ $stats['highest_bid_team'] }}</p>
+                @endif
             </div>
         </div>
 

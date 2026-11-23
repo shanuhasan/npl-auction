@@ -281,6 +281,9 @@
         font-variation-settings: "opsz" 144; @apply text-ink;
     }
     .stat-strip a:hover { border-color: rgb(214 178 94 / .45); }
+    .stat-strip .stat-of { @apply ml-1.5 text-base text-muted; font-family: 'Manrope', ui-sans-serif, sans-serif; letter-spacing: 0; }
+    .stat-strip .stat-note { @apply mt-2 truncate text-xs text-muted; }
+    .stat-strip .stat-value.text-danger { color: rgb(var(--color-danger)); }
     .stat-strip a:hover .stat-label { @apply text-brand; }
 
     /* Sidebar */
