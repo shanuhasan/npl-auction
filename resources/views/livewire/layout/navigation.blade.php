@@ -25,7 +25,7 @@ new class extends Component
     $initials = collect(explode(' ', trim($user->name ?? '')))->filter()->take(2)->map(fn ($p) => mb_strtoupper(mb_substr($p, 0, 1)))->implode('');
 @endphp
 
-<header class="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-3 border-b border-line bg-surface/95 px-4 backdrop-blur sm:px-6 lg:px-8">
+<header class="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-3 border-b border-line bg-canvas/75 px-4 backdrop-blur-md sm:px-6 lg:px-8">
     <!-- Mobile: open drawer -->
     <button type="button" class="btn-ghost -ml-2 p-2 lg:hidden" @click="$dispatch('toggle-sidebar')" aria-label="Open menu">
         <x-icon name="menu" />
@@ -38,7 +38,8 @@ new class extends Component
 
     <div class="hidden min-w-0 sm:block">
         <p class="truncate text-sm text-muted">
-            Welcome back, <span class="font-medium text-ink">{{ \Illuminate\Support\Str::before($user->name, ' ') ?: $user->name }}</span>
+            <span class="font-medium text-ink">{{ now()->format('l, j F Y') }}</span>
+            @if(setting('season'))<span class="mx-2 text-faint">/</span>{{ setting('season') }}@endif
         </p>
     </div>
 
@@ -71,9 +72,7 @@ new class extends Component
                     <div class="max-h-80 overflow-y-auto border-y border-line">
                         @forelse($unreadMessages as $message)
                             <a href="{{ route('admin.contacts') }}" wire:navigate class="flex gap-3 px-4 py-3 hover:bg-surface-muted">
-                                <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
-                                    <x-icon name="envelope" class="w-4 h-4" />
-                                </span>
+                                <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-accent"></span>
                                 <span class="min-w-0">
                                     <span class="block truncate text-sm font-medium text-ink">{{ $message->name }}</span>
                                     <span class="block truncate text-xs text-muted">{{ \Illuminate\Support\Str::limit($message->message, 60) }}</span>
@@ -99,7 +98,7 @@ new class extends Component
                 @if($user->image)
                     <img src="{{ asset('storage/' . $user->image) }}" alt="" class="h-8 w-8 rounded-full object-cover ring-1 ring-line">
                 @else
-                    <span class="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-xs font-semibold text-white">{{ $initials ?: 'U' }}</span>
+                    <span class="flex h-8 w-8 items-center justify-center rounded-sm bg-brand text-xs font-semibold text-white">{{ $initials ?: 'U' }}</span>
                 @endif
                 <span class="hidden text-left md:block">
                     <span class="block max-w-[10rem] truncate text-sm font-medium leading-tight text-ink"

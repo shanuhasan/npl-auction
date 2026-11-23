@@ -64,9 +64,24 @@ export default {
                 success: token('color-success'),
                 warning: token('color-warning'),
             },
+            // Radius and shadow read CSS variables so the admin area (.theme-admin in
+            // resources/css/app.css) can square them off; the fallbacks are Tailwind's
+            // defaults, so the public site is unchanged.
+            borderRadius: {
+                sm: 'var(--radius-sm, 0.125rem)',
+                DEFAULT: 'var(--radius, 0.25rem)',
+                md: 'var(--radius-md, 0.375rem)',
+                lg: 'var(--radius-lg, 0.5rem)',
+                xl: 'var(--radius-xl, 0.75rem)',
+                '2xl': 'var(--radius-2xl, 1rem)',
+                '3xl': 'var(--radius-3xl, 1.5rem)',
+            },
             boxShadow: {
-                card: '0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.04)',
-                pop: '0 10px 30px -10px rgb(15 23 42 / 0.20), 0 4px 6px -4px rgb(15 23 42 / 0.06)',
+                sm: 'var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05))',
+                DEFAULT: 'var(--shadow, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1))',
+                md: 'var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1))',
+                card: 'var(--shadow-card, 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.04))',
+                pop: 'var(--shadow-pop, 0 10px 30px -10px rgb(15 23 42 / 0.20), 0 4px 6px -4px rgb(15 23 42 / 0.06))',
             },
         },
     },

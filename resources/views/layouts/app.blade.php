@@ -20,7 +20,7 @@
         <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
         <script src="{{ asset('js/select2.min.js') }}"></script>
     </head>
-    <body class="theme-app">
+    <body class="theme-app theme-admin">
         <div x-data="{
                 collapsed: (() => { try { return localStorage.getItem('sidebar-collapsed') === '1' } catch (e) { return false } })(),
                 mobileOpen: false,
@@ -36,25 +36,28 @@
 
             <!-- Mobile drawer backdrop -->
             <div x-show="mobileOpen" x-cloak x-transition.opacity @click="mobileOpen = false"
-                 class="fixed inset-0 z-40 bg-slate-900/40 lg:hidden"></div>
+                 class="fixed inset-0 z-40 bg-[#171E2D]/50 lg:hidden"></div>
 
             <!-- Sidebar -->
-            <aside class="fixed inset-y-0 left-0 z-50 flex w-[var(--sidebar-width)] flex-col border-r border-line bg-surface transition-[width,transform] duration-200 ease-out
+            <aside class="fixed inset-y-0 left-0 z-50 flex w-[var(--sidebar-width)] flex-col border-r sidebar-dark transition-[width,transform] duration-200 ease-out
                           -translate-x-full lg:static lg:translate-x-0"
                    :class="[mobileOpen && '!translate-x-0 shadow-pop', collapsed && 'lg:w-[var(--sidebar-width-collapsed)]']">
                 <!-- Brand -->
-                <div class="flex h-16 shrink-0 items-center gap-3 border-b border-line px-4" :class="collapsed && 'lg:justify-center lg:px-0'">
+                <div class="sidebar-rule flex h-16 shrink-0 items-center gap-3 border-b px-5" :class="collapsed && 'lg:justify-center lg:px-0'">
                     <a href="{{ route('dashboard') }}" wire:navigate class="flex min-w-0 items-center gap-3">
                         @if(setting('logo'))
-                            <img src="{{ asset('storage/' . setting('logo')) }}" alt="Logo" class="h-9 w-9 shrink-0 rounded-lg object-contain">
+                            <img src="{{ asset('storage/' . setting('logo')) }}" alt="Logo" class="h-9 w-9 shrink-0 object-contain">
                         @else
-                            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand text-sm font-bold text-white">
+                            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-accent text-sm font-bold text-brand-deep" style="font-family: var(--font-display)">
                                 {{ \Illuminate\Support\Str::of(setting('app_name', 'NPL'))->substr(0, 2)->upper() }}
                             </span>
                         @endif
-                        <span class="truncate text-[15px] font-semibold text-ink" :class="collapsed && 'lg:hidden'">{{ setting('app_name', 'NPLT20') }}</span>
+                        <span class="min-w-0 leading-none" :class="collapsed && 'lg:hidden'">
+                            <span class="block truncate text-[19px] font-medium tracking-tight text-white" style="font-family: var(--font-display)">{{ setting('app_name', 'NPLT20') }}</span>
+                            <span class="mt-1.5 block text-[10px] font-bold uppercase tracking-[0.18em] text-brand/80">{{ setting('season') ?: 'League office' }}</span>
+                        </span>
                     </a>
-                    <button type="button" class="btn-ghost ml-auto p-1.5 lg:hidden" @click="mobileOpen = false" aria-label="Close menu">
+                    <button type="button" class="ml-auto rounded-sm p-1.5 text-white/60 hover:bg-white/10 hover:text-white lg:hidden" @click="mobileOpen = false" aria-label="Close menu">
                         <x-icon name="x" />
                     </button>
                 </div>
@@ -64,9 +67,9 @@
                 @endauth
 
                 <!-- Collapse toggle (desktop) -->
-                <div class="hidden shrink-0 border-t border-line p-2 lg:block">
+                <div class="sidebar-rule hidden shrink-0 border-t py-2 lg:block">
                     <button type="button" @click="toggleCollapse()"
-                            class="nav-item w-[calc(100%-1rem)]" :class="collapsed && 'lg:justify-center lg:px-0'"
+                            class="nav-item w-full" :class="collapsed && 'lg:justify-center lg:px-0'"
                             :title="collapsed ? 'Expand sidebar' : 'Collapse sidebar'">
                         <x-icon name="chevrons-left" class="w-5 h-5 transition-transform" ::class="collapsed && 'rotate-180'" />
                         <span :class="collapsed && 'lg:hidden'">Collapse</span>

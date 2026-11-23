@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -39,6 +39,58 @@
     --radius-control: 0.5rem;
     --sidebar-width: 16rem;
     --sidebar-width-collapsed: 4.5rem;
+}
+
+/* =====================================================================
+   Admin / team-owner area (layouts/app → <body class="theme-app theme-admin">)
+   "Club premium" dark theme: midnight navy, champagne-gold accents,
+   Fraunces serif for titles & figures, Manrope for UI text.
+   Only this area changes; the public site keeps the :root values.
+   ===================================================================== */
+.theme-admin {
+    color-scheme: dark;
+
+    --color-canvas: 9 12 21;            /* #090C15 midnight */
+    --color-surface: 17 22 35;          /* #111623 cards */
+    --color-surface-muted: 13 17 28;    /* #0D111C wells, inputs */
+    --color-surface-subtle: 27 34 51;   /* #1B2233 hover, chips */
+    --color-line: 34 42 61;             /* #222A3D hairlines */
+    --color-line-strong: 50 60 84;      /* #323C54 input borders */
+    --color-ink: 237 233 224;           /* #EDE9E0 warm ivory text */
+    --color-ink-soft: 197 196 192;      /* #C5C4C0 */
+    --color-muted: 139 145 161;         /* #8B91A1 */
+    --color-faint: 92 99 117;           /* #5C6375 */
+
+    /* Primary actions & links are champagne gold here (navy would vanish on dark) */
+    --color-brand: 214 178 94;          /* #D6B25E */
+    --color-brand-hover: 230 199 125;   /* #E6C77D */
+    --color-brand-soft: 39 35 25;       /* #272319 gold-tinted well */
+    --color-brand-deep: 6 8 15;         /* #06080F sidebar */
+    --color-accent: 214 178 94;
+    --color-accent-hover: 230 199 125;
+    --color-accent-soft: 39 35 25;
+
+    --color-danger: 244 114 114;        /* #F47272 */
+    --color-success: 74 205 141;        /* #4ACD8D */
+    --color-warning: 240 180 70;        /* #F0B446 */
+
+    /* Tailwind radius/shadow utilities read these (see tailwind.config.js) */
+    --radius-sm: 4px;
+    --radius: 6px;
+    --radius-md: 7px;
+    --radius-lg: 9px;
+    --radius-xl: 12px;
+    --radius-2xl: 14px;
+    --radius-3xl: 18px;
+    --radius-control: 8px;
+    --shadow-sm: 0 0 #0000;
+    --shadow: 0 0 #0000;
+    --shadow-md: 0 8px 24px -12px rgb(0 0 0 / .6);
+    --shadow-card: inset 0 1px 0 rgb(255 255 255 / .035), 0 1px 2px rgb(0 0 0 / .35);
+    --shadow-pop: 0 24px 48px -16px rgb(0 0 0 / .7), 0 0 0 1px rgb(255 255 255 / .06);
+
+    --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --gold-line: linear-gradient(90deg, rgb(214 178 94 / 0), rgb(214 178 94 / .55) 20%, rgb(214 178 94 / .55) 80%, rgb(214 178 94 / 0));
 }
 
 /* ---------------------------------------------------------------------
@@ -127,6 +179,34 @@
     .theme-app .prose strong { @apply font-semibold text-ink; }
 
     [x-cloak] { display: none !important; }
+
+    /* ----- Admin area overrides (.theme-admin) ----- */
+    .theme-app.theme-admin {
+        font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+        font-feature-settings: normal;
+        background:
+            radial-gradient(1200px 500px at 100% -10%, rgb(214 178 94 / .06), transparent 60%),
+            rgb(var(--color-canvas));
+        background-attachment: fixed;
+    }
+    .theme-admin main h1, .theme-admin .page-header :is(h1, h2) {
+        font-family: var(--font-display);
+        font-size: 2.15rem; line-height: 1.1; font-weight: 500;
+        letter-spacing: -0.015em; font-variation-settings: "opsz" 72;
+    }
+    .theme-admin :is(h2, h3) { letter-spacing: -0.01em; }
+    .theme-admin :is(input, select, textarea):not([type=checkbox]):not([type=radio]) { box-shadow: none; }
+    .theme-admin :is(input, select, textarea):focus { box-shadow: 0 0 0 3px rgb(var(--color-brand) / .18) !important; }
+    .theme-admin input[type=checkbox], .theme-admin input[type=radio] { background-color: rgb(var(--color-surface-muted)); }
+    .theme-admin input[type=checkbox]:checked, .theme-admin input[type=radio]:checked { background-color: rgb(var(--color-brand)); border-color: rgb(var(--color-brand)); }
+    .theme-admin table { font-variant-numeric: tabular-nums; }
+    .theme-admin table thead th {
+        background: rgb(var(--color-surface-muted)); color: rgb(var(--color-muted));
+        font-size: 11px; font-weight: 600; letter-spacing: .09em;
+        border-bottom: 1px solid rgb(var(--color-line));
+    }
+    .theme-admin table tbody tr:hover { background: rgb(255 255 255 / .025); }
+    .theme-admin ::selection { background: rgb(214 178 94 / .35); color: #fff; }
 }
 
 /* ---------------------------------------------------------------------
@@ -167,6 +247,60 @@
     .alert-success { @apply alert border-green-200 bg-green-50 text-green-800; }
     .alert-danger { @apply alert border-red-200 bg-red-50 text-red-800; }
     .alert-info { @apply alert border-blue-200 bg-blue-50 text-blue-800; }
+
+    /* ----- Admin area components ----- */
+    .theme-admin .card { background-image: linear-gradient(180deg, rgb(255 255 255 / .018), transparent 120px); }
+    .theme-admin .card-header { @apply py-3.5; }
+    .theme-admin .card-title { @apply text-[11px] font-bold uppercase text-muted; letter-spacing: .14em; }
+    .theme-admin .badge { @apply rounded-full px-2 py-0.5 text-[11px] font-semibold; letter-spacing: .02em; }
+    .theme-admin .badge-neutral { background: rgb(255 255 255 / .06); color: rgb(var(--color-ink-soft)); }
+    .theme-admin .badge-brand { background: rgb(214 178 94 / .14); color: rgb(var(--color-brand)); }
+    .theme-admin .badge-success { background: rgb(74 205 141 / .12); color: rgb(var(--color-success)); --tw-ring-color: rgb(74 205 141 / .25); }
+    .theme-admin .badge-danger { background: rgb(244 114 114 / .12); color: rgb(var(--color-danger)); --tw-ring-color: rgb(244 114 114 / .25); }
+    .theme-admin .badge-warning { background: rgb(240 180 70 / .12); color: rgb(var(--color-warning)); --tw-ring-color: rgb(240 180 70 / .25); }
+    .theme-admin .alert-success { background: rgb(74 205 141 / .08); border-color: rgb(74 205 141 / .3); color: rgb(150 230 190); }
+    .theme-admin .alert-danger { background: rgb(244 114 114 / .08); border-color: rgb(244 114 114 / .3); color: rgb(250 170 170); }
+    .theme-admin .alert-info { background: rgb(120 160 255 / .08); border-color: rgb(120 160 255 / .3); color: rgb(175 200 255); }
+    /* Gold buttons get dark text */
+    .theme-admin :is(.btn-primary, .btn-accent, .bg-brand, .bg-accent) { color: rgb(var(--color-brand-deep)); }
+    .theme-admin :is(.btn-primary, .bg-brand) { font-weight: 600; box-shadow: inset 0 1px 0 rgb(255 255 255 / .25); }
+    .theme-admin .btn-secondary { background: rgb(255 255 255 / .03); }
+    .theme-admin .btn-secondary:hover { background: rgb(255 255 255 / .07); }
+
+    /* Headline figures: serif numerals with a gold hairline on top */
+    .stat-strip { @apply grid gap-4; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); }
+    .stat-strip > * {
+        @apply relative block overflow-hidden rounded-xl border border-line bg-surface px-5 pb-5 pt-4 transition-colors;
+        box-shadow: var(--shadow-card);
+    }
+    .stat-strip > *::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: var(--gold-line); }
+    .stat-strip .stat-label { @apply text-[11px] font-bold uppercase text-muted; letter-spacing: .14em; }
+    .stat-strip .stat-value {
+        font-family: var(--font-display); font-size: 2.9rem; line-height: 1; font-weight: 400;
+        margin-top: .7rem; font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.02em;
+        font-variation-settings: "opsz" 144; @apply text-ink;
+    }
+    .stat-strip a:hover { border-color: rgb(214 178 94 / .45); }
+    .stat-strip a:hover .stat-label { @apply text-brand; }
+
+    /* Sidebar */
+    .sidebar-dark { background: rgb(var(--color-brand-deep)); border-color: rgb(255 255 255 / .06); color: rgb(255 255 255 / .9); }
+    .sidebar-dark .nav-section { color: rgb(255 255 255 / .32); letter-spacing: .16em; font-size: 10px; font-weight: 700; }
+    .sidebar-dark .nav-item {
+        @apply mx-3 rounded-lg px-3 py-2 font-medium;
+        color: rgb(255 255 255 / .58);
+    }
+    .sidebar-dark .nav-item svg { width: 1.125rem; height: 1.125rem; color: rgb(255 255 255 / .35); }
+    .sidebar-dark .nav-item:hover { background: rgb(255 255 255 / .04); color: rgb(255 255 255 / .92); }
+    .sidebar-dark .nav-item:hover svg { color: rgb(255 255 255 / .7); }
+    .sidebar-dark .nav-item.is-active {
+        color: rgb(var(--color-brand));
+        background: linear-gradient(90deg, rgb(214 178 94 / .14), rgb(214 178 94 / .03));
+        box-shadow: inset 0 0 0 1px rgb(214 178 94 / .18);
+    }
+    .sidebar-dark .nav-item.is-active svg { color: rgb(var(--color-brand)); }
+    .sidebar-dark .sidebar-rule { border-color: rgb(255 255 255 / .06); }
+    .sidebar-dark ::-webkit-scrollbar-thumb { background: rgb(255 255 255 / .12); border-color: rgb(var(--color-brand-deep)); }
 
     /* Section heading with a gold marker (public site) */
     .section-title { @apply relative pl-4; }
@@ -273,3 +407,36 @@
 .theme-app .ql-snow .ql-fill { fill: rgb(var(--color-ink-soft)); }
 .theme-app .ql-snow .ql-picker { color: rgb(var(--color-ink-soft)); }
 .theme-app .ql-editor.ql-blank::before { color: rgb(var(--color-faint)); }
+
+/* ---------------------------------------------------------------------
+   Admin area: hard-coded light Tailwind colours in older views,
+   remapped to tones that read on the dark theme.
+   --------------------------------------------------------------------- */
+.theme-admin .bg-white { background-color: rgb(var(--color-surface)); }
+.theme-admin .text-black { color: rgb(var(--color-ink)); }
+.theme-admin :is(.bg-slate-200, .hover\:bg-slate-200:hover, .hover\:bg-gray-500:hover) { background-color: rgb(255 255 255 / .09); }
+.theme-admin :is(.text-red-500, .text-red-600) { color: rgb(var(--color-danger)); }
+.theme-admin :is(.hover\:text-red-700:hover, .hover\:text-red-500:hover) { color: rgb(252 165 165); }
+.theme-admin .text-green-600 { color: rgb(var(--color-success)); }
+.theme-admin .hover\:text-green-700:hover { color: rgb(134 239 172); }
+.theme-admin :is(.text-blue-600, .text-indigo-600, .text-sky-600) { color: rgb(140 175 255); }
+.theme-admin :is(.hover\:text-blue-700:hover, .hover\:text-indigo-700:hover, .hover\:text-sky-700:hover) { color: rgb(185 207 255); }
+.theme-admin .text-amber-600 { color: rgb(var(--color-warning)); }
+.theme-admin .hover\:text-amber-700:hover { color: rgb(var(--color-brand-hover)); }
+.theme-admin .text-pink-600 { color: rgb(244 140 190); }
+.theme-admin .hover\:text-pink-700:hover { color: rgb(249 180 214); }
+.theme-admin .bg-red-50 { background-color: rgb(244 114 114 / .1); }
+.theme-admin .bg-green-50 { background-color: rgb(74 205 141 / .1); }
+.theme-admin .bg-amber-50 { background-color: rgb(240 180 70 / .1); }
+.theme-admin .bg-blue-50 { background-color: rgb(120 160 255 / .1); }
+.theme-admin .border-red-200 { border-color: rgb(244 114 114 / .3); }
+.theme-admin .border-green-200 { border-color: rgb(74 205 141 / .3); }
+.theme-admin .border-blue-200 { border-color: rgb(120 160 255 / .3); }
+.theme-admin :is(.text-green-700, .text-green-800) { color: rgb(150 230 190); }
+.theme-admin :is(.text-red-700, .text-red-800) { color: rgb(250 170 170); }
+.theme-admin :is(.text-amber-700, .text-amber-800) { color: rgb(245 205 130); }
+.theme-admin input[type=date]::-webkit-calendar-picker-indicator,
+.theme-admin input[type=datetime-local]::-webkit-calendar-picker-indicator,
+.theme-admin input[type=time]::-webkit-calendar-picker-indicator { filter: invert(.8); }
+.theme-admin :is(.bg-danger, .btn-danger, .bg-red-400, .bg-red-500, .bg-red-600) { background-color: rgb(196 43 43); color: #fff; }
+.theme-admin :is(.hover\:bg-red-500:hover, .hover\:bg-red-600:hover, .hover\:bg-red-700:hover, .btn-danger:hover) { background-color: rgb(220 55 55); }

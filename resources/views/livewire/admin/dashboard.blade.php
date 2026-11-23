@@ -3,7 +3,7 @@
     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
             <h1 class="text-2xl font-semibold text-ink">Dashboard</h1>
-            <p class="mt-1 text-sm text-muted">Overview of your league, auctions and website activity.</p>
+            <p class="mt-1.5 text-sm text-muted">{{ setting('app_name', 'NPL') }}{{ setting('season') ? ' · ' . setting('season') : '' }}</p>
         </div>
         @if(!$hasLiveAuctions)
             <button wire:click="resetSeason" wire:confirm="WARNING: This will reset ALL Teams' remaining budgets back to full, and set ALL players to 'available'. ONLY DO THIS IF YOU ARE STARTING A BRAND NEW AUCTION / NEW SEASON. Are you sure?"
@@ -23,55 +23,48 @@
         </div>
     @endif
 
-    <!-- Stats -->
+    <!-- Stats: one scoreboard strip -->
     @php
+        $user = auth()->user();
         $stats = [
-            ['label' => 'Players', 'value' => $totalPlayers, 'icon' => 'users', 'tone' => 'bg-blue-50 text-blue-600', 'route' => auth()->user()->hasPermission('manage_players') ? route('admin.players') : null],
-            ['label' => 'Teams', 'value' => $totalTeams, 'icon' => 'shield', 'tone' => 'bg-violet-50 text-violet-600', 'route' => auth()->user()->hasPermission('manage_teams') ? route('admin.teams') : null],
-            ['label' => 'Upcoming Auctions', 'value' => $upcomingAuctions, 'icon' => 'clock', 'tone' => 'bg-amber-50 text-amber-600', 'route' => auth()->user()->hasPermission('manage_auctions') ? route('admin.auctions') : null],
-            ['label' => 'Completed Auctions', 'value' => $completedAuctions, 'icon' => 'check-circle', 'tone' => 'bg-green-50 text-green-600', 'route' => auth()->user()->hasPermission('manage_auctions') ? route('admin.auctions') : null],
-            ['label' => 'Website Visitors', 'value' => $totalVisitors, 'icon' => 'eye', 'tone' => 'bg-slate-100 text-slate-600', 'route' => auth()->user()->hasPermission('view_analytics') ? route('admin.analytics') : null],
+            ['label' => 'Players', 'value' => $totalPlayers, 'route' => $user->hasPermission('manage_players') ? route('admin.players') : null],
+            ['label' => 'Teams', 'value' => $totalTeams, 'route' => $user->hasPermission('manage_teams') ? route('admin.teams') : null],
+            ['label' => 'Upcoming auctions', 'value' => $upcomingAuctions, 'route' => $user->hasPermission('manage_auctions') ? route('admin.auctions') : null],
+            ['label' => 'Completed auctions', 'value' => $completedAuctions, 'route' => $user->hasPermission('manage_auctions') ? route('admin.auctions') : null],
+            ['label' => 'Site visitors', 'value' => $totalVisitors, 'route' => $user->hasPermission('view_analytics') ? route('admin.analytics') : null],
         ];
     @endphp
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+    <div class="stat-strip">
         @foreach($stats as $stat)
-            <{{ $stat['route'] ? 'a' : 'div' }} @if($stat['route']) href="{{ $stat['route'] }}" wire:navigate @endif
-                class="card group p-5 transition-colors {{ $stat['route'] ? 'hover:border-line-strong' : '' }}">
-                <div class="flex items-start justify-between">
-                    <p class="text-sm font-medium text-muted">{{ $stat['label'] }}</p>
-                    <span class="flex h-9 w-9 items-center justify-center rounded-lg {{ $stat['tone'] }}">
-                        <x-icon :name="$stat['icon']" class="w-5 h-5" />
-                    </span>
-                </div>
-                <p class="mt-3 text-3xl font-semibold tracking-tight text-ink">{{ number_format($stat['value']) }}</p>
+            <{{ $stat['route'] ? 'a' : 'div' }} @if($stat['route']) href="{{ $stat['route'] }}" wire:navigate @endif>
+                <p class="stat-label">{{ $stat['label'] }}</p>
+                <p class="stat-value">{{ number_format($stat['value']) }}</p>
             </{{ $stat['route'] ? 'a' : 'div' }}>
         @endforeach
     </div>
 
-    <!-- Quick actions -->
+    <!-- Shortcuts -->
     @php
         $actions = array_filter([
-            auth()->user()->hasPermission('manage_auctions') ? ['label' => 'Create auction', 'desc' => 'Set up a new auction and its teams', 'icon' => 'trophy', 'route' => route('admin.auctions.create')] : null,
-            auth()->user()->hasPermission('manage_players') ? ['label' => 'Manage players', 'desc' => 'Approve, edit and export players', 'icon' => 'users', 'route' => route('admin.players')] : null,
-            auth()->user()->hasPermission('manage_teams') ? ['label' => 'Manage teams', 'desc' => 'Owners, budgets and logos', 'icon' => 'shield', 'route' => route('admin.teams')] : null,
-            ['label' => 'Auction reports', 'desc' => 'Squads, spending and results', 'icon' => 'report', 'route' => route('reports.auction')],
-            auth()->user()->hasPermission('manage_settings') ? ['label' => 'Settings', 'desc' => 'Branding, fees and payments', 'icon' => 'cog', 'route' => route('admin.settings')] : null,
+            $user->hasPermission('manage_auctions') ? ['label' => 'Create auction', 'desc' => 'New auction, its teams and players', 'route' => route('admin.auctions.create')] : null,
+            $user->hasPermission('manage_players') ? ['label' => 'Players', 'desc' => 'Approve, edit and export to PDF', 'route' => route('admin.players')] : null,
+            $user->hasPermission('manage_teams') ? ['label' => 'Teams', 'desc' => 'Owners, budgets and logos', 'route' => route('admin.teams')] : null,
+            ['label' => 'Auction reports', 'desc' => 'Squads, spending and results', 'route' => route('reports.auction')],
+            $user->hasPermission('manage_settings') ? ['label' => 'Settings', 'desc' => 'Branding, fees and payments', 'route' => route('admin.settings')] : null,
         ]);
     @endphp
-    <div class="card">
+    <div class="card overflow-hidden">
         <div class="card-header">
-            <h2 class="card-title">Quick actions</h2>
+            <h2 class="card-title">Shortcuts</h2>
         </div>
-        <div class="grid grid-cols-1 divide-y divide-line sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-3 xl:grid-cols-5">
+        <div class="-mb-px -mr-px grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             @foreach($actions as $action)
-                <a href="{{ $action['route'] }}" wire:navigate class="group flex items-start gap-3 p-5 transition-colors hover:bg-surface-muted">
-                    <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand">
-                        <x-icon :name="$action['icon']" class="w-5 h-5" />
-                    </span>
+                <a href="{{ $action['route'] }}" wire:navigate class="group flex items-baseline justify-between gap-4 border-b border-line px-5 py-4 transition-colors hover:bg-accent-soft/60 sm:border-r">
                     <span>
-                        <span class="block text-sm font-medium text-ink group-hover:text-brand">{{ $action['label'] }}</span>
+                        <span class="block text-sm font-semibold text-ink">{{ $action['label'] }}</span>
                         <span class="mt-0.5 block text-xs text-muted">{{ $action['desc'] }}</span>
                     </span>
+                    <span class="text-faint transition-transform group-hover:translate-x-0.5 group-hover:text-ink" aria-hidden="true">&rarr;</span>
                 </a>
             @endforeach
         </div>

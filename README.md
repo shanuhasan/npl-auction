@@ -345,6 +345,8 @@ Managed from **Admin → Settings** and read with the `setting('key', $default)`
 
 The whole application uses one theme: deep navy `#172554` with a gold accent `#C9A227` on light gray: the public website (`layouts/ipl`), the live auction and bidding screens (`layouts/auction-live`), the admin / team owner area (`layouts/app`) and the auth pages (`layouts/guest`).
 
+The admin / team owner area has its own dark premium layer (`.theme-admin` in `resources/css/app.css`): midnight navy background, ivory text, champagne-gold buttons and active states, Manrope for text and Fraunces serif for page titles and headline numbers.
+
 - **Colours:** CSS variables in `resources/css/app.css` (`:root`), exposed to Tailwind as `brand` (+ `brand-deep`), `accent` (gold), `canvas`, `surface`, `line`, `ink`, `muted`, `faint`, `danger`, `success`, `warning` (see `tailwind.config.js`). Change a colour in one place and it applies everywhere.
 - **Public site accents:** `.page-intro` (navy title band on a page's title block), `.page-band` (navy band behind a page that starts with a card), `.section-title` (heading with a gold marker), `.btn-accent` (gold button).
 - **Components:** `.card`, `.btn-primary`, `.btn-secondary`, `.btn-danger`, `.btn-ghost`, `.badge-*`, `.alert-*`, `.form-label`, `.nav-item`, `.menu-panel` (same file).
